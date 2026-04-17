@@ -820,6 +820,36 @@
     max-width: 300px;
   }
 
+  /* MOBILE MENU TOGGLE */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 14px; left: 14px;
+    z-index: 1100;
+    background: rgba(13,17,23,0.92);
+    border: 1px solid #30363d;
+    color: #e6edf3;
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 22px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+  }
+  .menu-toggle:active { background: rgba(248,81,73,0.3); }
+  .nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 999;
+    backdrop-filter: blur(2px);
+  }
+  .nav-backdrop.open { display: block; }
+
   /* PRINT */
   @media print {
     .nav { display: none; }
@@ -854,6 +884,122 @@
     .two-col, .two-col.balanced { grid-template-columns: 1fr; }
     .conclusion-grid { grid-template-columns: repeat(2, 1fr); }
     .cover h1 { font-size: 56px; }
+  }
+
+  /* MÓVIL (smartphones) */
+  @media (max-width: 768px) {
+    .menu-toggle { display: flex; }
+    .nav {
+      width: 260px !important;
+      transform: translateX(-100%);
+      transition: transform 0.28s ease;
+      padding: 70px 12px 20px !important;
+    }
+    .nav.open { transform: translateX(0); }
+    .nav a {
+      justify-content: flex-start !important;
+      font-size: 12px !important;
+      letter-spacing: 1.2px !important;
+      padding: 11px 12px !important;
+    }
+    .nav a .num { font-size: 10px; }
+    .nav-header .title, .nav-header .h1, .nav-header .sub, .nav-footer { display: block !important; }
+    .nav-header { padding: 4px 10px 18px !important; margin-bottom: 14px !important; }
+
+    section { padding: 70px 16px 24px 16px; }
+    section h1 { font-size: 26px; letter-spacing: -0.3px; }
+    section h2 { font-size: 17px; margin-bottom: 14px; }
+    section h3 { font-size: 12px; margin-bottom: 18px; letter-spacing: 1.5px; }
+    .footer-note { font-size: 11px; padding-top: 16px; }
+
+    /* Cover */
+    .cover h1 { font-size: 40px !important; line-height: 1.05; }
+    .cover .subtitle { font-size: 14px; margin-bottom: 28px; padding: 0 10px; }
+    .cover .cards { grid-template-columns: 1fr; gap: 10px; max-width: 340px; margin-bottom: 22px; }
+    .cover .card { min-height: 80px; padding: 14px; flex-direction: row; gap: 14px; text-align: left; }
+    .cover .card .num { font-size: 28px; margin-bottom: 0; min-width: 80px; text-align: center; }
+    .cover .card .lbl { font-size: 11px; text-align: left; line-height: 1.35; }
+    .cover .click-hint { font-size: 12px; padding: 8px 16px; margin-bottom: 20px; }
+    .cover .click-hint .dot { width: 8px; height: 8px; }
+    .cover-visual { opacity: 0.55; }
+    .brand-strip { padding: 10px 12px; font-size: 10.5px; gap: 10px; max-width: 340px !important; }
+    .brand-strip .mini45 { width: 44px; height: 44px; }
+    .brand-strip div[style] { font-size: 10.5px !important; }
+
+    /* Bullets */
+    .bullets { font-size: 15px; max-width: 100%; }
+    .bullets li { padding: 12px 0 12px 26px; }
+    .bullets li:before { width: 14px; top: 24px; }
+    .bullets li .sub { font-size: 11.5px; }
+    .bullets.numbered li { padding-left: 40px; }
+    .bullets.numbered li:before { font-size: 24px; top: 10px; }
+
+    /* Info boxes */
+    .highlight-banner { font-size: 14px; padding: 14px 16px; margin: 14px 0; }
+    .info-box, .context-box, .caveat-banner { font-size: 12px; padding: 10px 14px; line-height: 1.5; }
+
+    /* Charts */
+    .chart-container { min-height: 280px; max-height: 420px; padding: 10px; }
+
+    /* Visual panels */
+    .visual-panel { padding: 16px; min-height: auto; }
+    .visual-panel .panel-title { font-size: 10.5px; letter-spacing: 1.5px; margin-bottom: 12px; }
+    .dispro-bars .row { margin-bottom: 16px; }
+    .dispro-bars .lab { font-size: 11.5px; }
+    .dispro-bars .track { height: 22px; }
+    .dispro-bars .fill { font-size: 10px; padding-right: 6px; }
+    .dispro-bars .foot { font-size: 11px; }
+    .stat-row { font-size: 12.5px; padding: 10px 0; }
+    .stat-row span:last-child { font-size: 14px !important; }
+
+    /* Conclusiones */
+    .conclusion-grid { grid-template-columns: 1fr; gap: 10px; }
+    .conclusion-card { min-height: auto; padding: 16px 14px; }
+    .conclusion-card .hero { font-size: 36px; }
+    .conclusion-card .hero-sub { font-size: 9px; letter-spacing: 2px; margin-bottom: 10px; }
+    .conclusion-card p { font-size: 12.5px; }
+    .concl-header { flex-direction: row; align-items: flex-start; }
+    .concl-header .corner-logo { width: 54px; height: 54px; }
+
+    /* Panel artístico extorsión */
+    .extortion-visual { height: 220px; }
+    .extortion-visual .overlay { padding: 12px 14px; }
+    .extortion-visual .tag-top { gap: 12px; }
+    .extortion-visual .msg-bubble { max-width: 140px; padding: 7px 10px; }
+    .extortion-visual .msg-bubble .who { font-size: 8px; letter-spacing: 1.5px; }
+    .extortion-visual .msg-bubble .txt { font-size: 11px; }
+    .extortion-visual .counter { padding: 6px 10px; }
+    .extortion-visual .counter .lbl { font-size: 8px; letter-spacing: 1.5px; }
+    .extortion-visual .counter .big { font-size: 20px; }
+    .extortion-visual .counter .small { font-size: 9px; }
+    .extortion-visual .bottom-banner { padding: 7px 10px; }
+    .extortion-visual .bottom-banner .ttl { font-size: 10px; letter-spacing: 2px; }
+    .extortion-visual .bottom-banner .sub { font-size: 10px; }
+
+    /* Leyenda legal */
+    .legal-notice {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      font-size: 10.5px;
+      line-height: 1.55;
+    }
+    .legal-notice .mini45 { width: 42px; height: 42px; }
+    .legal-notice .label { font-size: 8.5px; letter-spacing: 1.5px; }
+
+    /* Modal */
+    .modal-overlay { padding: 20px; }
+    .modal-box { padding: 22px 18px; }
+    .modal-box h3 { font-size: 14px; }
+    .modal-box p { font-size: 13px; line-height: 1.6; }
+  }
+
+  /* Smartphone muy pequeño */
+  @media (max-width: 400px) {
+    .cover h1 { font-size: 34px !important; }
+    section h1 { font-size: 22px; }
+    .chart-container { min-height: 240px; }
   }
 </style>
 </head>
@@ -890,6 +1036,9 @@
     </symbol>
   </defs>
 </svg>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+<div class="nav-backdrop" id="navBackdrop"></div>
 
 <nav class="nav" id="nav">
   <div class="nav-header">
@@ -1487,6 +1636,26 @@
 </section>
 
 <script>
+// ============ MOBILE MENU TOGGLE ============
+const menuToggle = document.getElementById('menuToggle');
+const nav = document.getElementById('nav');
+const navBackdrop = document.getElementById('navBackdrop');
+
+function toggleMenu(open) {
+  const isOpen = open !== undefined ? open : !nav.classList.contains('open');
+  nav.classList.toggle('open', isOpen);
+  navBackdrop.classList.toggle('open', isOpen);
+  menuToggle.innerHTML = isOpen ? '×' : '☰';
+}
+menuToggle.addEventListener('click', () => toggleMenu());
+navBackdrop.addEventListener('click', () => toggleMenu(false));
+// Cerrar al tocar un enlace (en móvil)
+document.querySelectorAll('.nav a').forEach(a => {
+  a.addEventListener('click', () => {
+    if (window.innerWidth <= 768) toggleMenu(false);
+  });
+});
+
 // ============ SCROLL-SPY (resalta sección activa en nav) ============
 const navLinks = document.querySelectorAll('.nav a[data-target]');
 const navSections = Array.from(navLinks).map(a => document.getElementById(a.dataset.target));
