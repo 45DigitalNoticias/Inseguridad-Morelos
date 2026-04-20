@@ -1061,6 +1061,201 @@
     .chart-container { min-height: 240px; }
   }
 
+  /* ============ RESPONSIVE v2.1 — componentes nuevos (hub, ranking, cruce, Ayala, glosario, metodo) ============ */
+  @media (max-width: 768px) {
+    /* Secciones tipo map-hub (Panel Estatal: s0, sR, sI) */
+    section.map-hub { padding: 70px 16px 24px 16px; }
+    .hub-header h3 { font-size: 10px; letter-spacing: 1.8px; margin-bottom: 6px; }
+    .hub-header h1 { font-size: 24px !important; line-height: 1.15; letter-spacing: -0.3px; }
+    .hub-sub { font-size: 12.5px; line-height: 1.55; }
+    .hub-header { margin-bottom: 12px; }
+
+    /* Mapa Morelos */
+    .hub-map-wrap { padding: 10px; min-height: 260px; }
+    .hub-map-wrap svg.morelos-map { max-height: 420px; min-height: 240px; }
+    .mun-label { font-size: 8px !important; stroke-width: 1.5px !important; }
+    .mun-label.highlight { font-size: 9px !important; stroke-width: 2px !important; }
+
+    /* Stats hub y leyenda */
+    .hub-stats { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+    .hub-stat { padding: 10px 12px; }
+    .hub-stat .n { font-size: 20px; }
+    .hub-stat .l { font-size: 9.5px; letter-spacing: 0.8px; }
+    .hub-legend { flex-direction: column; gap: 6px; padding: 10px 12px; margin-top: 12px; }
+    .hub-legend .item { font-size: 11px; gap: 8px; }
+    .hub-legend .count { font-size: 9.5px; }
+    .hub-instructions { font-size: 10.5px; margin-top: 6px; }
+
+    /* Ranking tabla — scroll horizontal */
+    .hub-ranking-wrap { padding: 12px; }
+    .rk-tabs { gap: 4px; }
+    .rk-tab { padding: 6px 9px; font-size: 9px; letter-spacing: 0.8px; }
+    .hub-ranking-wrap > div[style*="overflow-y"] { overflow-x: auto !important; }
+    .rk-table { font-size: 10.5px; min-width: 620px; }
+    .rk-table th, .rk-table td { padding: 6px 4px; }
+    .rk-table td.pos { width: 30px; }
+    .rk-caveat { font-size: 10px; }
+
+    /* Cross table — scroll horizontal */
+    .cross-table { font-size: 10.5px; min-width: 680px; }
+    .cross-table th, .cross-table td { padding: 6px 4px; }
+
+    /* Alerta CONFIDENCIAL */
+    .conf-alert { padding: 20px; gap: 14px; border-radius: 10px; }
+    .conf-alert .pct-box { min-width: auto; padding: 12px 16px; }
+    .conf-alert .pct-box .pct-huge { font-size: 48px; letter-spacing: -2px; }
+    .conf-alert .pct-box .pct-nums { font-size: 12px; }
+    .conf-alert .pct-box .pct-label { font-size: 8.5px; letter-spacing: 1.4px; }
+    .conf-alert .conf-body h4 { font-size: 16px; line-height: 1.25; }
+    .conf-alert .conf-body p { font-size: 12.5px; line-height: 1.55; }
+    .conf-alert .conf-body .conf-tag { font-size: 9px; letter-spacing: 1.5px; }
+    .conf-grid { grid-template-columns: 1fr; gap: 8px; }
+    .conf-fact { padding: 12px 14px; }
+    .conf-fact .cf-title { font-size: 9px; letter-spacing: 1px; }
+    .conf-fact .cf-value { font-size: 13px; line-height: 1.35; }
+    .conf-fact .cf-sub { font-size: 11px; line-height: 1.45; }
+
+    /* Quad matrix (4 cuadrantes) */
+    .quad { padding: 14px 16px; min-height: 100px; }
+    .quad .count { font-size: 26px; top: 12px; right: 16px; }
+    .quad .tag { font-size: 9px; letter-spacing: 1.4px; }
+    .quad .title { font-size: 13px; }
+    .quad .arrows { font-size: 10.5px; }
+    .quad p { font-size: 11.5px; line-height: 1.5; }
+
+    /* KPI cards fuera del cover */
+    .kpi-cards { grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0 20px; }
+    .kpi-cards .card { min-height: 110px; padding: 14px 12px; }
+    .kpi-cards .card .num { font-size: 26px; margin-bottom: 6px; }
+    .kpi-cards .card .lbl { font-size: 10px; letter-spacing: 0.8px; }
+
+    /* Nav agrupado (Cuautla/Ayala colapsables) — mobile */
+    .nav-group { margin-bottom: 10px; padding-bottom: 8px; }
+    .nav-group-title { font-size: 8px; letter-spacing: 1.5px; padding: 4px 8px 6px; }
+    .nav-collapsible { font-size: 10px; }
+    .nav-subnav { padding-left: 2px; margin-left: 6px; }
+    .mun-entry { font-size: 10.5px; padding: 7px 10px; letter-spacing: 0.8px; }
+    .mun-tag { font-size: 8px; padding: 1px 5px; }
+    .nav-toggle { padding: 6px 10px; font-size: 9px; letter-spacing: 0.8px; }
+
+    /* Panel Estatal destacado */
+    .nav-group.nav-hub { padding: 8px 8px 10px; }
+    .nav-group.nav-hub .nav-group-title { font-size: 9px; letter-spacing: 1.8px; }
+    .nav-group.nav-hub a { padding: 8px 10px; font-size: 10.5px; }
+
+    /* Ay-statement (pull-quote Ayala conclusiones) */
+    .ay-statement { padding: 24px 22px 22px; border-radius: 10px; }
+    .ay-statement::before { font-size: 110px; top: -28px; left: 10px; }
+    .ay-statement .st-intro { font-size: 9px; letter-spacing: 1.6px; margin-bottom: 14px; }
+    .ay-statement .st-text { font-size: 19px; line-height: 1.3; letter-spacing: -0.2px; }
+    .ay-statement .st-meta { font-size: 9.5px; letter-spacing: 1.3px; margin-top: 16px; }
+
+    /* Ayala boulevard visual */
+    .ay-boulevard { min-height: 0; border-radius: 10px; }
+    .ay-boulevard .overlay-content { padding: 22px 18px; gap: 14px; grid-template-columns: 1fr; }
+    .ay-boulevard .big-stat { min-width: auto; padding: 8px 0; }
+    .ay-boulevard .big-stat .big-num { font-size: 72px; letter-spacing: -3px; }
+    .ay-boulevard .big-stat .big-lbl { font-size: 11px; letter-spacing: 2px; }
+    .ay-boulevard .big-stat .big-date { font-size: 9px; letter-spacing: 1.5px; margin-top: 6px; }
+    .ay-boulevard .ov-txt .ov-title { font-size: 10px; letter-spacing: 1.8px; margin-bottom: 8px; }
+    .ay-boulevard .ov-txt .ov-head { font-size: 17px; line-height: 1.22; margin-bottom: 10px; }
+    .ay-boulevard .ov-txt p { font-size: 12.5px; line-height: 1.55; }
+
+    /* Ayala projection */
+    .ay-projection { padding: 16px 18px; gap: 12px; grid-template-columns: 1fr; }
+    .ay-projection .proj-txt { font-size: 12.5px; line-height: 1.5; }
+    .ay-projection .proj-badge { padding: 8px 14px; font-size: 9.5px; letter-spacing: 1.5px; text-align: center; }
+    .ay-projection .proj-badge strong { font-size: 24px; }
+
+    /* Cards accent grid Ayala — responsive */
+    #sA9 .conclusion-card { padding: 18px 14px 16px; }
+    #sA9 .conclusion-card .hero { font-size: 40px; }
+    #sA9 .conclusion-card .hero-sub { font-size: 9.5px; letter-spacing: 1.4px; }
+    #sA9 .conclusion-card p { font-size: 12.5px; line-height: 1.55; }
+
+    /* Simple box (cajas didacticas) */
+    .simple-box { padding: 14px 16px; font-size: 13px; }
+    .simple-box .simple-tag { font-size: 9px; letter-spacing: 1.3px; padding: 2px 8px; }
+    .simple-box p { font-size: 13px; line-height: 1.55; }
+
+    /* Glossary items (del detalle 2020) */
+    .glossary { grid-template-columns: 1fr; gap: 8px; margin: 14px 0; }
+    .glossary-item { padding: 14px 15px; }
+    .glossary-item h4 { font-size: 11.5px; letter-spacing: 1px; }
+    .glossary-item p { font-size: 12.5px; line-height: 1.5; }
+
+    /* Menores table (fuera de cover) */
+    .menores-table { padding: 12px; overflow-x: auto; }
+    .menores-table table { font-size: 11px; min-width: 380px; }
+    .menores-table th, .menores-table td { padding: 7px 8px; }
+
+    /* Two crisis cards */
+    .two-crisis { grid-template-columns: 1fr; gap: 10px; }
+    .crisis-card { padding: 16px; }
+    .crisis-card h3 { font-size: 15px; }
+    .crisis-card li { font-size: 12.5px; line-height: 1.55; }
+
+    /* Heatmap wrap (detalle 2020) */
+    .heatmap-wrap { padding: 12px; overflow-x: auto; }
+    .heatmap-wrap .title { font-size: 13px; }
+    .heatmap-wrap .sub { font-size: 10.5px; line-height: 1.45; }
+    table.heatmap { font-size: 10px; min-width: 420px; }
+    table.heatmap th, table.heatmap td { padding: 4px 3px; min-width: 24px; }
+
+    /* Callout huge */
+    .callout-huge { padding: 22px 18px; border-radius: 10px; }
+    .callout-huge .big-num { font-size: 56px; letter-spacing: -2px; }
+    .callout-huge .big-sub { font-size: 14px; line-height: 1.3; margin: 8px 0 12px; }
+    .callout-huge .explanation { font-size: 12.5px; line-height: 1.55; }
+
+    /* Metodo (sM) */
+    .meta-section { padding: 70px 16px 24px 16px; }
+    .meta-subseccion { padding: 16px 18px; border-radius: 8px; }
+    .meta-subseccion h3 { font-size: 12px; letter-spacing: 1.2px; margin-bottom: 10px; }
+    .meta-subseccion h4 { font-size: 14px; margin: 10px 0 6px; }
+    .meta-subseccion p, .meta-subseccion li, .meta-subseccion ol li { font-size: 12.5px; line-height: 1.55; }
+    .meta-subseccion ul, .meta-subseccion ol { padding-left: 18px; }
+    .meta-subseccion code { font-size: 10.5px; word-break: break-word; }
+
+    /* Data tables (método) */
+    table.data-table { font-size: 11px; }
+    table.data-table th, table.data-table td { padding: 6px 5px; }
+    table.data-table .hash { font-size: 9px; word-break: break-all; }
+
+    /* Blindaje legal */
+    .blindaje-legal { padding: 16px 18px; border-radius: 8px; }
+    .blindaje-legal h4 { font-size: 11px; letter-spacing: 1.1px; }
+    .blindaje-legal p { font-size: 12.5px; line-height: 1.6; }
+
+    /* Pipeline steps */
+    .pipeline-steps { grid-template-columns: 1fr; gap: 10px; }
+    .pipeline-step { padding: 12px; }
+    .pipeline-step .step-t { font-size: 12px; }
+    .pipeline-step .step-d { font-size: 11px; line-height: 1.45; }
+
+    /* Glosario (sG) — items */
+    .glo-group { margin-bottom: 18px; }
+    .glo-cat { font-size: 10px; letter-spacing: 1.4px; margin-bottom: 10px; padding-bottom: 4px; }
+    .glo-list { grid-template-columns: 1fr; gap: 8px; }
+    .glo-item { padding: 10px 12px; }
+    .glo-item dt { font-size: 12.5px; }
+    .glo-item dt .acronym { display: block; margin-left: 0; margin-top: 3px; font-size: 10.5px; }
+    .glo-item dd { font-size: 12px; line-height: 1.5; }
+  }
+
+  /* Smartphone pequeño <= 480px */
+  @media (max-width: 480px) {
+    .hub-header h1 { font-size: 21px !important; }
+    .ay-statement .st-text { font-size: 16.5px; line-height: 1.3; }
+    .ay-boulevard .big-stat .big-num { font-size: 60px; }
+    .conf-alert .pct-box .pct-huge { font-size: 42px; }
+    .callout-huge .big-num { font-size: 48px; }
+    #sA9 .conclusion-card .hero { font-size: 34px; }
+    .rk-tab { padding: 5px 7px; font-size: 8.5px; }
+    /* Cuautla trayectoria inline (barras 2018-2025) — si es demasiado */
+    .cover .subtitle { padding: 0 6px; font-size: 13px; }
+  }
+
   /* ============ v2.1 — heatmap + glosario + explicacion simple ============ */
   .simple-box {
     background: linear-gradient(135deg, rgba(63,185,113,0.09), rgba(88,166,255,0.06));
