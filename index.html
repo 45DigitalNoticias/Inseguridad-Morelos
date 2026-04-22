@@ -2402,6 +2402,119 @@
   .h-rest .h-row .d.down { color: #3fb950; }
   .h-rest .h-row .d.zero { color: #6e7681; }
 
+  /* ============ BOX METODOLOGICA — CADENCIA / RITMO ============ */
+  .method-box {
+    margin: 24px 0 28px;
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    border-radius: 12px;
+    background:
+      linear-gradient(180deg, rgba(251,191,36,0.055) 0%, rgba(13,17,23,0) 100%),
+      #0f1420;
+    overflow: hidden;
+  }
+  .method-box .method-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    background: rgba(251, 191, 36, 0.08);
+    border-bottom: 1px solid rgba(251, 191, 36, 0.25);
+  }
+  .method-box .method-head .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.8px;
+    color: #fbbf24;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border: 1px solid rgba(251,191,36,0.4);
+    border-radius: 4px;
+  }
+  .method-box .method-head .title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #e6edf3;
+    letter-spacing: -0.2px;
+  }
+  .method-box .method-body { padding: 18px 24px 20px; }
+  .method-formula {
+    background: #0d1117;
+    border: 1px solid rgba(251,191,36,0.25);
+    border-radius: 8px;
+    padding: 16px 20px;
+    text-align: center;
+    margin: 4px 0 16px;
+  }
+  .method-formula .eq {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    color: #fbbf24;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .method-formula .eq .var { color: #e6edf3; }
+  .method-formula .cap {
+    display: block;
+    font-size: 11px;
+    color: #8b949e;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+  .method-body p {
+    color: #c9d1d9;
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin: 10px 0;
+  }
+  .method-body p .hi { color: #fbbf24; font-weight: 700; }
+  .method-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 6px;
+    font-size: 12.5px;
+  }
+  .method-table th, .method-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid rgba(48,54,61,0.6);
+    text-align: left;
+    vertical-align: top;
+  }
+  .method-table th {
+    color: #fbbf24;
+    font-weight: 700;
+    font-size: 10.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(251,191,36,0.4);
+    background: rgba(251,191,36,0.05);
+  }
+  .method-table td { color: #c9d1d9; }
+  .method-table td.unit { color: #e6edf3; font-weight: 600; }
+  .method-table td.example { color: #8b949e; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; }
+  .method-table td.result { color: #fbbf24; font-weight: 700; }
+  .method-caveat {
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(248,81,73,0.07);
+    border-left: 3px solid #f85149;
+    border-radius: 6px;
+    color: #c9d1d9;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  .method-caveat strong { color: #f85149; }
+  .method-source {
+    margin-top: 12px;
+    font-size: 11.5px;
+    color: #8b949e;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
   @media (max-width: 1024px) {
     .h-state-hero { grid-template-columns: 1fr; text-align: center; }
     .h-clock-wrap { margin: 0 auto; }
@@ -2414,6 +2527,13 @@
     .h-top5 .h-num { font-size: 38px; }
     .h-top15 { grid-template-columns: repeat(2, 1fr); }
     .h-rest { grid-template-columns: 1fr; }
+    .method-box .method-head { padding: 12px 16px; flex-direction: column; align-items: flex-start; gap: 6px; }
+    .method-box .method-head .title { font-size: 16px; }
+    .method-box .method-body { padding: 14px 16px 16px; }
+    .method-formula { padding: 12px 14px; }
+    .method-formula .eq { font-size: 15px; }
+    .method-table th, .method-table td { padding: 7px 8px; font-size: 11.5px; }
+    .method-table td.example { font-size: 10.5px; }
   }
 
   /* ============ SECCIÓN sE · TRIBUTO / EXTORSIÓN ============ */
@@ -3785,6 +3905,71 @@
     </div>
   </div>
 
+  <!-- Apartado metodológico: cómo se calcula la cadencia -->
+  <div class="method-box">
+    <div class="method-head">
+      <span class="tag">Método</span>
+      <span class="title">Cómo se calcula la cadencia</span>
+    </div>
+    <div class="method-body">
+      <div class="method-formula">
+        <span class="eq">ritmo = 365 / <span class="var">homicidios_año</span></span>
+        <span class="cap">días entre cada homicidio</span>
+      </div>
+      <p>
+        El cociente devuelve <span class="hi">días</span>. Se convierte a la unidad más legible según la densidad del municipio: horas cuando el valor cae debajo de 48 hrs, días cuando es menor a 14, semanas en escalas mayores. Cuando el estado registra más de 365 homicidios al año, el resultado invertido (<em>homicidios ÷ 365</em>) se publica como <span class="hi">X por día</span>.
+      </p>
+      <table class="method-table">
+        <thead>
+          <tr>
+            <th>Rango del cociente</th>
+            <th>Unidad de lectura</th>
+            <th>Ejemplo real 2025</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="unit">&lt; 1 día</td>
+            <td>X por día</td>
+            <td class="example">Morelos estado: 1,385 ÷ 365 = <span class="result">3.8 por día</span></td>
+          </tr>
+          <tr>
+            <td class="unit">1 a 2 días</td>
+            <td>1 cada X horas</td>
+            <td class="example">Cuernavaca: 365 ÷ 254 × 24 = <span class="result">1 cada 34 hrs</span></td>
+          </tr>
+          <tr>
+            <td class="unit">2 a 10 días</td>
+            <td>1 cada X.X días</td>
+            <td class="example">Cuautla: 365 ÷ 141 = <span class="result">1 cada 2.6 días</span></td>
+          </tr>
+          <tr>
+            <td class="unit">10 a 60 días</td>
+            <td>1 cada X días</td>
+            <td class="example">Yautepec: 365 ÷ 77 = <span class="result">1 cada 5 días</span></td>
+          </tr>
+          <tr>
+            <td class="unit">&gt; 60 días</td>
+            <td>1 cada X semanas</td>
+            <td class="example">Tepalcingo: 365 ÷ 5 = <span class="result">1 cada 10 semanas</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        La cadencia es una <span class="hi">densidad estadística</span>, no una predicción. Los homicidios se agrupan por racha, territorio y conflicto: hay días sin ningún registro y días con siete. Lo que el cálculo entrega es la distancia promedio que tendría cada muerte si los 1,385 casos del estado se repartieran en partes iguales a lo largo de los 365 días del año.
+      </p>
+      <p>
+        Se usa la forma <span class="hi">días/muerte</span> (cadencia) en lugar de <span class="hi">muertes/día</span> (tasa) porque el lenguaje natural mide el tiempo entre eventos, no la fracción de eventos por unidad de tiempo. <em>"Uno cada 34 horas"</em> se procesa mejor que <em>"0.70 por día"</em>, aun siendo matemáticamente equivalentes.
+      </p>
+      <div class="method-caveat">
+        <strong>Advertencia.</strong> La cifra incluye <strong>homicidio doloso + homicidio culposo</strong>. El feminicidio se contabiliza por separado, por convención del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública. La cadencia municipal pierde resolución cuando el volumen anual es muy bajo (menos de 12 casos/año): allí el ritmo se expresa en semanas solo por completitud, sin pretensión de precisión.
+      </div>
+      <div class="method-source">
+        Fuente: Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública (SESNSP) — corte diciembre 2025. Proyecciones poblacionales: Consejo Nacional de Población (CONAPO) 2025.
+      </div>
+    </div>
+  </div>
+
   <!-- Subtítulo Top 5 -->
   <div class="h-subtitle">Posiciones 1 a 5 — el ritmo de los más violentos</div>
   <div class="h-top5" id="hTop5"></div>
@@ -3798,7 +3983,7 @@
   <div class="h-rest" id="hRest"></div>
 
   <p class="rk-caveat" style="margin-top:22px;">
-    Lectura del ritmo: se calcula como <code style="color:#d29922;">365 / homicidios</code> y se expresa en horas cuando el valor es menor a 48 horas, en días cuando es menor a 14 y en semanas en escalas mayores. No es un tiempo determinista — es una métrica de densidad que traduce estadística anual a percepción humana. El campo <strong>homicidio</strong> en SESNSP incluye doloso y culposo; feminicidio se contabiliza por separado. Fuente: SESNSP corte dic-2025 · CONAPO 2025.
+    La variación anual de cada card compara <strong>enero-diciembre 2025</strong> contra el mismo corte de 2024. La tasa por 100K habitantes usa la proyección de población 2025 del <strong>Consejo Nacional de Población (CONAPO)</strong>. El procedimiento de cálculo del ritmo se detalla en el apartado metodológico arriba. <strong>Fuente:</strong> Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública (SESNSP) — corte diciembre 2025.
   </p>
 </section>
 
@@ -3863,7 +4048,7 @@
   <div class="e-rest" id="eRest"></div>
 
   <p class="rk-caveat" style="margin-top:22px;">
-    El ritmo se calcula sobre casos denunciados. La extorsión en México tiene una <strong>cifra negra del 93%</strong> según ENVIPE — solo un caso de cada quince llega a carpeta. Las proyecciones con cifra negra se muestran por completitud estadística, pero el ordenamiento del ranking usa la cifra oficial reportada. Cuautla es primer lugar nacional absoluto en extorsión 2025 (259 casos · tasa 138.4/100K). Fuente: SESNSP corte dic-2025 · ENVIPE 2024 (cifra negra) · CONAPO 2025.
+    El ritmo se calcula con la misma fórmula del panel de homicidio (<code style="color:#d29922;">365 / casos_año</code>) aplicada sobre denuncias formales. La extorsión en México tiene una <strong>cifra negra cercana al 93%</strong> de acuerdo con la Encuesta Nacional de Victimización y Percepción sobre Seguridad Pública (ENVIPE) 2024 del Instituto Nacional de Estadística y Geografía (INEGI) — solo uno de cada quince casos llega a carpeta de investigación. Las proyecciones con cifra negra se muestran por completitud estadística, pero el ordenamiento del ranking usa la cifra oficial reportada. Cuautla es primer lugar nacional absoluto en extorsión 2025 (259 casos · tasa 138.4/100K). <strong>Fuentes:</strong> Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública (SESNSP) corte diciembre 2025 · Instituto Nacional de Estadística y Geografía (INEGI) — ENVIPE 2024 · Consejo Nacional de Población (CONAPO) 2025.
   </p>
 </section>
 
