@@ -117,22 +117,37 @@
     max-width: 1200px;
   }
   .hero-kpi {
-    padding: 26px 24px;
-    background: rgba(22,27,34,0.75);
+    padding: 24px 22px 22px;
+    background: rgba(22,27,34,0.7);
     border: 1px solid rgba(48,54,61,0.8);
     border-radius: 14px;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
   }
   .hero-kpi:hover {
-    border-color: rgba(251,191,36,0.5);
+    border-color: rgba(251,191,36,0.6);
     transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(248,81,73,0.18), 0 0 0 1px rgba(251,191,36,0.15) inset;
   }
   .hero-kpi::before {
     content: "";
     position: absolute; top: 0; left: 0; right: 0; height: 3px;
     background: linear-gradient(90deg, #fbbf24 0%, #f85149 100%);
+    z-index: 3;
+  }
+  /* Glyph SVG — el símbolo visual que identifica cada KPI */
+  .hero-kpi .glyph {
+    position: absolute;
+    top: 14px; right: 14px;
+    width: 96px; height: 96px;
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 1;
   }
   .hero-kpi .k {
     font-family: 'JetBrains Mono', monospace;
@@ -141,26 +156,69 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+    max-width: calc(100% - 110px);
   }
   .hero-kpi .v {
     font-family: 'Fraunces', serif;
     font-weight: 900;
-    font-size: clamp(42px, 4.5vw, 64px);
-    line-height: 0.92;
-    letter-spacing: -2px;
+    font-size: clamp(44px, 4.8vw, 66px);
+    line-height: 0.9;
+    letter-spacing: -2.5px;
     font-variant-numeric: tabular-nums;
-    margin-bottom: 10px;
-    background: linear-gradient(180deg, #fbbf24 0%, #f85149 80%);
+    margin-bottom: 12px;
+    background: linear-gradient(180deg, #fbbf24 0%, #f85149 85%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
+    position: relative;
+    z-index: 2;
   }
   .hero-kpi .t {
     font-size: 13.5px;
     color: #c9d1d9;
-    line-height: 1.4;
+    line-height: 1.45;
     font-weight: 500;
+    margin-top: auto;
+    position: relative;
+    z-index: 2;
   }
   .hero-kpi .t strong { color: #fbbf24; }
+
+  /* === GLYPH · Percepción (iris/ojo con 90% llenado) === */
+  .glyph-eye .iris-bg { fill: rgba(22,27,34,0.9); stroke: rgba(248,81,73,0.55); stroke-width: 1.5; }
+  .glyph-eye .iris-fill { fill: url(#eyeGrad); }
+  .glyph-eye .pupil { fill: #0d1117; stroke: #fbbf24; stroke-width: 1.2; }
+  .glyph-eye .pupil-dot { fill: #fbbf24; }
+  .glyph-eye .gaze-ring { fill: none; stroke: rgba(251,191,36,0.25); stroke-width: 1; stroke-dasharray: 2 3; }
+
+  /* === GLYPH · Extorsión (ondas concéntricas de llamada) === */
+  .glyph-waves .ring { fill: none; stroke-width: 1.5; }
+  .glyph-waves .r1 { stroke: rgba(251,191,36,0.85); }
+  .glyph-waves .r2 { stroke: rgba(251,191,36,0.5); }
+  .glyph-waves .r3 { stroke: rgba(248,81,73,0.4); }
+  .glyph-waves .r4 { stroke: rgba(248,81,73,0.25); }
+  .glyph-waves .core { fill: #fbbf24; filter: drop-shadow(0 0 4px #fbbf24); }
+  .glyph-waves .sign { fill: #0d1117; font-family: 'Fraunces', serif; font-weight: 900; font-size: 18px; }
+
+  /* === GLYPH · Homicidio (electrocardiograma que se detiene) === */
+  .glyph-ekg .grid { stroke: rgba(48,54,61,0.6); stroke-width: 0.5; fill: none; }
+  .glyph-ekg .line {
+    fill: none;
+    stroke: url(#ekgGrad);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 4px rgba(248,81,73,0.6));
+  }
+  .glyph-ekg .flatline { stroke: rgba(139,148,158,0.5); stroke-width: 1; stroke-dasharray: 3 3; }
+  .glyph-ekg .end-dot { fill: #f85149; filter: drop-shadow(0 0 5px #f85149); }
+
+  /* === GLYPH · RNPDNO (siluetas con redaccion) === */
+  .glyph-redact .fig { fill: rgba(139,148,158,0.55); }
+  .glyph-redact .fig.hidden { fill: rgba(48,54,61,0.3); }
+  .glyph-redact .bar { fill: #0d1117; stroke: #f85149; stroke-width: 0.8; }
+  .glyph-redact .question { fill: #f85149; font-family: 'Fraunces', serif; font-weight: 900; font-size: 10px; }
   #sHero .hero-actions {
     display: flex;
     gap: 14px;
@@ -4320,22 +4378,100 @@
     Este análisis parte de fuentes oficiales — SESNSP, INEGI, RNPDNO, CONAPO — y triangula cifras con series decenales. Cinco hallazgos sostienen la argumentación completa.
   </p>
   <div class="hero-kpis">
-    <a href="#sP" class="hero-kpi reveal" data-count-target="90.09" data-count-suffix="%">
+    <!-- KPI 1 · PERCEPCIÓN · símbolo: ojo/iris con 90% de llenado -->
+    <a href="#sP" class="hero-kpi reveal" aria-label="Percepción de inseguridad 90.09 por ciento · Morelos número uno nacional">
+      <svg class="glyph glyph-eye" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <linearGradient id="eyeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fbbf24"/>
+            <stop offset="100%" stop-color="#f85149"/>
+          </linearGradient>
+          <clipPath id="eyeClip"><ellipse cx="50" cy="50" rx="42" ry="28"/></clipPath>
+        </defs>
+        <!-- Forma de ojo -->
+        <ellipse class="iris-bg" cx="50" cy="50" rx="42" ry="28"/>
+        <!-- Iris circular -->
+        <g clip-path="url(#eyeClip)">
+          <circle class="iris-fill" cx="50" cy="50" r="22"/>
+        </g>
+        <!-- Pupila -->
+        <circle class="pupil" cx="50" cy="50" r="8"/>
+        <circle class="pupil-dot" cx="47" cy="47" r="2"/>
+        <!-- Anillos de observación -->
+        <circle class="gaze-ring" cx="50" cy="50" r="32"/>
+        <circle class="gaze-ring" cx="50" cy="50" r="40"/>
+      </svg>
       <div class="k">ENVIPE 2025 · Percepción</div>
       <div class="v counting" data-target="90.09" data-suffix="%">90.09%</div>
       <div class="t">Morelos <strong>#1 nacional</strong> en percepción de inseguridad</div>
     </a>
-    <a href="#sE" class="hero-kpi reveal">
+
+    <!-- KPI 2 · EXTORSIÓN · símbolo: ondas concéntricas con signo $ -->
+    <a href="#sE" class="hero-kpi reveal" aria-label="259 extorsiones en Cuautla · número uno nacional en tasa per cápita">
+      <svg class="glyph glyph-waves" viewBox="0 0 100 100" aria-hidden="true">
+        <!-- Ondas concéntricas (4 capas) -->
+        <circle class="ring r4" cx="50" cy="50" r="44"/>
+        <circle class="ring r3" cx="50" cy="50" r="34"/>
+        <circle class="ring r2" cx="50" cy="50" r="24"/>
+        <circle class="ring r1" cx="50" cy="50" r="14"/>
+        <!-- Core con símbolo $ -->
+        <circle class="core" cx="50" cy="50" r="10"/>
+        <text class="sign" x="50" y="56" text-anchor="middle">$</text>
+      </svg>
       <div class="k">SESNSP 2025 · Cuautla</div>
       <div class="v counting" data-target="259">259</div>
       <div class="t">Cuautla <strong>#1 nacional</strong> en tasa de extorsión per cápita</div>
     </a>
-    <a href="#sH" class="hero-kpi reveal">
+
+    <!-- KPI 3 · HOMICIDIO · símbolo: electrocardiograma con flatline -->
+    <a href="#sH" class="hero-kpi reveal" aria-label="1385 homicidios en Morelos · uno cada 6.3 horas">
+      <svg class="glyph glyph-ekg" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <linearGradient id="ekgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#fbbf24"/>
+            <stop offset="60%" stop-color="#f85149"/>
+            <stop offset="100%" stop-color="#f85149"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid sutil -->
+        <path class="grid" d="M0 30 H100 M0 50 H100 M0 70 H100 M20 15 V85 M50 15 V85 M80 15 V85"/>
+        <!-- EKG con dos latidos y flatline al final -->
+        <path class="line" d="M5 50 L15 50 L20 50 L24 40 L28 60 L32 30 L36 70 L40 50 L50 50 L54 40 L58 60 L62 30 L66 70 L70 50 L78 50"/>
+        <path class="flatline" d="M78 50 L95 50"/>
+        <!-- Punto final (el último latido antes del silencio) -->
+        <circle class="end-dot" cx="78" cy="50" r="2.5"/>
+      </svg>
       <div class="k">SESNSP 2025 · Estatal</div>
       <div class="v counting" data-target="1385" data-comma="true">1,385</div>
       <div class="t">homicidios en Morelos · <strong>uno cada 6.3 hrs</strong></div>
     </a>
-    <a href="#sI" class="hero-kpi reveal" data-count-target="40.7" data-count-suffix="%">
+
+    <!-- KPI 4 · RNPDNO · símbolo: siluetas humanas con redacción -->
+    <a href="#sI" class="hero-kpi reveal" aria-label="40.7 por ciento de desapariciones en Morelos oculta el municipio">
+      <svg class="glyph glyph-redact" viewBox="0 0 100 100" aria-hidden="true">
+        <!-- 5 figuras humanas abstractas (2 redactadas = 40%) -->
+        <g transform="translate(5,30)">
+          <!-- Figura 1 · visible -->
+          <circle class="fig" cx="8" cy="6" r="5"/>
+          <path class="fig" d="M2 30 Q2 13 8 13 Q14 13 14 30 Z"/>
+          <!-- Figura 2 · REDACTADA -->
+          <circle class="fig hidden" cx="26" cy="6" r="5"/>
+          <path class="fig hidden" d="M20 30 Q20 13 26 13 Q32 13 32 30 Z"/>
+          <rect class="bar" x="17" y="3" width="18" height="7" rx="1"/>
+          <text class="question" x="26" y="9" text-anchor="middle">?</text>
+          <!-- Figura 3 · visible -->
+          <circle class="fig" cx="44" cy="6" r="5"/>
+          <path class="fig" d="M38 30 Q38 13 44 13 Q50 13 50 30 Z"/>
+          <!-- Figura 4 · REDACTADA -->
+          <circle class="fig hidden" cx="62" cy="6" r="5"/>
+          <path class="fig hidden" d="M56 30 Q56 13 62 13 Q68 13 68 30 Z"/>
+          <rect class="bar" x="53" y="3" width="18" height="7" rx="1"/>
+          <text class="question" x="62" y="9" text-anchor="middle">?</text>
+          <!-- Figura 5 · visible -->
+          <circle class="fig" cx="80" cy="6" r="5"/>
+          <path class="fig" d="M74 30 Q74 13 80 13 Q86 13 86 30 Z"/>
+        </g>
+      </svg>
       <div class="k">RNPDNO · CNB · Morelos</div>
       <div class="v counting" data-target="40.7" data-suffix="%">40.7%</div>
       <div class="t">de las desapariciones <strong>oculta el municipio</strong> (832 de 2,042)</div>
