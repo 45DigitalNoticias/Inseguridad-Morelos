@@ -112,9 +112,9 @@
   }
   #sHero .hero-kpis {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-    max-width: 1200px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    max-width: 1400px;
   }
   .hero-kpi {
     padding: 24px 22px 22px;
@@ -219,6 +219,22 @@
   .glyph-redact .fig.hidden { fill: rgba(48,54,61,0.3); }
   .glyph-redact .bar { fill: #0d1117; stroke: #f85149; stroke-width: 0.8; }
   .glyph-redact .question { fill: #f85149; font-family: 'Fraunces', serif; font-weight: 900; font-size: 10px; }
+
+  /* === GLYPH · Reclasificación (dos flechas cruzadas) === */
+  .glyph-switch .arrow-down { stroke: #6e7681; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .glyph-switch .arrow-up { stroke: #f85149; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 4px rgba(248,81,73,0.5)); }
+  .glyph-switch .eq-line { stroke: rgba(251,191,36,0.55); stroke-width: 1; stroke-dasharray: 3 2; }
+  .glyph-switch .lbl-dol { fill: #6e7681; font-family: 'Inter', sans-serif; font-size: 8.5px; font-weight: 900; letter-spacing: 1px; }
+  .glyph-switch .lbl-cul { fill: #f85149; font-family: 'Inter', sans-serif; font-size: 8.5px; font-weight: 900; letter-spacing: 1px; }
+
+  /* El valor del KPI 5 es más corto (porcentaje) pero tiene 2 cifras — ajusta el tamaño para balance */
+  .hero-kpi.kpi-dual .v { font-size: clamp(36px, 3.8vw, 52px); letter-spacing: -1.8px; }
+  .hero-kpi.kpi-dual .v .sep { color: #8b949e; font-weight: 700; margin: 0 4px; font-size: 0.7em; vertical-align: middle; }
+  .hero-kpi.kpi-dual .v .down { color: #6e7681; -webkit-background-clip: unset; background-clip: unset; background: none; }
+  .hero-kpi.kpi-dual .v .up {
+    background: linear-gradient(180deg, #fbbf24 0%, #f85149 85%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
   #sHero .hero-actions {
     display: flex;
     gap: 14px;
@@ -324,7 +340,10 @@
   }
   .share-strip .copy-ok.show { opacity: 1; }
 
-  /* Responsive del hero */
+  /* Responsive del hero · 5 tarjetas → 3 → 2 → 1 */
+  @media (max-width: 1400px) {
+    #sHero .hero-kpis { grid-template-columns: repeat(3, 1fr); }
+  }
   @media (max-width: 1200px) {
     #sHero { padding: 70px 40px 50px 100px; }
   }
@@ -336,13 +355,15 @@
     #sHero h1 { font-size: 44px; letter-spacing: -1.5px; }
     #sHero .hero-lead { font-size: 17px; }
     #sHero .hero-kpis { gap: 12px; }
-    .hero-kpi { padding: 20px 18px; }
+    .hero-kpi { padding: 20px 18px; min-height: 240px; }
     .hero-kpi .v { font-size: 38px; }
+    .hero-kpi.kpi-dual .v { font-size: 30px; }
+    .hero-kpi .glyph { width: 72px; height: 72px; }
     .hero-cta { padding: 12px 20px; font-size: 12.5px; }
     .share-strip { flex-wrap: wrap; padding: 10px 14px; }
   }
   @media (max-width: 480px) {
-    #sHero .hero-kpis { grid-template-columns: 1fr 1fr; }
+    #sHero .hero-kpis { grid-template-columns: 1fr; }
   }
   body {
     font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -4475,6 +4496,25 @@
       <div class="k">RNPDNO · CNB · Morelos</div>
       <div class="v counting" data-target="40.7" data-suffix="%">40.7%</div>
       <div class="t">de las desapariciones <strong>oculta el municipio</strong> (832 de 2,042)</div>
+    </a>
+
+    <!-- KPI 5 · RECLASIFICACIÓN · símbolo: flechas contrapuestas (doloso↓ · culposo↑) -->
+    <a href="#sC1" class="hero-kpi kpi-dual reveal" aria-label="Cuernavaca · homicidio doloso baja 42 por ciento · culposo sube 68 por ciento · reclasificación">
+      <svg class="glyph glyph-switch" viewBox="0 0 100 100" aria-hidden="true">
+        <!-- Flecha abajo · DOL (tenue) -->
+        <text class="lbl-dol" x="25" y="13" text-anchor="middle">DOL</text>
+        <path class="arrow-down" d="M25 18 L25 72 M18 62 L25 72 L32 62"/>
+        <!-- Línea central discontinua · "resultado neto igual" -->
+        <line class="eq-line" x1="10" y1="50" x2="90" y2="50"/>
+        <!-- Flecha arriba · CUL (prominente) -->
+        <path class="arrow-up" d="M75 82 L75 28 M68 38 L75 28 L82 38"/>
+        <text class="lbl-cul" x="75" y="93" text-anchor="middle">CUL</text>
+      </svg>
+      <div class="k">SESNSP 2024→25 · Cuernavaca</div>
+      <div class="v">
+        <span class="down">−42%</span><span class="sep">/</span><span class="up">+68%</span>
+      </div>
+      <div class="t">Homicidio <strong>doloso cae</strong>, culposo sube. Mismos muertos, otra etiqueta.</div>
     </a>
   </div>
   <div class="hero-actions">
