@@ -8052,12 +8052,12 @@
           <td><span class="hash">SHA-256: 8da25ae6…988038</span></td>
         </tr>
         <tr>
-          <td><strong>ENVIPE — Encuesta Nacional de Victimización y Percepción</strong></td>
-          <td>INEGI</td>
-          <td>PDF + microdatos</td>
-          <td>Año 2024</td>
-          <td>Abr 2026</td>
-          <td>Cifra negra nacional ≈93%</td>
+          <td><strong>ENVIPE — Encuesta Nacional de Victimización y Percepción sobre Seguridad Pública</strong></td>
+          <td>Instituto Nacional de Estadística y Geografía (INEGI)</td>
+          <td>Tabulados XLSX estatales (cuadros I, III, IV, V, VI) · PDF de metodología</td>
+          <td>15 ediciones<br>2011 a 2025</td>
+          <td>22-abr-2026</td>
+          <td>75 tabulados · 208 MB · manifest SHA-256</td>
         </tr>
         <tr>
           <td><strong>Proyecciones poblacionales</strong></td>
@@ -8089,7 +8089,7 @@
     <ul>
       <li><strong>SESNSP — corte diciembre 2025.</strong> Publicación oficial en febrero 2026. Serie de 10 años (2016-2025) completa. Próxima actualización mensual.</li>
       <li><strong>RNPDNO — corte 29-noviembre-2025.</strong> Incluye registros hasta esa fecha. Actualización semanal-mensual. Dataset descargado el 19-abr-2026 desde el repo público; hash conservado para integridad.</li>
-      <li><strong>ENVIPE — año 2024.</strong> Encuesta anual; la de 2025 se publica normalmente en septiembre siguiente.</li>
+      <li><strong>ENVIPE — ediciones 2011 a 2025 (15 años continuos).</strong> Encuesta anual levantada en marzo-abril y publicada en septiembre del mismo año; la 2025 es la más reciente disponible. Usada para la cifra negra (93% nacional) y como fuente primaria del panel de percepción estatal. Edición 2020 con muestra reducida por COVID-19 — porcentajes válidos, población base no comparable con otras ediciones. Actualización automatizada con <code>bash scripts/update_envipe.sh</code>.</li>
       <li><strong>CONAPO — proyecciones 2025.</strong> Basadas en el Censo 2020 del INEGI; las proyecciones se actualizan periódicamente.</li>
       <li><strong>CONABIO — geometría 2023.</strong> Los límites municipales son estables; solo cambian si hay reformas constitucionales locales (Morelos tuvo alta de Coatetelco, Xoxocotla y Hueyapan como municipios nuevos en 2018-2020 — ya reflejado).</li>
     </ul>
@@ -8107,6 +8107,10 @@
     <p>El homicidio deja cuerpo (visible). La desaparición no (silenciosa). Cuando el primero baja y la segunda sube, suele ser <strong>reclasificación</strong>: el crimen no disminuyó, cambió de forma. Sin este cruce, los discursos de "se redujo la violencia" son incompletos.</p>
     <h4>¿Por qué cohorte poblacional, no solo promedio estatal?</h4>
     <p>Comparar Cuautla con Morelos entero es diluir. Compararla con Cuernavaca (capital, más poblada), Jiutepec, Yautepec o Temixco (similares en tamaño) muestra las anomalías reales.</p>
+    <h4>¿Por qué cruzar percepción (ENVIPE) vs incidencia oficial (SESNSP)?</h4>
+    <p>La incidencia oficial mide <em>lo que se denunció</em>; la percepción mide <em>lo que se vive</em>. Ambas capturan dimensiones distintas de la inseguridad y pueden moverse en direcciones opuestas. En Morelos 2024-2025 el homicidio oficial baja 13.3% pero la percepción de inseguridad se mantiene en 90% (pico histórico). Ese desfase no indica error — indica que <strong>la narrativa oficial de mejora no coincide con la experiencia ciudadana</strong>. Publicar solo una de las dos series distorsiona.</p>
+    <h4>¿Por qué el dato estatal (ENVIPE) y no trimestral urbano (ENSU)?</h4>
+    <p>La ENVIPE entrega serie histórica continua 2011-2025 con desagregación estatal comparable. La ENSU mide ciudades específicas (Cuernavaca, Cuautla) con corte trimestral — útil para coyuntura, no para tendencia decenal. Para el juicio político se requiere la serie larga: la ENVIPE es la métrica correcta.</p>
   </div>
 
   <!-- M.4 — Limitaciones conocidas -->
@@ -8121,6 +8125,8 @@
       <li><strong>Alza en denuncia ≠ alza en incidencia.</strong> Puede reflejar mayor reportabilidad. Por eso se triangula con ENVIPE y observatorios.</li>
       <li><strong>Baja en denuncia ≠ mejora.</strong> En extorsión y secuestro puede indicar cooptación criminal (la víctima no denuncia por miedo).</li>
       <li><strong>Proyecciones poblacionales.</strong> El Censo 2020 es la base; las proyecciones 2025 de CONAPO son estimaciones.</li>
+      <li><strong>ENVIPE 2020 — muestra reducida por COVID-19.</strong> El levantamiento de ese año se acortó por pandemia. Los porcentajes publicados son válidos bajo el diseño muestral ajustado, pero la población base (columna "Población de 18+") no es comparable con otras ediciones. En la serie histórica mostrada, el punto 2020 se lee con esta advertencia.</li>
+      <li><strong>Percepción ≠ victimización.</strong> El 90% de percepción de inseguridad en Morelos no significa que 90% haya sido víctima. Mide lo que la población <em>considera</em>, no lo que le <em>ocurrió</em>. Para victimización directa, ENVIPE reporta la prevalencia (casos por 100K hab) en el cuadro I, distinto del de percepción (cuadro V).</li>
     </ul>
   </div>
 
@@ -8158,10 +8164,14 @@
         <dd>Base pública coordinada por la <strong>CNB</strong>. Registra personas desaparecidas desde 1964 a la fecha. Variables públicas limitadas (11 de 476 disponibles internas).</dd></div>
       <div class="glo-item"><dt>CNB <span class="acronym">(Comisión Nacional de Búsqueda)</span></dt>
         <dd>Órgano federal que administra el RNPDNO. Puede clasificar registros como confidenciales por protección de la víctima.</dd></div>
-      <div class="glo-item"><dt>INEGI · ENVIPE</dt>
-        <dd>Encuesta Nacional de Victimización y Percepción sobre Seguridad Pública. Mide la <em>cifra negra</em> y la percepción ciudadana. Fuente para triangular denuncias SESNSP.</dd></div>
-      <div class="glo-item"><dt>CONAPO</dt>
-        <dd>Consejo Nacional de Población. Proyecciones poblacionales usadas para calcular tasas por 100K habitantes.</dd></div>
+      <div class="glo-item"><dt>INEGI <span class="acronym">(Instituto Nacional de Estadística y Geografía)</span></dt>
+        <dd>Organismo autónomo del Estado mexicano responsable de producir información oficial de la República. Publica censos, encuestas nacionales (entre ellas la ENVIPE y la ENSU) y administra el Sistema Nacional de Información Estadística y Geográfica (SNIEG). Fuente primaria para cualquier análisis estadístico con respaldo institucional.</dd></div>
+      <div class="glo-item"><dt>ENVIPE <span class="acronym">(Encuesta Nacional de Victimización y Percepción sobre Seguridad Pública)</span></dt>
+        <dd>Encuesta anual del INEGI, levantada entre marzo y abril y publicada en septiembre. Mide <em>victimización</em> (delitos sufridos), <em>cifra negra</em> (estima 93% no denunciados), <em>percepción de inseguridad</em> por entidad, <em>desempeño institucional</em> (confianza en autoridades) y <em>cambios en hábitos</em>. En este dashboard se usa con serie completa <strong>2011-2025 (15 ediciones)</strong> para el panel de percepción estatal y para cruzar con la incidencia oficial del SESNSP.</dd></div>
+      <div class="glo-item"><dt>ENSU <span class="acronym">(Encuesta Nacional de Seguridad Pública Urbana)</span></dt>
+        <dd>Encuesta trimestral del INEGI que mide percepción de inseguridad en ciudades de más de 100 mil habitantes (Cuernavaca y Cuautla están incluidas). Útil para coyuntura trimestral — en este dashboard se usa la ENVIPE porque permite serie anual desde 2011.</dd></div>
+      <div class="glo-item"><dt>CONAPO <span class="acronym">(Consejo Nacional de Población)</span></dt>
+        <dd>Organismo federal que produce las proyecciones poblacionales oficiales de México. Sus cifras 2025 (basadas en el Censo INEGI 2020) se usan para calcular tasas por 100K habitantes y el denominador de la percepción estatal.</dd></div>
       <div class="glo-item"><dt>CONABIO</dt>
         <dd>Fuente de la geometría oficial de los municipios (GeoJSON usado en el mapa del hub).</dd></div>
       <div class="glo-item"><dt>INAI</dt>
@@ -8217,6 +8227,12 @@
         <dd>Por persona. Sinónimo operativo de "tasa por habitante". Usamos tasa por 100K porque los números son más legibles que fracciones.</dd></div>
       <div class="glo-item"><dt>Cifra negra</dt>
         <dd>Porcentaje de delitos que <em>no se denuncian</em>. La ENVIPE 2024 la estima en ≈93% a nivel nacional. Significa que lo que muestra SESNSP es la <em>punta del iceberg</em>.</dd></div>
+      <div class="glo-item"><dt>Percepción de inseguridad</dt>
+        <dd>Porcentaje de población de 18 años y más que responde afirmativamente a la pregunta de la ENVIPE: <em>"¿considera que vivir en su entidad federativa es inseguro?"</em>. Es una medida subjetiva: capta el temor, no la victimización directa. Morelos ocupa el <strong>primer lugar nacional</strong> en este indicador en 2025 (90.09%) y se mantiene arriba del promedio nacional todos los años de la serie 2011-2025.</dd></div>
+      <div class="glo-item"><dt>Percepción vs victimización</dt>
+        <dd>Dos mediciones distintas dentro de la misma ENVIPE: la <em>victimización</em> cuenta cuántas personas sufrieron un delito en el año; la <em>percepción</em> cuenta cuántas consideran que vivir ahí es inseguro, hayan sido víctimas o no. Suelen correlacionar pero pueden divergir (un estado con baja victimización puede tener alta percepción por efecto de cobertura mediática o trauma colectivo).</dd></div>
+      <div class="glo-item"><dt>Punto porcentual (pp)</dt>
+        <dd>Diferencia aritmética entre dos porcentajes. Si Morelos está en 90% y el nacional en 75.6%, la brecha es <strong>14.4 pp</strong>, no 14.4%. Se usa para distinguir cambio absoluto (pp) de cambio relativo (%).</dd></div>
       <div class="glo-item"><dt>Reclasificación</dt>
         <dd>Cuando un tipo de violencia <em>se convierte</em> en otro en las estadísticas (homicidios que no aparecen porque las víctimas fueron <em>desaparecidas</em>, etc.). El crimen no bajó — cambió de nombre.</dd></div>
       <div class="glo-item"><dt>Promedio vs mediana</dt>
