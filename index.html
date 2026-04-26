@@ -5698,16 +5698,36 @@
         <h2 style="font-size:24px;font-weight:800;color:#ff7b72;margin:0;letter-spacing:-0.3px;">ZM Cuernavaca</h2>
         <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#8b949e;letter-spacing:1.5px;">8 MUNICIPIOS</span>
       </div>
-      <p style="color:#c9d1d9;font-size:14.5px;margin-bottom:16px;line-height:1.5;">El corazón conurbado del estado. Concentra la mitad del homicidio doloso pero menos del 14% de la extorsión.</p>
-      <ul style="color:#c9d1d9;font-size:13.5px;line-height:1.65;padding-left:18px;margin:0;">
-        <li><strong style="color:#ff7b72;">54% de la población</strong> del estado, <strong>58.6%</strong> de las carpetas SESNSP.</li>
-        <li><strong>50.8% del homicidio doloso</strong> estatal · 506 de 997 casos.</li>
-        <li><strong>Sobreproporción 1.28× en robo de vehículo</strong> — firma del corredor.</li>
-        <li><strong>Infraproporción 0.25× en extorsión</strong> — el delito vive en el oriente, no aquí.</li>
-        <li><strong>63.5% de la violencia familiar</strong> · 3,686 carpetas (la denuncia se concentra donde hay más MP).</li>
-        <li><strong>Narcomenudeo 2024 → 2025: +78%</strong> — el rebrote es estructural, no aislado.</li>
-        <li>Caso atípico: <strong>Huitzilac</strong> (20K hab) lidera tasa de robo vehículo del estado por el peaje del Ajusco.</li>
-      </ul>
+      <p style="color:#c9d1d9;font-size:14.5px;margin-bottom:16px;line-height:1.5;">El corazón conurbado del estado. Concentra la mitad del homicidio doloso pero menos del 14% de la extorsión. Con 54% de la población, su firma criminal es <strong>patrimonial</strong>: sobreproporción en robo de vehículo y violencia familiar, infraproporción extrema en extorsión.</p>
+
+      <!-- Chart · diverging horizontal bar (sobre/infraproporción 2025) -->
+      <div style="position:relative;height:300px;margin:8px 0 14px;padding:12px 14px 8px;background:rgba(13,17,23,0.55);border:1px solid rgba(48,54,61,0.7);border-radius:10px;">
+        <canvas id="chartZmCuerSobreprop"></canvas>
+      </div>
+      <div style="font-size:10.5px;color:#8b949e;font-family:'JetBrains Mono',monospace;letter-spacing:0.5px;margin-bottom:14px;text-align:center;">
+        BARRA = ratio sobreproporción · LÍNEA EN 1.00 = peso poblacional ZM (54%)
+      </div>
+
+      <!-- Outliers municipales · badges -->
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(255,123,114,0.10);border:1px solid rgba(255,123,114,0.45);border-radius:999px;font-size:11.5px;color:#c9d1d9;">
+          <strong style="color:#ff7b72;">Huitzilac</strong>
+          <span style="font-family:'JetBrains Mono',monospace;color:#8b949e;">robo veh. 5.68×</span>
+        </span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(63,185,80,0.10);border:1px solid rgba(63,185,80,0.40);border-radius:999px;font-size:11.5px;color:#c9d1d9;">
+          <strong style="color:#3fb950;">Cuernavaca</strong>
+          <span style="font-family:'JetBrains Mono',monospace;color:#8b949e;">feminicidio −62.5% AxA</span>
+        </span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(255,123,114,0.10);border:1px solid rgba(255,123,114,0.45);border-radius:999px;font-size:11.5px;color:#c9d1d9;">
+          <strong style="color:#ff7b72;">Tlaltizapán</strong>
+          <span style="font-family:'JetBrains Mono',monospace;color:#8b949e;">narco +350% AxA</span>
+        </span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(255,123,114,0.10);border:1px solid rgba(255,123,114,0.45);border-radius:999px;font-size:11.5px;color:#c9d1d9;">
+          <strong style="color:#ff7b72;">E. Zapata</strong>
+          <span style="font-family:'JetBrains Mono',monospace;color:#8b949e;">extorsión +200% AxA</span>
+        </span>
+      </div>
+
       <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(48,54,61,0.6);font-size:12px;color:#8b949e;line-height:1.5;">
         <strong style="color:#ff7b72;">Pregunta editorial 2026:</strong> ¿el narcomenudeo distribuido en la ZM consolida un nuevo polo o vuelve a centralizarse en Cuernavaca?
       </div>
@@ -5719,16 +5739,36 @@
         <h2 style="font-size:24px;font-weight:800;color:#fbbf24;margin:0;letter-spacing:-0.3px;">ZM Cuautla</h2>
         <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#8b949e;letter-spacing:1.5px;">6 MUNICIPIOS</span>
       </div>
-      <p style="color:#c9d1d9;font-size:14.5px;margin-bottom:16px;line-height:1.5;">Polo del oriente del estado. La capital de la extorsión y del rebrote del narcomenudeo. Población mucho menor pero firma criminal específica.</p>
-      <ul style="color:#c9d1d9;font-size:13.5px;line-height:1.65;padding-left:18px;margin:0;">
-        <li><strong style="color:#fbbf24;">25% de la población</strong> del estado, <strong>27%</strong> de las carpetas SESNSP.</li>
-        <li><strong>80% de la extorsión estatal</strong> · 335 de 419 casos. Cuautla concentra 259 (62% nacional en absoluto).</li>
-        <li><strong>35.5% del narcomenudeo</strong> estatal · 375 de 1,058 carpetas — sobreproporción 1.42×.</li>
-        <li><strong>Tlayacapan: feminicidio sobreproporción 6.55×</strong> — la más alta del estado.</li>
-        <li><strong>Yecapixtla: extorsión sobreproporción 1.93×</strong> — segunda más alta del estado.</li>
-        <li><strong>Atlatlahucan: caída de homicidio del 73%</strong> — la más grande del año en cualquier municipio.</li>
-        <li><strong>Yautepec entra al top 4 estatal en narcomenudeo</strong> con +224% año a año.</li>
-      </ul>
+      <p style="color:#c9d1d9;font-size:14.5px;margin-bottom:16px;line-height:1.5;">Polo del oriente del estado. Con 25% de la población, aporta cuotas grotescamente desproporcionadas en delitos específicos. Es la <strong>capital de la extorsión</strong> (80% estatal) y del rebrote del narcomenudeo. La forma del polígono lo dice: spike masivo, polígono asimétrico.</p>
+
+      <!-- Chart · radar (% estatal aportado por la ZM Cuautla) -->
+      <div style="position:relative;height:320px;margin:8px 0 14px;padding:12px 14px 8px;background:rgba(13,17,23,0.55);border:1px solid rgba(48,54,61,0.7);border-radius:10px;">
+        <canvas id="chartZmCuaPolygon"></canvas>
+      </div>
+      <div style="font-size:10.5px;color:#8b949e;font-family:'JetBrains Mono',monospace;letter-spacing:0.5px;margin-bottom:14px;text-align:center;">
+        EJES = % estatal aportado por la ZM · CÍRCULO PUNTEADO = peso poblacional (25%)
+      </div>
+
+      <!-- Outliers municipales · badges -->
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(251,191,36,0.10);border:1px solid rgba(251,191,36,0.45);border-radius:999px;font-size:11.5px;color:#c9d1d9;">
+          <strong style="color:#fbbf24;">Tlayacapan</strong>
+          <span style="font-family:'JetBrains Mono',monospace;color:#8b949e;">feminicidio 6.59×</span>
+        </span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(251,191,36,0.10);border:1px solid rgba(251,191,36,0.45);border-radius:999px;font-size:11.5px;color:#c9d1d9;">
+          <strong style="color:#fbbf24;">Cuautla</strong>
+          <span style="font-family:'JetBrains Mono',monospace;color:#8b949e;">extorsión 6.49×</span>
+        </span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(251,191,36,0.10);border:1px solid rgba(251,191,36,0.45);border-radius:999px;font-size:11.5px;color:#c9d1d9;">
+          <strong style="color:#fbbf24;">Yautepec</strong>
+          <span style="font-family:'JetBrains Mono',monospace;color:#8b949e;">narco +224% AxA</span>
+        </span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(63,185,80,0.10);border:1px solid rgba(63,185,80,0.40);border-radius:999px;font-size:11.5px;color:#c9d1d9;">
+          <strong style="color:#3fb950;">Atlatlahucan</strong>
+          <span style="font-family:'JetBrains Mono',monospace;color:#8b949e;">homicidio −73% AxA</span>
+        </span>
+      </div>
+
       <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(48,54,61,0.6);font-size:12px;color:#8b949e;line-height:1.5;">
         <strong style="color:#fbbf24;">Pregunta editorial 2026:</strong> ¿la extorsión sigue concentrada en Cuautla o se replica al corredor metropolitano del centro?
       </div>
@@ -5786,9 +5826,184 @@
   </div>
 
   <div class="footer-note" style="margin-top:24px;">
-    <strong>Fuentes y método.</strong> Agregados calculados desde SESNSP corte dic-2025 — los 36 municipios del estado clasificados en 4 zonas. Definición ZM oficial SEDATU-CONAPO 2020 (con la salvedad de incluir Huitzilac en ZM Cuernavaca por contigüidad y patrón de violencia). Las regiones Sur-Poniente y Oriente son agregados geográficos no oficiales — facilitan lectura pero no equivalen a divisiones administrativas. Población CONAPO 2025.
+    <strong>Fuentes y método.</strong> Agregados calculados desde SESNSP corte dic-2025 — los 36 municipios del estado clasificados en 4 zonas. Definición ZM oficial SEDATU-CONAPO 2020 (con la salvedad de incluir Huitzilac en ZM Cuernavaca por contigüidad y patrón de violencia). Las regiones Sur-Poniente y Oriente son agregados geográficos no oficiales — facilitan lectura pero no equivalen a divisiones administrativas. Población CONAPO 2025. Datos derivados regenerables con `scripts/build_zm_aggregates.js` → `scripts/zm_aggregates.json`.
   </div>
 </section>
+
+<script>
+(function(){
+  // === ZM Cuernavaca · diverging horizontal bar ===
+  // Cada categoría: ratio sobreproporción 2025 = (% estatal del delito) / (% población esperada 53.98%)
+  // Bar > 1.00 → sobreproporción (rojo) · Bar < 1.00 → infraproporción (azul)
+  const initCuer = () => {
+    const cvs = document.getElementById('chartZmCuerSobreprop');
+    if (!cvs || !window.Chart) return;
+    const cats = [
+      { label: 'Robo vehículo',      ratio: 1.28 },
+      { label: 'Violencia familiar', ratio: 1.18 },
+      { label: 'Homicidio doloso',   ratio: 0.94 },
+      { label: 'Feminicidio',        ratio: 0.74 },
+      { label: 'Narcomenudeo',       ratio: 0.64 },
+      { label: 'Extorsión',          ratio: 0.25 }
+    ];
+    new Chart(cvs.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: cats.map(c => c.label),
+        datasets: [{
+          label: 'Ratio vs peso poblacional',
+          data: cats.map(c => c.ratio - 1),
+          backgroundColor: cats.map(c => c.ratio >= 1 ? 'rgba(255,123,114,0.78)' : 'rgba(88,166,255,0.55)'),
+          borderColor: cats.map(c => c.ratio >= 1 ? '#ff7b72' : '#58a6ff'),
+          borderWidth: 1.5,
+          borderRadius: 4
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            min: -0.85, max: 0.45,
+            ticks: {
+              color: '#8b949e',
+              font: { family: "'JetBrains Mono', monospace", size: 10 },
+              callback: (v) => (1 + v).toFixed(2) + '×'
+            },
+            grid: {
+              color: (ctx) => ctx.tick.value === 0 ? 'rgba(201,209,217,0.65)' : 'rgba(48,54,61,0.4)',
+              lineWidth: (ctx) => ctx.tick.value === 0 ? 1.5 : 1
+            }
+          },
+          y: {
+            ticks: { color: '#c9d1d9', font: { size: 11.5, weight: '600' } },
+            grid: { display: false }
+          }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#0d1117', borderColor: '#30363d', borderWidth: 1,
+            titleColor: '#e6edf3', bodyColor: '#c9d1d9', padding: 10,
+            callbacks: {
+              title: (items) => items[0].label,
+              label: (c) => {
+                const ratio = (1 + c.parsed.x);
+                const label = ratio >= 1 ? 'Sobreproporción' : 'Infraproporción';
+                return `${label}: ${ratio.toFixed(2)}×`;
+              }
+            }
+          }
+        }
+      },
+      plugins: [{
+        id: 'datalabel-ratio',
+        afterDatasetsDraw(chart) {
+          const { ctx } = chart;
+          const meta = chart.getDatasetMeta(0);
+          ctx.save();
+          ctx.font = "700 11px 'JetBrains Mono', monospace";
+          ctx.textBaseline = 'middle';
+          meta.data.forEach((bar, i) => {
+            const ratio = cats[i].ratio;
+            const isPos = ratio >= 1;
+            ctx.fillStyle = isPos ? '#ff7b72' : '#58a6ff';
+            ctx.textAlign = isPos ? 'left' : 'right';
+            const offset = isPos ? 6 : -6;
+            ctx.fillText(ratio.toFixed(2) + '×', bar.x + offset, bar.y);
+          });
+          ctx.restore();
+        }
+      }]
+    });
+  };
+
+  // === ZM Cuautla · radar polygon ===
+  // Cada eje: % estatal aportado por la ZM Cuautla en ese delito
+  // Círculo punteado a 25% = peso poblacional (lo que aportaría una zona "neutra")
+  const initCua = () => {
+    const cvs = document.getElementById('chartZmCuaPolygon');
+    if (!cvs || !window.Chart) return;
+    const labels = ['Extorsión','Narcomenudeo','Feminicidio','Homicidio doloso','Violencia familiar','Robo vehículo'];
+    const zmShare = [79.95, 35.44, 34.29, 25.08, 22.03, 21.66];
+    const popGuide = labels.map(() => 24.82);
+    new Chart(cvs.getContext('2d'), {
+      type: 'radar',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Peso poblacional (25%)',
+            data: popGuide,
+            borderColor: 'rgba(139,148,158,0.85)',
+            backgroundColor: 'rgba(139,148,158,0.05)',
+            borderWidth: 1.5,
+            borderDash: [4,4],
+            pointRadius: 0,
+            fill: false
+          },
+          {
+            label: '% estatal aportado',
+            data: zmShare,
+            borderColor: '#fbbf24',
+            backgroundColor: 'rgba(251,191,36,0.22)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#fbbf24',
+            pointBorderColor: '#0d1117',
+            pointBorderWidth: 1.5,
+            pointRadius: 4,
+            fill: true
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            min: 0, max: 85,
+            ticks: {
+              stepSize: 20,
+              color: '#6e7681',
+              font: { family: "'JetBrains Mono', monospace", size: 9 },
+              backdropColor: 'transparent',
+              callback: (v) => v + '%'
+            },
+            grid: { color: 'rgba(48,54,61,0.55)' },
+            angleLines: { color: 'rgba(48,54,61,0.55)' },
+            pointLabels: {
+              color: '#c9d1d9',
+              font: { size: 11, weight: '600' }
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              color: '#c9d1d9',
+              font: { size: 10.5 },
+              padding: 10,
+              usePointStyle: true,
+              pointStyle: 'circle',
+              boxWidth: 8
+            }
+          },
+          tooltip: {
+            backgroundColor: '#0d1117', borderColor: '#30363d', borderWidth: 1,
+            titleColor: '#e6edf3', bodyColor: '#c9d1d9', padding: 10,
+            callbacks: {
+              label: (c) => c.dataset.label + ': ' + c.parsed.r.toFixed(2) + '%'
+            }
+          }
+        }
+      }
+    });
+  };
+
+  const run = () => { initCuer(); initCua(); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
+})();
+</script>
 
 
 <!-- SECCIÓN 1 — PORTADA CUAUTLA -->
@@ -14721,6 +14936,10 @@
         <dd><strong>Promedio:</strong> suma dividida entre el número de casos. <strong>Mediana:</strong> el valor central. Cuando hay outliers (ej. Cuautla en extorsión), la mediana es más representativa.</dd></div>
       <div class="glo-item"><dt>Variación % (Δ)</dt>
         <dd>Cambio porcentual entre dos valores. Fórmula: (nuevo − viejo) / viejo × 100. En bases muy bajas, las variaciones grandes pueden ser ruido (ej. de 1 a 2 = +100%).</dd></div>
+      <div class="glo-item"><dt>AxA <span class="acronym">(Año por Año / variación interanual)</span></dt>
+        <dd>Variación porcentual entre el mismo periodo de dos años consecutivos. En este dashboard se usa para comparar 2024 vs 2025 — por ejemplo, "Yautepec narco +224% AxA (17→55)" significa que las carpetas de narcomenudeo crecieron 224% del cierre 2024 al cierre 2025. Se prefiere sobre comparaciones contra promedios largos porque captura el cambio reciente sin diluirlo en la serie histórica. Limitación: en bases bajas (1→3) el porcentaje se ve grande pero el cambio absoluto es marginal.</dd></div>
+      <div class="glo-item"><dt>Ratio sobreproporción (×)</dt>
+        <dd>Multiplicador que compara el peso de un municipio o zona en un delito específico contra su peso poblacional. Si la ZM Cuernavaca con 54% de la población aporta 69% del robo de vehículo, el ratio es 1.28× (sobreproporción); si aporta solo 14% de la extorsión, el ratio es 0.25× (infraproporción). Útil para identificar firmas criminales territoriales independientes del tamaño del municipio. Es la base de los charts de las tarjetas ZM en la sección "Resumen ejecutivo · zonas".</dd></div>
       <div class="glo-item"><dt>Línea base demográfica</dt>
         <dd>Porcentaje de población que un municipio representa del estado. Si los delitos se distribuyeran uniformemente, cada municipio debería concentrar su línea base. Sobrerrepresentación = rebasar la línea.</dd></div>
       <div class="glo-item"><dt>Ratio D/H</dt>
@@ -14747,7 +14966,9 @@
       <div class="glo-item"><dt>Sobreproporción · sobrerrepresentación (×)</dt>
         <dd>Un municipio está <em>sobrerepresentado</em> en un delito cuando aporta al estatal un porcentaje mayor a su peso demográfico. Se expresa como multiplicador: Huitzilac tiene 16.6× la tasa esperada en robo de vehículo; Tepoztlán tiene 1.48× en abuso sexual. La "línea base" es el peso demográfico del municipio.</dd></div>
       <div class="glo-item"><dt>Zona Metropolitana (ZM) de Cuernavaca</dt>
-        <dd>Conurbación de 7 municipios del centro-norte de Morelos: Cuernavaca, Jiutepec, Temixco, Emiliano Zapata, Huitzilac, Tepoztlán, Tlaltizapán y Xochitepec. Concentra ~60% de la población del estado. En el dashboard se agrupan en la navegación y se comparan entre sí por similitudes geográficas y de movilidad.</dd></div>
+        <dd>Conurbación de 8 municipios del centro-norte de Morelos: Cuernavaca, Jiutepec, Temixco, Emiliano Zapata, Xochitepec, Tepoztlán, Tlaltizapán y Huitzilac. Concentra ~54% de la población del estado (1.06 millones de hab. CONAPO 2025) y 58.6% de las carpetas SESNSP 2025. Definición SEDATU-CONAPO 2020 con la salvedad operativa de incluir Huitzilac por contigüidad y patrón de violencia. Su firma criminal es <strong>patrimonial</strong>: sobreproporción en robo de vehículo y violencia familiar, infraproporción extrema en extorsión (0.25×).</dd></div>
+      <div class="glo-item"><dt>Zona Metropolitana (ZM) de Cuautla</dt>
+        <dd>Conurbación de 6 municipios del oriente de Morelos: Cuautla, Yautepec, Ayala, Yecapixtla, Atlatlahucan y Tlayacapan. Concentra ~25% de la población del estado (487 mil hab. CONAPO 2025) y 27% de las carpetas SESNSP 2025. Definición SEDATU-CONAPO 2020. Su firma criminal es <strong>delincuencia organizada emergente</strong>: 80% estatal de extorsión (ratio 3.22×), 35% de narcomenudeo (1.43×), 34% de feminicidio (1.38×). Cuautla cabecera concentra 62% de la extorsión nacional en absoluto (259 carpetas 2025).</dd></div>
       <div class="glo-item"><dt>Corredor criminal</dt>
         <dd>Geografía con alto tránsito de actividad delictiva específica. El <em>corredor Cuernavaca–Jiutepec–E.Zapata–Cuautla</em> concentra robo de vehículo; el <em>corredor Cuautla–Yecapixtla–Ayala</em> concentra extorsión. Se identifica cuando municipios contiguos comparten sobreproporción en el mismo delito.</dd></div>
       <div class="glo-item"><dt>Pueblo Mágico</dt>
