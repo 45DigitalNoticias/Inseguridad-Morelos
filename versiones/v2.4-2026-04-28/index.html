@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- Archivo histórico · marcas de no-indexación -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://45digitalnoticias.github.io/Inseguridad-Morelos/">
+  <title>v2.4 · Archivo histórico · Inseguridad Morelos</title>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R64XZVCF6F"></script>
 <script>
@@ -13,8 +17,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="version" content="2.2-draft">
 <meta name="generated" content="2026-04-19">
-<meta name="changelog" content="v2.5: seccion sTep10 Q1 2026 La Respuesta - confrontacion editorial con datos al alcalde de Tepoztlan tras declaracion publica del 28-abr-2026. 5 charts especificos: comparativa Q1 25 vs Q1 26 los 36 delitos, lesiones doloso vs culposo, lesiones culposas mes a mes, violencia sexual emergente x4.5, narcomenudeo decenal 2016-2026. Botones de zoom in/out con scrollbars en modo expandido. v2.4: seccion Decada Nacional (sNAC1-5). v2.3: actualización SESNSP corte mar-2026 (Q1 2026 parcial). v2.2: charts ZM con sobreproporción + ZM Cuautla agregada (sZMC1-3). v2.1: hub interactivo de municipios Morelos al inicio, nueva seccion El detalle mensual, matriz homicidio x desaparicion, glosario, explicaciones en palabras simples. v2.0: seccion Desapariciones (RNPDNO), correcciones numericas, conclusion matizada.">
-<title>Morelos: Seguridad municipal — Hub de investigación (v2.5)</title>
+<meta name="changelog" content="v2.4: seccion Decada Nacional (sNAC1-5) - cohorte Morelos vs los 32 estados con metricas decenales 2015-2025. Espiral SVG, slope ladder, diverging bars Morelos vs nacional, cohorte 5 estados pares, heatmap nacional 32x11. v2.3: actualización SESNSP corte mar-2026 (Q1 2026 parcial). v2.2: charts ZM con sobreproporción + ZM Cuautla agregada (sZMC1-3). v2.1: hub interactivo de municipios Morelos al inicio, nueva seccion El detalle mensual, matriz homicidio x desaparicion, glosario, explicaciones en palabras simples. v2.0: seccion Desapariciones (RNPDNO), correcciones numericas, conclusion matizada.">
+
 <!-- Tipografía editorial -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -4486,6 +4490,56 @@
 </style>
 </head>
 <body>
+<!-- BANNER ARCHIVO HISTÓRICO -->
+<style>
+  .archive-banner {
+    position: sticky; top: 0; z-index: 99999;
+    background: rgba(88,166,255,0.10);
+    border-left: 4px solid #58a6ff;
+    border-bottom: 1px solid rgba(88,166,255,0.45);
+    padding: 12px 22px 12px 18px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #c9d1d9;
+    font-size: 13.5px;
+    line-height: 1.55;
+    text-align: justify;
+    display: flex; align-items: center; gap: 14px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  }
+  .archive-banner .icon { font-size: 22px; flex-shrink: 0; }
+  .archive-banner .text { flex: 1; text-align: justify; }
+  .archive-banner .text strong { color: #58a6ff; font-weight: 700; letter-spacing: 0.4px; }
+  .archive-banner .text .sub { color: #8b949e; font-size: 12px; margin-top: 2px; display: block; text-align: justify; }
+  .archive-banner a.live-link {
+    color: #3fb950; text-decoration: underline; font-weight: 600; white-space: nowrap;
+    padding: 6px 12px; border: 1px solid rgba(63,185,80,0.45); border-radius: 6px;
+    transition: all 150ms; flex-shrink: 0;
+  }
+  .archive-banner a.live-link:hover { background: rgba(63,185,80,0.12); border-color: #3fb950; }
+  .archive-banner .close-btn {
+    background: transparent; border: 1px solid rgba(139,148,158,0.4); color: #8b949e;
+    width: 26px; height: 26px; border-radius: 4px; cursor: pointer; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center; padding: 0;
+    transition: all 150ms;
+  }
+  .archive-banner .close-btn:hover { color: #c9d1d9; border-color: #c9d1d9; }
+  @media (max-width: 720px) {
+    .archive-banner { font-size: 12px; padding: 10px 14px; gap: 10px; }
+    .archive-banner .icon { font-size: 18px; }
+    .archive-banner a.live-link { padding: 5px 9px; font-size: 11.5px; }
+  }
+</style>
+<div class="archive-banner" id="archiveBanner" role="alert" aria-label="Archivo histórico">
+  <span class="icon" aria-hidden="true">📚</span>
+  <div class="text">
+    <strong>ARCHIVO HISTÓRICO · v2.4 · Publicada 2026-04-28</strong>
+    <span class="sub">Datos con corte SESNSP marzo 2026. Esta versión se mantiene como referencia histórica inalterable.</span>
+  </div>
+  <a class="live-link" href="https://45digitalnoticias.github.io/Inseguridad-Morelos/">→ Ver versión actual</a>
+  <button class="close-btn" onclick="document.getElementById('archiveBanner').remove();" aria-label="Cerrar banner" type="button">×</button>
+</div>
+
 
 <!-- Progress indicator · barra fija superior que rastrea scroll -->
 <div class="progress-indicator" aria-hidden="true"><div class="bar" id="progressBar"></div></div>
@@ -4806,7 +4860,6 @@
       <a href="#sTep7" data-target="sTep7"><span class="num">07</span>HOM × DESAP</a>
       <a href="#sTep8" data-target="sTep8"><span class="num">08</span>VS ESTADO</a>
       <a href="#sTep9" data-target="sTep9"><span class="num">09</span>CONCLUSIONES</a>
-      <a href="#sTep10" data-target="sTep10" style="border-left:3px solid #f85149;padding-left:8px;background:rgba(248,81,73,0.08);"><span class="num">10</span><span style="color:#f85149;font-weight:700;">Q1 2026 · LA RESPUESTA</span></a>
     </div>
   </div>
 
@@ -4864,7 +4917,7 @@
   </div>
 
   <div class="nav-footer">
-    <span style="color:#f85149;">v2.5 · 28-abr-2026</span><br>
+    <span style="color:#f85149;">v2.4 · 28-abr-2026</span><br>
     SESNSP · Mar 2026<br>
     RNPDNO · Dic 2025<br>
     <a href="versiones/" style="color:#8b949e;text-decoration:none;font-size:11px;border-bottom:1px dotted rgba(139,148,158,0.4);">Ver versiones anteriores ↗</a>
@@ -12551,391 +12604,6 @@
 
 
 <!-- =============================================================== -->
-<!-- sTep10 · TEPOZTLÁN Q1 2026 · LA RESPUESTA EDITORIAL              -->
-<!-- ¿bajó todo o solo algunos delitos? Confrontación a la            -->
-<!-- afirmación del alcalde sobre baja "en cualquier índice"          -->
-<!-- =============================================================== -->
-
-<section id="sTep10">
-  <h3>Tepoztlán · 10</h3>
-  <h1>Q1 2026 · ¿bajó todo o solo algunos delitos?</h1>
-  <div class="simple-box">
-    <div class="simple-tag">Contexto editorial</div>
-    <p style="text-align:justify;">El 28 de abril de 2026 el alcalde de Tepoztlán declaró públicamente que su municipio fue "el que tuvo la mayor disminución en cualquier índice que tú veas" durante el primer trimestre 2026. Esta sección verifica cifra por cifra esa afirmación contra los 36 tipos de delito que reporta el SESNSP. <strong>El homicidio doloso, en efecto, bajó dramáticamente</strong> — cayó 90 por ciento. <strong>Pero la afirmación de que "todo bajó" no se sostiene</strong>: hay indicadores que aparecieron donde no había, otros se duplicaron y triplicaron, y un patrón sospechoso entre lesiones dolosas y culposas que vale revisar.</p>
-  </div>
-
-  <!-- Stats hero · 4 cards comparativas -->
-  <div class="cards" style="margin-top:24px;">
-    <div class="card" style="border-color:#3fb950;background:rgba(63,185,80,0.10);" onclick="showExplain('Homicidio doloso · la baja real','Tepoztlán pasó de 10 carpetas de homicidio doloso en el primer trimestre 2025 a una sola en el primer trimestre 2026 — una caída del 90 por ciento. Es la baja más fuerte de las 14 zonas metropolitanas analizadas. Sin embargo, conviene contextualizar: el cierre 2025 fue 50 dolosos anuales (récord decenal). Una sola carpeta en Q1 podría ser tendencia o piso anómalo. Pendiente Q2 para confirmar.')">
-      <div class="num" style="color:#3fb950;">−90%</div><div class="lbl">Homicidio doloso<br>(de 10 a 1 · Q1 25→26)</div>
-    </div>
-    <div class="card" style="border-color:#f85149;background:rgba(248,81,73,0.12);" onclick="showExplain('Violencia familiar al alza','Tepoztlán pasó de 26 a 44 carpetas de violencia familiar entre Q1 2025 y Q1 2026 — un alza de 69 por ciento. La violencia familiar es delito de denuncia: si la captura del MP fuera el problema, este indicador bajaría también. Que SUBA confirma que el sistema de denuncia opera, lo que a su vez exige explicar por qué otros delitos sí bajan dramáticamente.')">
-      <div class="num" style="color:#f85149;">+69%</div><div class="lbl">Violencia familiar<br>(de 26 a 44 · Q1 25→26)</div>
-    </div>
-    <div class="card" style="border-color:#f85149;background:rgba(248,81,73,0.14);" onclick="showExplain('Violencia sexual emergente','Sumando los delitos sexuales del trimestre — abuso sexual, violación, hostigamiento sexual, otros delitos contra la libertad sexual y tentativa de feminicidio — Tepoztlán pasó de 2 casos en el primer trimestre 2025 a 9 casos en el primer trimestre 2026. Multiplicado por 4.5 en un Pueblo Mágico durante temporada turística. Donde antes había cero abuso sexual, hoy hay cinco. Donde antes había cero violación, hoy hay dos. Apareció además una tentativa de feminicidio.')">
-      <div class="num" style="color:#f85149;">×4.5</div><div class="lbl">Violencia sexual<br>(de 2 a 9 casos · Q1 25→26)</div>
-    </div>
-    <div class="card" style="border-color:#d29922;background:rgba(210,153,34,0.10);" onclick="showExplain('Narcomenudeo emergente · cierre 2025','Tepoztlán cerró 2024 con CERO carpetas anuales de narcomenudeo. Cerró 2025 con 22 carpetas. El primer año con narco emergente del decenio — un salto sin precedentes de 0 a 22 en un año, en un municipio Pueblo Mágico. Promedio decenal previo: 3.8/año. Es ruptura, no oscilación. El alcalde no menciona este dato en sus declaraciones públicas.')">
-      <div class="num" style="color:#d29922;">0 → 22</div><div class="lbl">Narcomenudeo<br>cierre anual 2024 → 2025</div>
-    </div>
-  </div>
-  <div class="click-hint"><span class="dot"></span>Haz clic en cualquier tarjeta para la explicación completa</div>
-
-  <!-- ===== CHART 1 · Comparativa Q1 25 vs Q1 26 todos los delitos ===== -->
-  <h3 style="margin-top:36px;">10.1 — Cuadro completo · Q1 2025 vs Q1 2026 · 36 tipos de delito</h3>
-  <p style="text-align:justify;">El alcalde afirmó que Tepoztlán bajó "en cualquier índice que tú veas". Este chart muestra los 36 tipos de delito que reporta el SESNSP municipal — los que están a la derecha del cero (rojo) son los que <strong>subieron o aparecieron</strong>; los que están a la izquierda (verde) son los que <strong>bajaron o se mantuvieron estables</strong>. Si la afirmación fuera cierta, todas las barras estarían a la izquierda. Hay 17 indicadores donde Tepoztlán SUBIÓ o aparecieron casos donde antes no había.</p>
-  <div class="chart-zoomable" style="margin:22px 0 18px;">
-    <div class="chart-canvas-frame" style="position:relative;height:720px;padding:14px 16px;background:rgba(13,17,23,0.55);border:1px solid rgba(48,54,61,0.7);border-radius:10px;">
-      <canvas id="chartTepQ1Full"></canvas>
-    </div>
-  </div>
-  <div style="font-size:10.5px;color:#8b949e;font-family:'JetBrains Mono',monospace;letter-spacing:0.5px;margin-bottom:14px;text-align:center;">
-    DERECHA = ALZA Q1-25→Q1-26 · IZQUIERDA = BAJA · CIFRA ENTRE PARÉNTESIS = Δ ABSOLUTO
-  </div>
-
-  <!-- ===== CHART 2 · Lesiones doloso vs culposo · el patrón sospechoso ===== -->
-  <h3 style="margin-top:36px;">10.2 — El patrón sospechoso de las lesiones</h3>
-  <p style="text-align:justify;">Mientras las <strong>lesiones dolosas</strong> (intencionales, agresión) bajaron a cero — de 2 a 0 entre Q1 2025 y Q1 2026 — las <strong>lesiones culposas</strong> (que en SESNSP se registran como accidentales) <strong>se triplicaron</strong>: pasaron de 8 a 23 carpetas, un alza del 188 por ciento. Las dos categorías cubren al mismo tipo de hecho — alguien resulta lesionado — pero la tipificación cambia según quién la registra. Cuando lo doloso desaparece y lo culposo se triplica en el mismo periodo, la auditoría del dashboard lo flagged como posible reclasificación de tipificación. Es hipótesis, no acusación: requiere verificación de las carpetas individuales.</p>
-
-  <div class="chart-zoomable" style="margin:22px 0 18px;">
-    <div class="chart-canvas-frame" style="position:relative;height:380px;padding:14px 16px;background:rgba(13,17,23,0.55);border:1px solid rgba(48,54,61,0.7);border-radius:10px;">
-      <canvas id="chartTepLesiones"></canvas>
-    </div>
-  </div>
-
-  <!-- Modalidades (no especificado) -->
-  <div class="info-box" style="margin-top:14px;background:rgba(248,81,73,0.06);border-color:rgba(248,81,73,0.45);">
-    <strong>El detalle revelador · modalidades.</strong>
-    <p style="margin-top:8px;text-align:justify;">El SESNSP desagrega las lesiones culposas en cinco modalidades: con arma de fuego, con arma blanca, en accidente de tránsito, con otro elemento y no especificado. <strong>En Tepoztlán Q1 2026, las primeras cuatro modalidades aparecen en cero. Las 23 carpetas están todas clasificadas como "No especificado".</strong> El propio Ministerio Público registró las lesiones, pero no documentó la modalidad. Curiosamente, la categoría "accidente de tránsito" — que sería la explicación natural para un alza de lesiones culposas — está en cero. No es viable sostener que las 23 son accidentes viales: el reporte oficial municipal no lo dice así.</p>
-  </div>
-
-  <div class="menores-table" style="margin-top:18px;">
-    <table>
-      <thead>
-        <tr>
-          <th>Modalidad SESNSP · Lesiones culposas</th>
-          <th style="text-align:right;">Q1 2025</th>
-          <th style="text-align:right;">Q1 2026</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Con arma de fuego</td><td style="text-align:right;color:#3fb950;">0</td><td style="text-align:right;color:#3fb950;">0</td></tr>
-        <tr><td>Con arma blanca</td><td style="text-align:right;color:#3fb950;">0</td><td style="text-align:right;color:#3fb950;">0</td></tr>
-        <tr><td>En accidente de tránsito</td><td style="text-align:right;color:#3fb950;">0</td><td style="text-align:right;color:#3fb950;">0</td></tr>
-        <tr><td>Con otro elemento</td><td style="text-align:right;color:#3fb950;">0</td><td style="text-align:right;color:#3fb950;">0</td></tr>
-        <tr style="background:rgba(248,81,73,0.10);">
-          <td><strong>No especificado</strong></td>
-          <td style="text-align:right;font-weight:700;">8</td>
-          <td style="text-align:right;font-weight:700;color:#f85149;">23</td>
-        </tr>
-        <tr style="background:rgba(48,54,61,0.4);">
-          <td><strong>TOTAL Q1</strong></td>
-          <td style="text-align:right;font-weight:800;">8</td>
-          <td style="text-align:right;font-weight:800;color:#f85149;">23</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- ===== CHART 3 · Lesiones culposas mes a mes ===== -->
-  <h3 style="margin-top:32px;">10.3 — Lesiones culposas · mes por mes</h3>
-  <p style="text-align:justify;">El alza no es ruido aleatorio. Enero 2026 incluso bajó (0 vs 4 casos en enero 2025). El alza arranca en febrero (de 1 a 11 casos · ×11) y se sostiene en marzo (de 3 a 12 casos · ×4). Dos meses consecutivos con alzas dramáticas, en modalidad "No especificado".</p>
-
-  <div class="chart-zoomable" style="margin:22px 0 18px;">
-    <div class="chart-canvas-frame" style="position:relative;height:340px;padding:14px 16px;background:rgba(13,17,23,0.55);border:1px solid rgba(48,54,61,0.7);border-radius:10px;">
-      <canvas id="chartTepLesionesMensual"></canvas>
-    </div>
-  </div>
-
-  <!-- ===== CHART 4 · Violencia sexual emergente ===== -->
-  <h3 style="margin-top:36px;">10.4 — Violencia sexual emergente · Q1 25 vs Q1 26</h3>
-  <p style="text-align:justify;">Sumando todos los delitos contra la libertad y la seguridad sexual, Tepoztlán pasó de 2 casos en el primer trimestre 2025 a 9 casos en el primer trimestre 2026. <strong>Multiplicado por 4.5 en un solo trimestre</strong>, en un municipio Pueblo Mágico durante temporada turística. La distribución por tipo es lo más revelador.</p>
-
-  <div class="chart-zoomable" style="margin:22px 0 18px;">
-    <div class="chart-canvas-frame" style="position:relative;height:340px;padding:14px 16px;background:rgba(13,17,23,0.55);border:1px solid rgba(48,54,61,0.7);border-radius:10px;">
-      <canvas id="chartTepSexual"></canvas>
-    </div>
-  </div>
-
-  <!-- ===== CHART 5 · Narcomenudeo decenal ===== -->
-  <h3 style="margin-top:36px;">10.5 — Narcomenudeo · una década, un salto inédito</h3>
-  <p style="text-align:justify;">Durante los nueve años entre 2016 y 2024, Tepoztlán mantuvo cifras de narcomenudeo entre 0 y 9 carpetas anuales — promedio decenal previo de 3.8 casos por año. <strong>En 2025 cerró el año con 22 carpetas anuales, partiendo de cero en 2024</strong>. Es la primera vez en una década que el municipio registra narco emergente. El Q1 2026 muestra solo 2 carpetas, lo que podría sugerir baja, pero la narrativa estructural ya cambió: el "Pueblo Mágico" ya no es muni con cero narco. Y la baja del Q1 2026 podría ser piso anómalo, no tendencia confirmada.</p>
-
-  <div class="chart-zoomable" style="margin:22px 0 18px;">
-    <div class="chart-canvas-frame" style="position:relative;height:380px;padding:14px 16px;background:rgba(13,17,23,0.55);border:1px solid rgba(48,54,61,0.7);border-radius:10px;">
-      <canvas id="chartTepNarcoDecenal"></canvas>
-    </div>
-  </div>
-
-  <!-- Cierre editorial -->
-  <div class="callout-huge" style="margin-top:36px;">
-    <div class="big-num">17 <span style="color:#8b949e;font-size:32px;">vs</span> 18</div>
-    <div class="big-sub">Indicadores que SUBIERON o aparecieron · vs · indicadores que bajaron</div>
-    <div class="explanation" style="text-align:justify;">
-      De los 36 tipos de delito que reporta el SESNSP municipal para Tepoztlán, <strong>17 subieron o aparecieron en Q1 2026</strong> donde antes no existían — incluyendo violencia familiar (+69%), violencia sexual (×4.5), lesiones culposas (+188%), allanamiento de morada (×3.5), suplantación de identidad y otros. Los 18 indicadores que sí bajaron incluyen homicidio doloso (−90%), robo de vehículo (−68%) y fraude (−88%). La afirmación de que la baja fue "en cualquier índice" no se sostiene en los datos. Es un resumen selectivo, no un cuadro completo.
-      <br><br>
-      <em>La pregunta editorial:</em> si todos los delitos bajaran proporcionalmente, sería evidencia de mejoría sistémica. Si algunos suben, otros bajan y otros se ven sospechosos por reclasificación, la lectura honesta es que <strong>la realidad de seguridad en Tepoztlán es más compleja que su narrativa pública</strong>.
-    </div>
-  </div>
-
-  <div class="footer-note" style="margin-top:24px;text-align:justify;">
-    <strong>Fuentes y método.</strong> SESNSP · Tabla Dinámica RNID Municipal Delitos · cortes diciembre 2025 (publicación febrero 2026) y marzo 2026 (publicación abril 2026). CVE municipal 17020. Cálculos de variación porcentual: ((Q1 2026 − Q1 2025) / Q1 2025) × 100. Para indicadores que pasaron de 0 a positivo, se reporta como "apareció" (la división por cero no permite porcentaje válido). Auditoría reproducible: <code>scripts/auditoria_q1_2026.js</code> sobre <code>scripts/data_combined/tepoztlan_records.json</code>. Esta sección documenta exclusivamente cifras del SESNSP federal — no constituye acusación contra ninguna autoridad ni atribución de responsabilidad.
-  </div>
-</section>
-
-<script>
-(function(){
-  // ===== Chart 1 · Comparativa Q1 25 vs Q1 26 todos los delitos · diverging horizontal bar =====
-  const TEP_FULL = [
-    { delito: 'Otros delitos contra la sociedad',  q25: 0,  q26: 18, delta: 18 },
-    { delito: 'Violencia familiar',                 q25: 26, q26: 44, delta: 18 },
-    { delito: 'Lesiones culposas',                  q25: 8,  q26: 23, delta: 15 },
-    { delito: 'Otros robos',                        q25: 11, q26: 18, delta: 7 },
-    { delito: 'Abuso sexual',                       q25: 0,  q26: 5,  delta: 5 },
-    { delito: 'Allanamiento de morada',             q25: 2,  q26: 7,  delta: 5 },
-    { delito: 'Suplantación / usurpación identidad',q25: 0,  q26: 4,  delta: 4 },
-    { delito: 'Robo vehículo · coche',              q25: 0,  q26: 3,  delta: 3 },
-    { delito: 'Robo vehículo · motocicleta',        q25: 0,  q26: 3,  delta: 3 },
-    { delito: 'Narcomenudeo · posesión simple',     q25: 0,  q26: 2,  delta: 2 },
-    { delito: 'Violación simple',                   q25: 0,  q26: 2,  delta: 2 },
-    { delito: 'Tentativa de feminicidio',           q25: 0,  q26: 1,  delta: 1 },
-    { delito: 'Otros delitos libertad sexual',      q25: 0,  q26: 1,  delta: 1 },
-    { delito: 'Otros delitos contra el patrimonio', q25: 0,  q26: 1,  delta: 1 },
-    { delito: 'Falsificación',                      q25: 0,  q26: 1,  delta: 1 },
-    { delito: 'Contra el medio ambiente',           q25: 0,  q26: 1,  delta: 1 },
-    { delito: 'Retención sustracción de menores',   q25: 0,  q26: 1,  delta: 1 },
-    { delito: 'Robo a negocio',                     q25: 1,  q26: 1,  delta: 0 },
-    { delito: 'Otros delitos libertad personal',    q25: 1,  q26: 0,  delta: -1 },
-    { delito: 'Abuso de confianza',                 q25: 3,  q26: 2,  delta: -1 },
-    { delito: 'Otros delitos contra la familia',    q25: 1,  q26: 0,  delta: -1 },
-    { delito: 'Lesiones dolosas',                   q25: 2,  q26: 0,  delta: -2 },
-    { delito: 'Hostigamiento sexual',               q25: 2,  q26: 0,  delta: -2 },
-    { delito: 'Robo a transeúnte',                  q25: 3,  q26: 1,  delta: -2 },
-    { delito: 'Daño a la propiedad',                q25: 20, q26: 18, delta: -2 },
-    { delito: 'Otros delitos del Fuero Común',      q25: 10, q26: 8,  delta: -2 },
-    { delito: 'Homicidio culposo',                  q25: 5,  q26: 2,  delta: -3 },
-    { delito: 'Otros delitos vida e integridad',    q25: 5,  q26: 2,  delta: -3 },
-    { delito: 'Robo de autopartes',                 q25: 3,  q26: 0,  delta: -3 },
-    { delito: 'Robo a casa habitación',             q25: 10, q26: 6,  delta: -4 },
-    { delito: 'Despojo',                            q25: 22, q26: 18, delta: -4 },
-    { delito: 'Fraude',                             q25: 8,  q26: 1,  delta: -7 },
-    { delito: 'Homicidio doloso',                   q25: 10, q26: 1,  delta: -9 },
-    { delito: 'Amenazas',                           q25: 42, q26: 26, delta: -16 },
-    { delito: 'Robo de vehículo (agregado)',        q25: 19, q26: 0,  delta: -19 }
-  ];
-
-  const initFull = () => {
-    const cvs = document.getElementById('chartTepQ1Full');
-    if (!cvs || !window.Chart) return;
-    new Chart(cvs.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: TEP_FULL.map(d => d.delito),
-        datasets: [{
-          label: 'Δ Q1 2025 → Q1 2026',
-          data: TEP_FULL.map(d => d.delta),
-          backgroundColor: TEP_FULL.map(d => d.delta > 0 ? 'rgba(248,81,73,0.78)' : (d.delta < 0 ? 'rgba(63,185,80,0.65)' : 'rgba(139,148,158,0.4)')),
-          borderColor: TEP_FULL.map(d => d.delta > 0 ? '#f85149' : (d.delta < 0 ? '#3fb950' : '#8b949e')),
-          borderWidth: 1.5,
-          borderRadius: 3
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        maintainAspectRatio: false,
-        scales: {
-          x: {
-            ticks: { color: '#8b949e', font: { family: "'JetBrains Mono', monospace", size: 10 }, callback: v => (v>=0?'+':'')+v },
-            grid: { color: (ctx) => ctx.tick.value === 0 ? 'rgba(201,209,217,0.65)' : 'rgba(48,54,61,0.4)', lineWidth: (ctx) => ctx.tick.value === 0 ? 1.5 : 1 }
-          },
-          y: { ticks: { color: '#c9d1d9', font: { size: 10.5, weight: '500' } }, grid: { display: false } }
-        },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: '#0d1117', borderColor: '#30363d', borderWidth: 1,
-            titleColor: '#e6edf3', bodyColor: '#c9d1d9', padding: 10,
-            callbacks: {
-              title: (items) => items[0].label,
-              label: (c) => {
-                const d = TEP_FULL[c.dataIndex];
-                if (d.q25 === 0 && d.q26 > 0) return `Apareció en Q1 2026: ${d.q26} carpetas (Q1 25: 0)`;
-                return `Q1 25: ${d.q25} → Q1 26: ${d.q26} · Δ ${d.delta >= 0 ? '+' : ''}${d.delta}`;
-              }
-            }
-          }
-        }
-      }
-    });
-  };
-
-  // ===== Chart 2 · Lesiones doloso vs culposo · barras =====
-  const initLesiones = () => {
-    const cvs = document.getElementById('chartTepLesiones');
-    if (!cvs || !window.Chart) return;
-    new Chart(cvs.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['Lesiones DOLOSAS\n(intencionales · agresión)', 'Lesiones CULPOSAS\n(reportadas como accidentales)'],
-        datasets: [
-          { label: 'Q1 2025', data: [2, 8], backgroundColor: 'rgba(139,148,158,0.55)', borderColor: '#8b949e', borderWidth: 1.5, borderRadius: 4 },
-          { label: 'Q1 2026', data: [0, 23], backgroundColor: ['rgba(63,185,80,0.65)', 'rgba(248,81,73,0.78)'], borderColor: ['#3fb950', '#f85149'], borderWidth: 1.5, borderRadius: 4 }
-        ]
-      },
-      options: {
-        maintainAspectRatio: false,
-        scales: {
-          y: { beginAtZero: true, ticks: { color: '#8b949e', font: { family: "'JetBrains Mono', monospace", size: 11 } }, grid: { color: 'rgba(48,54,61,0.5)' }, title: { display: true, text: 'Carpetas Q1', color: '#8b949e', font: { size: 11, weight: '700' } } },
-          x: { ticks: { color: '#c9d1d9', font: { size: 12, weight: '600' } }, grid: { display: false } }
-        },
-        plugins: {
-          legend: { position: 'top', labels: { color: '#c9d1d9', font: { size: 12, weight: '600' }, padding: 14, usePointStyle: true, pointStyle: 'circle' } },
-          tooltip: { backgroundColor: '#0d1117', borderColor: '#30363d', borderWidth: 1, titleColor: '#e6edf3', bodyColor: '#c9d1d9', padding: 10 }
-        }
-      },
-      plugins: [{
-        id: 'datalabel-lesiones',
-        afterDatasetsDraw(chart) {
-          const { ctx } = chart;
-          ctx.save();
-          ctx.font = "700 13px 'JetBrains Mono', monospace";
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'bottom';
-          chart.data.datasets.forEach((ds, di) => {
-            const meta = chart.getDatasetMeta(di);
-            meta.data.forEach((bar, i) => {
-              const v = ds.data[i];
-              ctx.fillStyle = di === 0 ? '#c9d1d9' : (i === 0 ? '#3fb950' : '#f85149');
-              ctx.fillText(String(v), bar.x, bar.y - 4);
-            });
-          });
-          ctx.restore();
-        }
-      }]
-    });
-  };
-
-  // ===== Chart 3 · Lesiones culposas mes a mes =====
-  const initLesionesMensual = () => {
-    const cvs = document.getElementById('chartTepLesionesMensual');
-    if (!cvs || !window.Chart) return;
-    new Chart(cvs.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['Enero', 'Febrero', 'Marzo'],
-        datasets: [
-          { label: 'Q1 2025', data: [4, 1, 3], backgroundColor: 'rgba(139,148,158,0.55)', borderColor: '#8b949e', borderWidth: 1.5, borderRadius: 4 },
-          { label: 'Q1 2026', data: [0, 11, 12], backgroundColor: 'rgba(248,81,73,0.78)', borderColor: '#f85149', borderWidth: 1.5, borderRadius: 4 }
-        ]
-      },
-      options: {
-        maintainAspectRatio: false,
-        scales: {
-          y: { beginAtZero: true, ticks: { color: '#8b949e', font: { family: "'JetBrains Mono', monospace", size: 11 } }, grid: { color: 'rgba(48,54,61,0.5)' }, title: { display: true, text: 'Carpetas mensuales', color: '#8b949e', font: { size: 11, weight: '700' } } },
-          x: { ticks: { color: '#c9d1d9', font: { size: 12, weight: '600' } }, grid: { display: false } }
-        },
-        plugins: {
-          legend: { position: 'top', labels: { color: '#c9d1d9', font: { size: 12, weight: '600' }, padding: 14, usePointStyle: true, pointStyle: 'circle' } },
-          tooltip: { backgroundColor: '#0d1117', borderColor: '#30363d', borderWidth: 1, titleColor: '#e6edf3', bodyColor: '#c9d1d9', padding: 10 }
-        }
-      }
-    });
-  };
-
-  // ===== Chart 4 · Violencia sexual emergente =====
-  const initSexual = () => {
-    const cvs = document.getElementById('chartTepSexual');
-    if (!cvs || !window.Chart) return;
-    new Chart(cvs.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['Abuso sexual', 'Violación simple', 'Hostigamiento\nsexual', 'Otros delitos\nlibertad sexual', 'Tentativa de\nfeminicidio'],
-        datasets: [
-          { label: 'Q1 2025', data: [0, 0, 2, 0, 0], backgroundColor: 'rgba(139,148,158,0.55)', borderColor: '#8b949e', borderWidth: 1.5, borderRadius: 4 },
-          { label: 'Q1 2026', data: [5, 2, 0, 1, 1], backgroundColor: 'rgba(248,81,73,0.78)', borderColor: '#f85149', borderWidth: 1.5, borderRadius: 4 }
-        ]
-      },
-      options: {
-        maintainAspectRatio: false,
-        scales: {
-          y: { beginAtZero: true, ticks: { stepSize: 1, color: '#8b949e', font: { family: "'JetBrains Mono', monospace", size: 11 } }, grid: { color: 'rgba(48,54,61,0.5)' }, title: { display: true, text: 'Carpetas Q1', color: '#8b949e', font: { size: 11, weight: '700' } } },
-          x: { ticks: { color: '#c9d1d9', font: { size: 11.5, weight: '600' } }, grid: { display: false } }
-        },
-        plugins: {
-          legend: { position: 'top', labels: { color: '#c9d1d9', font: { size: 12, weight: '600' }, padding: 14, usePointStyle: true, pointStyle: 'circle' } },
-          tooltip: { backgroundColor: '#0d1117', borderColor: '#30363d', borderWidth: 1, titleColor: '#e6edf3', bodyColor: '#c9d1d9', padding: 10 }
-        }
-      }
-    });
-  };
-
-  // ===== Chart 5 · Narcomenudeo decenal =====
-  const initNarcoDecenal = () => {
-    const cvs = document.getElementById('chartTepNarcoDecenal');
-    if (!cvs || !window.Chart) return;
-    new Chart(cvs.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026·Q1'],
-        datasets: [{
-          label: 'Narcomenudeo · carpetas anuales (Tepoztlán)',
-          data: [9, 6, 4, 4, 1, 1, 5, 1, 0, 22, 2],
-          backgroundColor: ['rgba(139,148,158,0.55)','rgba(139,148,158,0.55)','rgba(139,148,158,0.55)','rgba(139,148,158,0.55)','rgba(139,148,158,0.55)','rgba(139,148,158,0.55)','rgba(139,148,158,0.55)','rgba(139,148,158,0.55)','rgba(63,185,80,0.65)','rgba(248,81,73,0.85)','rgba(251,191,36,0.65)'],
-          borderColor: ['#8b949e','#8b949e','#8b949e','#8b949e','#8b949e','#8b949e','#8b949e','#8b949e','#3fb950','#f85149','#fbbf24'],
-          borderWidth: 1.5,
-          borderRadius: 4
-        }]
-      },
-      options: {
-        maintainAspectRatio: false,
-        scales: {
-          y: { beginAtZero: true, ticks: { stepSize: 5, color: '#8b949e', font: { family: "'JetBrains Mono', monospace", size: 11 } }, grid: { color: 'rgba(48,54,61,0.5)' }, title: { display: true, text: 'Carpetas anuales', color: '#8b949e', font: { size: 11, weight: '700' } } },
-          x: { ticks: { color: (ctx) => ctx.tick.label === '2025' ? '#f85149' : (ctx.tick.label === '2026·Q1' ? '#fbbf24' : '#8b949e'), font: (ctx) => ({ family: "'JetBrains Mono', monospace", size: 11, weight: ctx.tick.label === '2025' ? '800' : '500' }) }, grid: { color: 'rgba(48,54,61,0.3)' } }
-        },
-        plugins: {
-          legend: { display: false },
-          tooltip: { backgroundColor: '#0d1117', borderColor: '#30363d', borderWidth: 1, titleColor: '#e6edf3', bodyColor: '#c9d1d9', padding: 10,
-            callbacks: { title: (items) => 'Año ' + items[0].label, label: (c) => c.parsed.y + ' carpetas' }
-          }
-        }
-      },
-      plugins: [{
-        id: 'narco-anotacion',
-        afterDatasetsDraw(chart) {
-          const { ctx } = chart;
-          const meta = chart.getDatasetMeta(0);
-          // Anotación sobre la barra 2025
-          const bar2025 = meta.data[9];
-          if (bar2025) {
-            ctx.save();
-            ctx.font = "700 11px 'JetBrains Mono', monospace";
-            ctx.fillStyle = '#f85149';
-            ctx.textAlign = 'center';
-            ctx.fillText('22 ↑ salto inédito', bar2025.x, bar2025.y - 8);
-            ctx.restore();
-          }
-          // Anotación 2026 Q1
-          const bar2026 = meta.data[10];
-          if (bar2026) {
-            ctx.save();
-            ctx.font = "600 10px 'JetBrains Mono', monospace";
-            ctx.fillStyle = '#fbbf24';
-            ctx.textAlign = 'center';
-            ctx.fillText('Q1 parcial', bar2026.x, bar2026.y - 8);
-            ctx.restore();
-          }
-        }
-      }]
-    });
-  };
-
-  const run = () => { initFull(); initLesiones(); initLesionesMensual(); initSexual(); initNarcoDecenal(); };
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
-})();
-</script>
-
-
-<!-- =============================================================== -->
 <!-- XOCHITEPEC · 9 SECCIONES (sXoc1-sXoc9)                           -->
 <!-- La baja aparente del homicidio · CVE 17028                       -->
 <!-- =============================================================== -->
@@ -17512,8 +17180,6 @@
   <div class="glo-group" style="margin-top:32px;">
     <div class="glo-cat">Historial de versiones</div>
     <dl class="glo-list">
-      <div class="glo-item"><dt>v2.5 · 28 de abril de 2026</dt>
-        <dd style="text-align:justify;">Nueva sección <strong>sTep10 · Q1 2026 · La Respuesta</strong> dentro del bloque de Tepoztlán. Confrontación editorial documentada al pronunciamiento público del alcalde Roberto Yáñez (28-abr-2026) sobre que el municipio fue "el que tuvo la mayor disminución en cualquier índice que tú veas" en Q1 2026. La sección verifica los 36 tipos de delito SESNSP municipal: 17 subieron o aparecieron donde antes no había (violencia familiar +69%, lesiones culposas +188%, abuso sexual y violación apareciendo, allanamiento de morada +250%, "otros delitos contra la sociedad" 0→18, narcomenudeo decenal 0→22 en cierre 2025), 18 bajaron (homicidio doloso −90%, robo vehículo −68%, fraude −88%, etc.). Detalle revelador: las 23 lesiones culposas Q1 2026 están todas clasificadas en modalidad "No especificado" — la modalidad "accidente de tránsito" aparece en cero. Adicionalmente: zoom in/out con scrollbars en modo expandido para todos los charts del dashboard. Versión anterior: <a href="versiones/v2.4-2026-04-28/" style="color:#58a6ff;">v2.4 (28-abr-2026)</a>.</dd></div>
       <div class="glo-item"><dt>v2.4 · 28 de abril de 2026</dt>
         <dd style="text-align:justify;">Sección dedicada <strong>Década Nacional</strong> (sNAC1-sNAC5) con análisis cohorte de Morelos vs los 32 estados de México durante el decenio 2015-2025. Cinco actos: portada con espiral SVG decenal Morelos vs nacional · ranking de cuatro métricas con escalas visuales · slope ladder de las 32 entidades ordenadas por tendencia anual · diverging bars Morelos vs nacional en seis indicadores graves · cohorte de cinco estados de tamaño similar (Querétaro, San Luis Potosí, Hidalgo, Tlaxcala, Aguascalientes) · heatmap nacional 32 estados × 11 años. El argumento central: la trayectoria de Morelos en homicidio doloso es la peor del país en pendiente decenal (#1 de 32 con +8.76% anual sostenido), tercera tasa más alta nacional (45.2/100K). El Q1 2026 deja de ser headline y queda como coyuntura tangencial. Versión anterior: <a href="versiones/v2.3-2026-04-28/" style="color:#58a6ff;">v2.3 (28-abr-2026)</a>.</dd></div>
       <div class="glo-item"><dt>v2.3 · 28 de abril de 2026</dt>
@@ -17532,7 +17198,7 @@
     </p>
   </div>
 
-  <div class="footer-note">Glosario del dashboard · 45 Digital Noticias · v2.5 (corte SESNSP marzo 2026 · sección sTep10 Q1 2026 La Respuesta). Si un término que usamos no está aquí, escríbenos para incluirlo.</div>
+  <div class="footer-note">Glosario del dashboard · 45 Digital Noticias · v2.4 (corte SESNSP marzo 2026 · sección Década Nacional). Si un término que usamos no está aquí, escríbenos para incluirlo.</div>
 </section>
 
 <script>
@@ -17876,7 +17542,7 @@ function wireCuautlaToggle() {
   const temixcoIds = ["sT1","sT2","sT3","sT4","sT5","sT6","sT7","sT8","sT9"];
   const huitzilacIds = ["sHz1","sHz2","sHz3","sHz4","sHz5","sHz6","sHz7","sHz8","sHz9"];
   const emilianoZapataIds = ["sEz1","sEz2","sEz3","sEz4","sEz5","sEz6","sEz7","sEz8","sEz9"];
-  const tepoztlanIds = ["sTep1","sTep2","sTep3","sTep4","sTep5","sTep6","sTep7","sTep8","sTep9","sTep10"];
+  const tepoztlanIds = ["sTep1","sTep2","sTep3","sTep4","sTep5","sTep6","sTep7","sTep8","sTep9"];
   const xochitepecIds = ["sXoc1","sXoc2","sXoc3","sXoc4","sXoc5","sXoc6","sXoc7","sXoc8","sXoc9"];
   const tlaltizapanIds = ["sTlz1","sTlz2","sTlz3","sTlz4","sTlz5","sTlz6","sTlz7","sTlz8","sTlz9"];
   const yautepecIds = ["sYa1","sYa2","sYa3","sYa4","sYa5","sYa6","sYa7","sYa8","sYa9"];
@@ -18650,7 +18316,7 @@ function wireNavProgrammaticLock() {
   const temixcoIds = ["sT1","sT2","sT3","sT4","sT5","sT6","sT7","sT8","sT9"];
   const huitzilacIds = ["sHz1","sHz2","sHz3","sHz4","sHz5","sHz6","sHz7","sHz8","sHz9"];
   const emilianoZapataIds = ["sEz1","sEz2","sEz3","sEz4","sEz5","sEz6","sEz7","sEz8","sEz9"];
-  const tepoztlanIds = ["sTep1","sTep2","sTep3","sTep4","sTep5","sTep6","sTep7","sTep8","sTep9","sTep10"];
+  const tepoztlanIds = ["sTep1","sTep2","sTep3","sTep4","sTep5","sTep6","sTep7","sTep8","sTep9"];
   const xochitepecIds = ["sXoc1","sXoc2","sXoc3","sXoc4","sXoc5","sXoc6","sXoc7","sXoc8","sXoc9"];
   const tlaltizapanIds = ["sTlz1","sTlz2","sTlz3","sTlz4","sTlz5","sTlz6","sTlz7","sTlz8","sTlz9"];
   const yautepecIds = ["sYa1","sYa2","sYa3","sYa4","sYa5","sYa6","sYa7","sYa8","sYa9"];
