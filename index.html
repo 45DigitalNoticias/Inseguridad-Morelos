@@ -4488,10 +4488,13 @@
   /* RESPONSIVE FIX 2026-04-30 · expansión dirigida por audit      */
   /* ============================================================ */
 
+  /* base · max-width universal y wrapper de tablas con overflow */
   img, svg, canvas { max-width: 100%; height: auto; }
   table { max-width: 100%; }
 
+  /* tablets horizontales · 769-1024px */
   @media (min-width: 769px) and (max-width: 1024px) {
+    /* charts con altura fluida */
     .p-serie-canvas-wrap,
     .chart-canvas-frame,
     .deca-canvas-frame,
@@ -4500,6 +4503,7 @@
     .nac-heatmap-wrap {
       height: clamp(280px, 50vh, 500px) !important;
     }
+    /* hero font · escalas */
     #sHero h1, .cover h1, .hero-headline {
       font-size: clamp(32px, 5vw, 56px) !important;
     }
@@ -4508,6 +4512,7 @@
     .ay-boulevard .big-stat .big-num {
       font-size: clamp(40px, 6vw, 72px) !important;
     }
+    /* grids · colapsar 4 cols a 2 */
     .hero-kpis,
     .conf-grid,
     .p-rank-grid {
@@ -4516,7 +4521,9 @@
     }
   }
 
+  /* mobile · ≤ 768px (expansión sobre el bloque ya existente) */
   @media (max-width: 768px) {
+    /* charts · altura adaptable */
     .p-serie-canvas-wrap,
     .chart-canvas-frame,
     .deca-canvas-frame,
@@ -4529,6 +4536,7 @@
       height: clamp(240px, 50vh, 400px) !important;
       max-height: 70vh;
     }
+    /* canvas dentro · respeta */
     .p-serie-canvas-wrap canvas,
     .chart-canvas-frame canvas,
     [class*="-canvas-frame"] canvas {
@@ -4536,7 +4544,9 @@
       width: 100% !important;
     }
 
-    #sHero h1, .cover h1, .hero-headline {
+    /* hero · font escalable */
+    #sHero h1, .cover h1, .hero-headline,
+    .hero-kpi.hero-crown .v {
       font-size: clamp(28px, 7vw, 44px) !important;
       line-height: 1.1 !important;
     }
@@ -4547,8 +4557,10 @@
     .ay-boulevard .big-stat .big-num {
       font-size: clamp(34px, 9vw, 56px) !important;
     }
+    /* títulos secundarios */
     section h2, section h3 { font-size: clamp(20px, 5vw, 30px) !important; }
 
+    /* grids · todos a 1 col */
     .hero-kpis,
     .conf-grid,
     .p-rank-grid,
@@ -4559,6 +4571,7 @@
       gap: 12px !important;
     }
 
+    /* tablas · wrappers universales con scroll-hint */
     .rk-wrap, .cross-wrap,
     div[style*="overflow-y: auto"],
     div[style*="overflow-x: auto"] {
@@ -4577,19 +4590,24 @@
       padding: 5px 4px !important;
     }
 
+    /* botones · touch target 40px mínimo */
     .share-strip button, .hero-cta, .nav-link,
     button[class*="filter"], button[class*="toggle"] {
       min-height: 40px;
     }
 
+    /* paddings cards */
     .hero-kpi { padding: 16px 14px !important; }
     .conf-alert { padding: 18px 16px !important; }
     .rank-card, .conf-card { padding: 14px 16px !important; }
 
+    /* lab banner · si existe en el index */
     .lab-banner { padding: 8px 14px; font-size: 11px; }
   }
 
+  /* mobile vertical · ≤ 480px */
   @media (max-width: 480px) {
+    /* hero ultra compacto */
     #sHero h1, .cover h1, .hero-headline {
       font-size: clamp(24px, 8vw, 34px) !important;
       letter-spacing: -0.5px !important;
@@ -4603,12 +4621,14 @@
     }
     section h2, section h3 { font-size: clamp(18px, 6vw, 24px) !important; }
 
+    /* charts · altura mínima */
     .p-serie-canvas-wrap,
     .chart-canvas-frame,
     [class*="-canvas-frame"] {
       height: clamp(220px, 45vh, 320px) !important;
     }
 
+    /* tablas · más compactas */
     .rk-table, .cross-table, .q1-heatmap,
     table.heatmap, .menores-table {
       font-size: 10px !important;
@@ -4621,24 +4641,29 @@
       padding: 4px 3px !important;
     }
 
+    /* heatmap cells más chicas */
     .q1-heatmap td .cell, table.heatmap td .cell {
       padding: 3px 2px !important;
       font-size: 9px !important;
     }
 
+    /* paddings ultra reducidos */
     .hero-kpi { padding: 14px 12px !important; }
     .conf-alert { padding: 14px 14px !important; }
     .rank-card, .conf-card { padding: 12px 14px !important; }
 
+    /* botones · padding más chico pero touch ok */
     .share-strip button, .hero-cta {
       padding: 10px 14px !important;
       font-size: 12px !important;
       min-height: 40px;
     }
 
+    /* meta-stat números */
     .meta-stat .v { font-size: clamp(28px, 9vw, 40px) !important; }
   }
 
+  /* hint de scroll horizontal en tablas grandes */
   @media (max-width: 768px) {
     .rk-wrap::after, .cross-wrap::after, .heatmap-wrap::after {
       content: '← desliza →';
@@ -4710,7 +4735,8 @@
     <a href="#sI" data-target="sI"><span class="num num-icon" aria-label="Cruce"><svg viewBox="0 0 20 20"><path d="M5 3v11.5M5 14.5L2.5 12M5 14.5L7.5 12M15 17V5.5M15 5.5L12.5 8M15 5.5L17.5 8" stroke="currentColor" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>VIOLENCIA EN DOS FORMAS</a>
     <a href="#sP" data-target="sP"><span class="num num-icon" aria-label="Percepción"><svg viewBox="0 0 20 20"><path d="M10 2C5.6 2 2 5.6 2 10s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 3.2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 10.1c-1.7 0-3.1-.9-4-2.2.1-1.3 2.7-2 4-2s3.9.7 4 2c-.9 1.3-2.3 2.2-4 2.2z" fill="currentColor"/></svg></span>PERCEPCIÓN · #1 NACIONAL</a>
     <a href="#sZE" data-target="sZE"><span class="num num-icon" aria-label="Resumen por zonas"><svg viewBox="0 0 20 20"><rect x="2" y="2" width="7" height="7" rx="1" fill="currentColor" opacity="0.85"/><rect x="11" y="2" width="7" height="7" rx="1" fill="currentColor" opacity="0.55"/><rect x="2" y="11" width="7" height="7" rx="1" fill="currentColor" opacity="0.35"/><rect x="11" y="11" width="7" height="7" rx="1" fill="currentColor" opacity="0.25"/></svg></span>RESUMEN · 4 ZONAS</a>
-    <a href="#sQ1" data-target="sQ1" style="border-left:3px solid #3fb950;padding-left:8px;background:rgba(63,185,80,0.06);"><span class="num num-icon" aria-label="Q1 2026"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M6.5 10.5L9 13L13.5 7.5" stroke="currentColor" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span style="color:#3fb950;font-weight:700;">Q1 2026 · ACTUALIZACIÓN</span></a>
+    <a href="#sQ1" data-target="sQ1" style="border-left:3px solid #3fb950;padding-left:8px;background:rgba(63,185,80,0.06);"><span class="num num-icon" aria-label="Q1 2026"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M6.5 10.5L9 13L13.5 7.5" stroke="currentColor" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span style="color:#3fb950;font-weight:700;">T1 2026 · ACTUALIZACIÓN</span></a>
+    <a href="#sME" data-target="sME" style="border-left:3px solid #fbbf24;padding-left:8px;background:rgba(251,191,36,0.08);"><span class="num num-icon" aria-label="Banderas rojas"><svg viewBox="0 0 20 20"><path d="M4 3v14M4 3h10l-2 3 2 3H4" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/></svg></span><span style="color:#fbbf24;font-weight:700;">BANDERAS ROJAS · ESTATAL</span></a>
   </div>
 
   <!-- Zonas metropolitanas — agregados analíticos antes de los municipios individuales -->
@@ -16842,6 +16868,247 @@
 
 
 <!-- =============================================================== -->
+<!-- sME · RESUMEN EJECUTIVO ESTATAL · BANDERAS ROJAS T1 2026         -->
+<!-- Teaser que enlaza al lab completo reporte_ejecutivo_v2.html      -->
+<!-- =============================================================== -->
+
+<style>
+  /* === sME · scoped al ID para no contaminar el dashboard === */
+  #sME {
+    background: linear-gradient(180deg, rgba(251,191,36,0.04) 0%, rgba(13,17,23,0) 100%);
+    padding-top: 60px; padding-bottom: 60px;
+  }
+  #sME .me-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 3px;
+    color: #fbbf24; font-weight: 800; text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+  }
+  #sME .me-eyebrow::before {
+    content: ''; width: 36px; height: 2px; background: #fbbf24;
+  }
+  #sME .me-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(34px, 5vw, 56px);
+    line-height: 1.05; font-weight: 800; letter-spacing: -1.2px;
+    color: #e6edf3; margin-bottom: 18px; max-width: 22ch;
+  }
+  #sME .me-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, #f85149 0%, #fbbf24 60%, #58a6ff 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  #sME .me-lead {
+    font-size: 16.5px; line-height: 1.6; color: #c9d1d9;
+    max-width: 78ch; text-align: justify; hyphens: auto;
+    margin-bottom: 36px;
+  }
+  #sME .me-lead strong { color: #e6edf3; }
+
+  /* 3 respuestas */
+  #sME .me-respuestas {
+    display: grid; grid-template-columns: 1fr; gap: 14px;
+    margin-bottom: 32px;
+  }
+  #sME .me-resp {
+    background: linear-gradient(160deg, rgba(22,27,34,0.95), rgba(22,27,34,0.6));
+    border: 1px solid rgba(48,54,61,0.7);
+    border-radius: 14px;
+    padding: 20px 28px; position: relative; overflow: hidden;
+  }
+  #sME .me-resp::before {
+    content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+  }
+  #sME .me-resp.r1::before { background: #f85149; }
+  #sME .me-resp.r2::before { background: #a371f7; }
+  #sME .me-resp.r3::before { background: #fbbf24; }
+  #sME .me-resp .num {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(54px, 7vw, 84px);
+    font-weight: 900; line-height: 0.95; letter-spacing: -2px;
+    display: inline-block; margin-bottom: 6px;
+  }
+  #sME .me-resp.r1 .num { color: #f85149; }
+  #sME .me-resp.r2 .num { color: #a371f7; }
+  #sME .me-resp.r3 .num { color: #fbbf24; }
+  #sME .me-resp p {
+    font-size: 15.5px; line-height: 1.55; color: #c9d1d9;
+    text-align: justify; hyphens: auto; max-width: 70ch;
+  }
+  #sME .me-resp p strong { color: #e6edf3; font-weight: 700; }
+
+  /* tabla compacta de banderas */
+  #sME .me-banderas {
+    background: rgba(22,27,34,0.55);
+    border: 1px solid rgba(48,54,61,0.7); border-radius: 12px;
+    padding: 22px 26px; margin-bottom: 32px;
+  }
+  #sME .me-banderas h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 22px; color: #e6edf3; font-weight: 700;
+    margin-bottom: 14px;
+  }
+  #sME .me-bg {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  #sME .me-bg .me-cat {
+    background: rgba(13,17,23,0.4);
+    border: 1px solid rgba(48,54,61,0.6);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  #sME .me-bg .me-cat .cat-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; letter-spacing: 1.4px;
+    text-transform: uppercase; font-weight: 700;
+  }
+  #sME .me-bg .me-cat .cat-head .label { color: #8b949e; }
+  #sME .me-bg .me-cat .cat-head .count {
+    font-family: 'Fraunces', Georgia, serif; font-style: italic;
+    font-size: 18px; font-weight: 800;
+  }
+  #sME .me-bg .me-cat.par .cat-head .count { color: #f85149; }
+  #sME .me-bg .me-cat.par .cat-head .label { color: #ff7b72; }
+  #sME .me-bg .me-cat.prendido .cat-head .count { color: #fbbf24; }
+  #sME .me-bg .me-cat.prendido .cat-head .label { color: #d29922; }
+  #sME .me-bg .me-cat.explosivo .cat-head .count { color: #a371f7; }
+  #sME .me-bg .me-cat.explosivo .cat-head .label { color: #d2a8ff; }
+  #sME .me-bg .me-cat.estatal .cat-head .count { color: #58a6ff; }
+  #sME .me-bg .me-cat.estatal .cat-head .label { color: #79c0ff; }
+  #sME .me-bg .me-cat ul {
+    list-style: none; padding: 0; margin: 0;
+  }
+  #sME .me-bg .me-cat li {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; color: #c9d1d9;
+    padding: 5px 0; line-height: 1.4;
+    display: flex; gap: 8px;
+  }
+  #sME .me-bg .me-cat li::before {
+    content: '•'; color: #6e7681;
+    font-weight: 800; flex-shrink: 0;
+  }
+  #sME .me-bg .me-cat li strong { color: #e6edf3; }
+
+  /* CTA al lab completo */
+  #sME .me-cta-wrap {
+    text-align: center; padding: 24px 0;
+  }
+  #sME .me-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, rgba(251,191,36,0.18), rgba(248,81,73,0.18));
+    border: 1px solid rgba(251,191,36,0.5);
+    color: #fbbf24;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 800;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    padding: 16px 28px; border-radius: 10px;
+    text-decoration: none;
+    transition: all 200ms;
+  }
+  #sME .me-cta:hover {
+    background: linear-gradient(135deg, rgba(251,191,36,0.32), rgba(248,81,73,0.32));
+    color: #fff; border-color: #fbbf24;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(251,191,36,0.18);
+  }
+  #sME .me-cta-sub {
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: #6e7681;
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 768px) {
+    #sME .me-bg { grid-template-columns: 1fr; }
+    #sME .me-resp { padding: 16px 20px; }
+    #sME .me-resp .num { font-size: clamp(42px, 12vw, 64px); }
+    #sME .me-resp p { font-size: 14.5px; }
+    #sME .me-banderas { padding: 18px 20px; }
+    #sME .me-cta { font-size: 11.5px; padding: 14px 22px; letter-spacing: 0.8px; }
+  }
+</style>
+
+<section id="sME">
+  <div class="me-eyebrow">RESUMEN EJECUTIVO ESTATAL · MORELOS · T1 2026</div>
+  <h2 class="me-title">Banderas rojas <em>Morelos</em> · primer trimestre 2026</h2>
+  <p class="me-lead">
+    Diecisiete anomalías estadísticas detectadas en los datos oficiales del SESNSP, comparadas contra los once primeros trimestres anteriores (2015-2025). Trece municipios concentran las banderas. Esta es la sección de referencia rápida; el <strong>reporte ejecutivo completo</strong> tiene la metodología, los pares espejo activos y el análisis municipio por municipio.
+  </p>
+
+  <div class="me-respuestas">
+    <article class="me-resp r1">
+      <span class="num">1,003</span>
+      <p><strong>lesiones culposas en enero-marzo</strong> · 31% más que el año pasado, y el <strong>99.8% sin especificar cómo</strong> ocurrieron. Las lesiones dolosas, en cambio, cayeron 31.6%. Cambio simétrico: la cuenta total se ve igual, pero la etiqueta cambió. <strong>Reclasificación espejo a nivel estado.</strong></p>
+    </article>
+    <article class="me-resp r2">
+      <span class="num">156</span>
+      <p><strong>carpetas de extorsión en enero-marzo</strong> · cuatro veces más que el promedio histórico, y ningún delito relacionado cae para compensar. <strong>La extorsión está creciendo, no migrando.</strong> Es el primer trimestre con más extorsiones de toda la serie 2015-2026.</p>
+    </article>
+    <article class="me-resp r3">
+      <span class="num">13</span>
+      <p><strong>municipios concentran las 17 banderas rojas</strong> detectadas. Yecapixtla, Tepalcingo y Jiutepec encabezan el ranking; <strong>Huitzilac aparece con 50 robos de coche con violencia</strong>, fenómeno verificado por la prensa nacional como punto rojo en la carretera federal México-Cuernavaca.</p>
+    </article>
+  </div>
+
+  <div class="me-banderas">
+    <h3>Las 17 banderas, agrupadas</h3>
+    <div class="me-bg">
+      <div class="me-cat estatal">
+        <div class="cat-head"><span class="label">Estatales</span><span class="count">2</span></div>
+        <ul>
+          <li><strong>Lesiones culposas</strong> · reclasificación espejo (LD↓ 215→147 / LC↑ 762→1,003)</li>
+          <li><strong>Extorsión</strong> · crecimiento real sin par (59 → 156)</li>
+        </ul>
+      </div>
+      <div class="me-cat par">
+        <div class="cat-head"><span class="label">Reclasificación espejo</span><span class="count">3</span></div>
+        <ul>
+          <li><strong>Yecapixtla</strong> · lesiones (LC↑ 18→32 / LD↓ 11→4)</li>
+          <li><strong>Yecapixtla</strong> · homicidios (HD↑ 3→14 / HC↓ 5→2)</li>
+          <li><strong>Jojutla</strong> · sexuales (AS↑ 5→11 / VL↓ 8→5)</li>
+        </ul>
+      </div>
+      <div class="me-cat prendido">
+        <div class="cat-head"><span class="label">Varios delitos al mismo tiempo</span><span class="count">6</span></div>
+        <ul>
+          <li><strong>Yecapixtla</strong> · 5 alzas simultáneas</li>
+          <li><strong>Tepalcingo</strong> · 5 alzas (VF, AM, LC, HD, NM)</li>
+          <li><strong>Jiutepec</strong> · 4 alzas (NM, HC, EXT, HOST)</li>
+          <li><strong>Tlalnepantla</strong> · 3 alzas extremas</li>
+          <li><strong>Jantetelco</strong> · 3 alzas</li>
+          <li><strong>Temixco</strong> · 3 alzas (LC, NM, EXT)</li>
+        </ul>
+      </div>
+      <div class="me-cat explosivo">
+        <div class="cat-head"><span class="label">Un delito disparado</span><span class="count">5</span></div>
+        <ul>
+          <li><strong>Huitzilac</strong> · RV 4→50 · ✓ verificado prensa</li>
+          <li><strong>Cuautla</strong> · EXT 33→60</li>
+          <li><strong>Xochitepec</strong> · RV 14→54</li>
+          <li><strong>Emiliano Zapata</strong> · NM 5→28</li>
+          <li><strong>Mazatepec</strong> · AM 7→12</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top: 16px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #6e7681; letter-spacing: 0.5px;">
+      + 1 caída sospechosa · Puente de Ixtla (homicidios cayeron al unísono · disonancia con prensa local · pendiente verificar corte junio 2026)
+    </p>
+  </div>
+
+  <div class="me-cta-wrap">
+    <a class="me-cta" href="secciones_lab/reporte_ejecutivo_v2.html" target="_blank" rel="noopener">
+      Ver reporte ejecutivo completo →
+    </a>
+    <div class="me-cta-sub">
+      Mapa interactivo · ranking por severidad · pares espejo con animación · tabla de 40 alzas · glosario y metodología
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== -->
 <!-- ZM CUERNAVACA · SECCIÓN AGREGADA (sZM1-sZM3)                     -->
 <!-- Los 8 municipios como unidad analítica                           -->
 <!-- =============================================================== -->
@@ -18169,7 +18436,7 @@ function wireCuautlaToggle() {
   const atlatlahucanIds = ["sAt1","sAt2","sAt3","sAt4","sAt5","sAt6","sAt7","sAt8","sAt9"];
   const zmIds = ["sZM1","sZM2","sZM3"];
   const zmcIds = ["sZMC1","sZMC2","sZMC3"];
-  const otherIds = ["s0", "sR", "sH", "sE", "sI", "sP", "sZE", "sQ1", "sQ1Cover", "sV23", "sNAC1", "sNAC2", "sNAC3", "sNAC4", "sNAC5", "sHero", "sM", "sG"];
+  const otherIds = ["s0", "sR", "sH", "sE", "sI", "sP", "sZE", "sQ1", "sQ1Cover", "sME", "sV23", "sNAC1", "sNAC2", "sNAC3", "sNAC4", "sNAC5", "sHero", "sM", "sG"];
   const all = [...otherIds, ...cuautlaIds, ...ayalaIds, ...cuernavacaIds, ...jiutepecIds, ...temixcoIds, ...huitzilacIds, ...emilianoZapataIds, ...tepoztlanIds, ...xochitepecIds, ...tlaltizapanIds, ...yautepecIds, ...yecapixtlaIds, ...tlayacapanIds, ...atlatlahucanIds, ...zmIds, ...zmcIds];
   wireCollapsibleGroup("toggleCuautla", "cuautlaSubnav", cuautlaIds, all);
   wireCollapsibleGroup("toggleAyala", "ayalaSubnav", ayalaIds, all);
