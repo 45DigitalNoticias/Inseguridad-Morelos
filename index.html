@@ -4483,6 +4483,173 @@
   @media (max-width: 480px) {
     section, section.map-hub, .meta-section { padding: 64px 12px 24px 12px !important; }
   }
+
+  /* ============================================================ */
+  /* RESPONSIVE FIX 2026-04-30 · expansión dirigida por audit      */
+  /* ============================================================ */
+
+  img, svg, canvas { max-width: 100%; height: auto; }
+  table { max-width: 100%; }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .p-serie-canvas-wrap,
+    .chart-canvas-frame,
+    .deca-canvas-frame,
+    .nac-spiral-stage,
+    .nac-slope-wrap,
+    .nac-heatmap-wrap {
+      height: clamp(280px, 50vh, 500px) !important;
+    }
+    #sHero h1, .cover h1, .hero-headline {
+      font-size: clamp(32px, 5vw, 56px) !important;
+    }
+    .hero-kpi.hero-crown .v,
+    .conf-alert .pct-box .pct-huge,
+    .ay-boulevard .big-stat .big-num {
+      font-size: clamp(40px, 6vw, 72px) !important;
+    }
+    .hero-kpis,
+    .conf-grid,
+    .p-rank-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 12px !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .p-serie-canvas-wrap,
+    .chart-canvas-frame,
+    .deca-canvas-frame,
+    .nac-spiral-stage,
+    .nac-slope-wrap,
+    .nac-heatmap-wrap,
+    .cohort-canvas-frame,
+    .heatmap-wrap,
+    [class*="-canvas-frame"] {
+      height: clamp(240px, 50vh, 400px) !important;
+      max-height: 70vh;
+    }
+    .p-serie-canvas-wrap canvas,
+    .chart-canvas-frame canvas,
+    [class*="-canvas-frame"] canvas {
+      height: 100% !important;
+      width: 100% !important;
+    }
+
+    #sHero h1, .cover h1, .hero-headline {
+      font-size: clamp(28px, 7vw, 44px) !important;
+      line-height: 1.1 !important;
+    }
+    .hero-kpi.hero-crown .v {
+      font-size: clamp(36px, 9vw, 52px) !important;
+    }
+    .conf-alert .pct-box .pct-huge,
+    .ay-boulevard .big-stat .big-num {
+      font-size: clamp(34px, 9vw, 56px) !important;
+    }
+    section h2, section h3 { font-size: clamp(20px, 5vw, 30px) !important; }
+
+    .hero-kpis,
+    .conf-grid,
+    .p-rank-grid,
+    .conclusion-grid,
+    .two-col,
+    .two-col.balanced {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+    }
+
+    .rk-wrap, .cross-wrap,
+    div[style*="overflow-y: auto"],
+    div[style*="overflow-x: auto"] {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+    }
+    .rk-table, .cross-table, .q1-heatmap,
+    table.heatmap, .menores-table {
+      font-size: 11px !important;
+    }
+    .rk-table th, .cross-table th, .q1-heatmap th {
+      font-size: 9.5px !important;
+      padding: 5px 4px !important;
+    }
+    .rk-table td, .cross-table td, .q1-heatmap td {
+      padding: 5px 4px !important;
+    }
+
+    .share-strip button, .hero-cta, .nav-link,
+    button[class*="filter"], button[class*="toggle"] {
+      min-height: 40px;
+    }
+
+    .hero-kpi { padding: 16px 14px !important; }
+    .conf-alert { padding: 18px 16px !important; }
+    .rank-card, .conf-card { padding: 14px 16px !important; }
+
+    .lab-banner { padding: 8px 14px; font-size: 11px; }
+  }
+
+  @media (max-width: 480px) {
+    #sHero h1, .cover h1, .hero-headline {
+      font-size: clamp(24px, 8vw, 34px) !important;
+      letter-spacing: -0.5px !important;
+    }
+    .hero-kpi.hero-crown .v {
+      font-size: clamp(30px, 10vw, 44px) !important;
+    }
+    .conf-alert .pct-box .pct-huge,
+    .ay-boulevard .big-stat .big-num {
+      font-size: clamp(28px, 11vw, 44px) !important;
+    }
+    section h2, section h3 { font-size: clamp(18px, 6vw, 24px) !important; }
+
+    .p-serie-canvas-wrap,
+    .chart-canvas-frame,
+    [class*="-canvas-frame"] {
+      height: clamp(220px, 45vh, 320px) !important;
+    }
+
+    .rk-table, .cross-table, .q1-heatmap,
+    table.heatmap, .menores-table {
+      font-size: 10px !important;
+    }
+    .rk-table th, .cross-table th, .q1-heatmap th {
+      font-size: 8.5px !important;
+      padding: 4px 3px !important;
+    }
+    .rk-table td, .cross-table td, .q1-heatmap td {
+      padding: 4px 3px !important;
+    }
+
+    .q1-heatmap td .cell, table.heatmap td .cell {
+      padding: 3px 2px !important;
+      font-size: 9px !important;
+    }
+
+    .hero-kpi { padding: 14px 12px !important; }
+    .conf-alert { padding: 14px 14px !important; }
+    .rank-card, .conf-card { padding: 12px 14px !important; }
+
+    .share-strip button, .hero-cta {
+      padding: 10px 14px !important;
+      font-size: 12px !important;
+      min-height: 40px;
+    }
+
+    .meta-stat .v { font-size: clamp(28px, 9vw, 40px) !important; }
+  }
+
+  @media (max-width: 768px) {
+    .rk-wrap::after, .cross-wrap::after, .heatmap-wrap::after {
+      content: '← desliza →';
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; color: #fbbf24;
+      text-align: center; margin-top: 6px;
+      letter-spacing: 0.5px;
+      opacity: 0.85;
+    }
+  }
 </style>
 </head>
 <body>
