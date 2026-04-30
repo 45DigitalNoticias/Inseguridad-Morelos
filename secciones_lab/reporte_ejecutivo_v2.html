@@ -1998,6 +1998,33 @@
   const GLOSS = JSON.parse(document.getElementById('glossary').textContent);
   window.__D = D;
 
+  // Modo embed · si la URL tiene ?embed=1, ocultar lab-banner y notificar al parent del alto
+  const isEmbedded = new URLSearchParams(location.search).get('embed') === '1';
+  if (isEmbedded) {
+    const banner = document.querySelector('.lab-banner');
+    if (banner) banner.style.display = 'none';
+    document.documentElement.classList.add('embedded');
+    // notify parent of height changes
+    const notifyHeight = () => {
+      const h = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.documentElement.offsetHeight
+      );
+      try { window.parent.postMessage({ type: 'sME-height', h }, '*'); } catch(e) {}
+    };
+    window.addEventListener('load', () => {
+      notifyHeight();
+      setTimeout(notifyHeight, 500);
+      setTimeout(notifyHeight, 1500);
+      setTimeout(notifyHeight, 3000);
+    });
+    window.addEventListener('resize', notifyHeight);
+    // observer para cambios de DOM (glosario abriendo, secciones expandidas, mapa cambiando)
+    const ro = new ResizeObserver(() => notifyHeight());
+    ro.observe(document.body);
+  }
+
   document.getElementById('genDate').textContent = new Date(D.generated_at).toISOString().slice(0, 10);
 
   // motion preference

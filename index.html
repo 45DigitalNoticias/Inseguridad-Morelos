@@ -16869,244 +16869,110 @@
 
 <!-- =============================================================== -->
 <!-- sME · RESUMEN EJECUTIVO ESTATAL · BANDERAS ROJAS T1 2026         -->
-<!-- Teaser que enlaza al lab completo reporte_ejecutivo_v2.html      -->
+<!-- Embed completo del lab via iframe con altura dinamica            -->
 <!-- =============================================================== -->
 
 <style>
-  /* === sME · scoped al ID para no contaminar el dashboard === */
+  /* === sME · embed iframe del reporte ejecutivo === */
   #sME {
-    background: linear-gradient(180deg, rgba(251,191,36,0.04) 0%, rgba(13,17,23,0) 100%);
-    padding-top: 60px; padding-bottom: 60px;
+    padding: 0 !important;
+    margin: 0;
+    background: #0d1117;
+    overflow: hidden;
   }
-  #sME .me-eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; letter-spacing: 3px;
-    color: #fbbf24; font-weight: 800; text-transform: uppercase;
-    display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+  #sME .me-iframe-wrap {
+    width: 100%;
+    margin: 0 auto;
+    background: #0d1117;
   }
-  #sME .me-eyebrow::before {
-    content: ''; width: 36px; height: 2px; background: #fbbf24;
+  #sME-iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+    background: #0d1117;
+    min-height: 80vh;
+    transition: height 200ms ease;
   }
-  #sME .me-title {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: clamp(34px, 5vw, 56px);
-    line-height: 1.05; font-weight: 800; letter-spacing: -1.2px;
-    color: #e6edf3; margin-bottom: 18px; max-width: 22ch;
-  }
-  #sME .me-title em {
-    font-style: normal;
-    background: linear-gradient(135deg, #f85149 0%, #fbbf24 60%, #58a6ff 100%);
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  #sME .me-lead {
-    font-size: 16.5px; line-height: 1.6; color: #c9d1d9;
-    max-width: 78ch; text-align: justify; hyphens: auto;
-    margin-bottom: 36px;
-  }
-  #sME .me-lead strong { color: #e6edf3; }
-
-  /* 3 respuestas */
-  #sME .me-respuestas {
-    display: grid; grid-template-columns: 1fr; gap: 14px;
-    margin-bottom: 32px;
-  }
-  #sME .me-resp {
-    background: linear-gradient(160deg, rgba(22,27,34,0.95), rgba(22,27,34,0.6));
-    border: 1px solid rgba(48,54,61,0.7);
-    border-radius: 14px;
-    padding: 20px 28px; position: relative; overflow: hidden;
-  }
-  #sME .me-resp::before {
-    content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
-  }
-  #sME .me-resp.r1::before { background: #f85149; }
-  #sME .me-resp.r2::before { background: #a371f7; }
-  #sME .me-resp.r3::before { background: #fbbf24; }
-  #sME .me-resp .num {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: clamp(54px, 7vw, 84px);
-    font-weight: 900; line-height: 0.95; letter-spacing: -2px;
-    display: inline-block; margin-bottom: 6px;
-  }
-  #sME .me-resp.r1 .num { color: #f85149; }
-  #sME .me-resp.r2 .num { color: #a371f7; }
-  #sME .me-resp.r3 .num { color: #fbbf24; }
-  #sME .me-resp p {
-    font-size: 15.5px; line-height: 1.55; color: #c9d1d9;
-    text-align: justify; hyphens: auto; max-width: 70ch;
-  }
-  #sME .me-resp p strong { color: #e6edf3; font-weight: 700; }
-
-  /* tabla compacta de banderas */
-  #sME .me-banderas {
-    background: rgba(22,27,34,0.55);
-    border: 1px solid rgba(48,54,61,0.7); border-radius: 12px;
-    padding: 22px 26px; margin-bottom: 32px;
-  }
-  #sME .me-banderas h3 {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 22px; color: #e6edf3; font-weight: 700;
-    margin-bottom: 14px;
-  }
-  #sME .me-bg {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-  }
-  #sME .me-bg .me-cat {
-    background: rgba(13,17,23,0.4);
-    border: 1px solid rgba(48,54,61,0.6);
-    border-radius: 8px;
-    padding: 14px 16px;
-  }
-  #sME .me-bg .me-cat .cat-head {
-    display: flex; justify-content: space-between; align-items: baseline;
-    margin-bottom: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px; letter-spacing: 1.4px;
-    text-transform: uppercase; font-weight: 700;
-  }
-  #sME .me-bg .me-cat .cat-head .label { color: #8b949e; }
-  #sME .me-bg .me-cat .cat-head .count {
-    font-family: 'Fraunces', Georgia, serif; font-style: italic;
-    font-size: 18px; font-weight: 800;
-  }
-  #sME .me-bg .me-cat.par .cat-head .count { color: #f85149; }
-  #sME .me-bg .me-cat.par .cat-head .label { color: #ff7b72; }
-  #sME .me-bg .me-cat.prendido .cat-head .count { color: #fbbf24; }
-  #sME .me-bg .me-cat.prendido .cat-head .label { color: #d29922; }
-  #sME .me-bg .me-cat.explosivo .cat-head .count { color: #a371f7; }
-  #sME .me-bg .me-cat.explosivo .cat-head .label { color: #d2a8ff; }
-  #sME .me-bg .me-cat.estatal .cat-head .count { color: #58a6ff; }
-  #sME .me-bg .me-cat.estatal .cat-head .label { color: #79c0ff; }
-  #sME .me-bg .me-cat ul {
-    list-style: none; padding: 0; margin: 0;
-  }
-  #sME .me-bg .me-cat li {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px; color: #c9d1d9;
-    padding: 5px 0; line-height: 1.4;
-    display: flex; gap: 8px;
-  }
-  #sME .me-bg .me-cat li::before {
-    content: '•'; color: #6e7681;
-    font-weight: 800; flex-shrink: 0;
-  }
-  #sME .me-bg .me-cat li strong { color: #e6edf3; }
-
-  /* CTA al lab completo */
-  #sME .me-cta-wrap {
-    text-align: center; padding: 24px 0;
-  }
-  #sME .me-cta {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: linear-gradient(135deg, rgba(251,191,36,0.18), rgba(248,81,73,0.18));
-    border: 1px solid rgba(251,191,36,0.5);
+  /* loading state · placeholder mientras carga */
+  #sME-loading {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 60vh;
     color: #fbbf24;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px; font-weight: 800;
-    letter-spacing: 1.2px; text-transform: uppercase;
-    padding: 16px 28px; border-radius: 10px;
-    text-decoration: none;
-    transition: all 200ms;
+    font-size: 13px; letter-spacing: 1.2px;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(251,191,36,0.05) 0%, rgba(13,17,23,0) 100%);
   }
-  #sME .me-cta:hover {
-    background: linear-gradient(135deg, rgba(251,191,36,0.32), rgba(248,81,73,0.32));
-    color: #fff; border-color: #fbbf24;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 22px rgba(251,191,36,0.18);
+  #sME-loading::before {
+    content: '⚐';
+    display: inline-block; margin-right: 8px;
+    color: #fbbf24; font-size: 18px;
+    animation: smePulse 1.4s ease-in-out infinite;
   }
-  #sME .me-cta-sub {
-    margin-top: 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px; color: #6e7681;
-    letter-spacing: 0.5px;
-  }
-
-  @media (max-width: 768px) {
-    #sME .me-bg { grid-template-columns: 1fr; }
-    #sME .me-resp { padding: 16px 20px; }
-    #sME .me-resp .num { font-size: clamp(42px, 12vw, 64px); }
-    #sME .me-resp p { font-size: 14.5px; }
-    #sME .me-banderas { padding: 18px 20px; }
-    #sME .me-cta { font-size: 11.5px; padding: 14px 22px; letter-spacing: 0.8px; }
+  @keyframes smePulse {
+    0%, 100% { opacity: 0.5; }
+    50%      { opacity: 1; }
   }
 </style>
 
-<section id="sME">
-  <div class="me-eyebrow">RESUMEN EJECUTIVO ESTATAL · MORELOS · T1 2026</div>
-  <h2 class="me-title">Banderas rojas <em>Morelos</em> · primer trimestre 2026</h2>
-  <p class="me-lead">
-    Diecisiete anomalías estadísticas detectadas en los datos oficiales del SESNSP, comparadas contra los once primeros trimestres anteriores (2015-2025). Trece municipios concentran las banderas. Esta es la sección de referencia rápida; el <strong>reporte ejecutivo completo</strong> tiene la metodología, los pares espejo activos y el análisis municipio por municipio.
-  </p>
-
-  <div class="me-respuestas">
-    <article class="me-resp r1">
-      <span class="num">1,003</span>
-      <p><strong>lesiones culposas en enero-marzo</strong> · 31% más que el año pasado, y el <strong>99.8% sin especificar cómo</strong> ocurrieron. Las lesiones dolosas, en cambio, cayeron 31.6%. Cambio simétrico: la cuenta total se ve igual, pero la etiqueta cambió. <strong>Reclasificación espejo a nivel estado.</strong></p>
-    </article>
-    <article class="me-resp r2">
-      <span class="num">156</span>
-      <p><strong>carpetas de extorsión en enero-marzo</strong> · cuatro veces más que el promedio histórico, y ningún delito relacionado cae para compensar. <strong>La extorsión está creciendo, no migrando.</strong> Es el primer trimestre con más extorsiones de toda la serie 2015-2026.</p>
-    </article>
-    <article class="me-resp r3">
-      <span class="num">13</span>
-      <p><strong>municipios concentran las 17 banderas rojas</strong> detectadas. Yecapixtla, Tepalcingo y Jiutepec encabezan el ranking; <strong>Huitzilac aparece con 50 robos de coche con violencia</strong>, fenómeno verificado por la prensa nacional como punto rojo en la carretera federal México-Cuernavaca.</p>
-    </article>
-  </div>
-
-  <div class="me-banderas">
-    <h3>Las 17 banderas, agrupadas</h3>
-    <div class="me-bg">
-      <div class="me-cat estatal">
-        <div class="cat-head"><span class="label">Estatales</span><span class="count">2</span></div>
-        <ul>
-          <li><strong>Lesiones culposas</strong> · reclasificación espejo (LD↓ 215→147 / LC↑ 762→1,003)</li>
-          <li><strong>Extorsión</strong> · crecimiento real sin par (59 → 156)</li>
-        </ul>
-      </div>
-      <div class="me-cat par">
-        <div class="cat-head"><span class="label">Reclasificación espejo</span><span class="count">3</span></div>
-        <ul>
-          <li><strong>Yecapixtla</strong> · lesiones (LC↑ 18→32 / LD↓ 11→4)</li>
-          <li><strong>Yecapixtla</strong> · homicidios (HD↑ 3→14 / HC↓ 5→2)</li>
-          <li><strong>Jojutla</strong> · sexuales (AS↑ 5→11 / VL↓ 8→5)</li>
-        </ul>
-      </div>
-      <div class="me-cat prendido">
-        <div class="cat-head"><span class="label">Varios delitos al mismo tiempo</span><span class="count">6</span></div>
-        <ul>
-          <li><strong>Yecapixtla</strong> · 5 alzas simultáneas</li>
-          <li><strong>Tepalcingo</strong> · 5 alzas (VF, AM, LC, HD, NM)</li>
-          <li><strong>Jiutepec</strong> · 4 alzas (NM, HC, EXT, HOST)</li>
-          <li><strong>Tlalnepantla</strong> · 3 alzas extremas</li>
-          <li><strong>Jantetelco</strong> · 3 alzas</li>
-          <li><strong>Temixco</strong> · 3 alzas (LC, NM, EXT)</li>
-        </ul>
-      </div>
-      <div class="me-cat explosivo">
-        <div class="cat-head"><span class="label">Un delito disparado</span><span class="count">5</span></div>
-        <ul>
-          <li><strong>Huitzilac</strong> · RV 4→50 · ✓ verificado prensa</li>
-          <li><strong>Cuautla</strong> · EXT 33→60</li>
-          <li><strong>Xochitepec</strong> · RV 14→54</li>
-          <li><strong>Emiliano Zapata</strong> · NM 5→28</li>
-          <li><strong>Mazatepec</strong> · AM 7→12</li>
-        </ul>
-      </div>
-    </div>
-    <p style="margin-top: 16px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #6e7681; letter-spacing: 0.5px;">
-      + 1 caída sospechosa · Puente de Ixtla (homicidios cayeron al unísono · disonancia con prensa local · pendiente verificar corte junio 2026)
-    </p>
-  </div>
-
-  <div class="me-cta-wrap">
-    <a class="me-cta" href="secciones_lab/reporte_ejecutivo_v2.html" target="_blank" rel="noopener">
-      Ver reporte ejecutivo completo →
-    </a>
-    <div class="me-cta-sub">
-      Mapa interactivo · ranking por severidad · pares espejo con animación · tabla de 40 alzas · glosario y metodología
-    </div>
+<section id="sME" aria-label="Banderas rojas Morelos · primer trimestre 2026">
+  <div class="me-iframe-wrap">
+    <div id="sME-loading">cargando reporte ejecutivo · banderas rojas Morelos · T1 2026</div>
+    <iframe id="sME-iframe"
+            title="Reporte ejecutivo · banderas rojas Morelos T1 2026"
+            src="secciones_lab/reporte_ejecutivo_v2.html?embed=1"
+            loading="lazy"
+            scrolling="no"
+            style="display:none;"></iframe>
   </div>
 </section>
+
+<script>
+(function() {
+  const iframe = document.getElementById('sME-iframe');
+  const loading = document.getElementById('sME-loading');
+  if (!iframe) return;
+
+  let lastH = 0;
+  function applyHeight(h) {
+    if (!h || Math.abs(h - lastH) < 4) return;
+    lastH = h;
+    iframe.style.height = h + 'px';
+  }
+
+  // Recibir altura desde el iframe vía postMessage
+  window.addEventListener('message', (e) => {
+    if (e.source !== iframe.contentWindow) return;
+    if (e.data && e.data.type === 'sME-height' && typeof e.data.h === 'number') {
+      applyHeight(e.data.h);
+    }
+  });
+
+  // Fallback: medir directamente (mismo origen, funciona)
+  function measureFallback() {
+    try {
+      const doc = iframe.contentWindow && iframe.contentWindow.document;
+      if (!doc) return;
+      const h = Math.max(
+        doc.body ? doc.body.scrollHeight : 0,
+        doc.documentElement ? doc.documentElement.scrollHeight : 0,
+        doc.documentElement ? doc.documentElement.offsetHeight : 0
+      );
+      applyHeight(h);
+    } catch (err) { /* cross-origin · ignore */ }
+  }
+
+  iframe.addEventListener('load', () => {
+    loading.style.display = 'none';
+    iframe.style.display = 'block';
+    measureFallback();
+    setTimeout(measureFallback, 600);
+    setTimeout(measureFallback, 1500);
+    setTimeout(measureFallback, 3500);
+  });
+  window.addEventListener('resize', measureFallback);
+})();
+</script>
 
 <!-- =============================================================== -->
 <!-- ZM CUERNAVACA · SECCIÓN AGREGADA (sZM1-sZM3)                     -->
