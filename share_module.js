@@ -35,6 +35,7 @@
       sNAC6:  "T1 2026 — Morelos es #1 nacional en feminicidio, extorsión y robo de vehículo por tasa per cápita.",
       sNAC7:  "832 desapariciones en Morelos bajo confidencialidad total — el 40.7% del padrón.",
       sNAC8:  "El −62% de Harfuch en Morelos: mientras el homicidio baja, feminicidio +79%, extorsión +116% y 835 desapariciones bloqueadas.",
+      sAC:    "El Ángulo Conveniente — tres lecturas de la seguridad en Morelos: gobierno estatal, federación, ciudadanía. Cada una verificable, ninguna completa.",
       sME:    "Banderas rojas T1 2026 — la radiografía de Morelos por municipio.",
       sQ1:    "Q1 2026 — actualización SESNSP de incidencia delictiva en Morelos.",
     };
