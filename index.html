@@ -4907,6 +4907,7 @@
     <div class="nav-group-title">Panel estatal</div>
     <a href="#sHero" data-target="sHero"><span class="num num-icon" aria-label="Inicio"><svg viewBox="0 0 20 20"><path d="M10 2L2 9h2v8h5v-5h2v5h5V9h2L10 2z" fill="currentColor"/></svg></span>INICIO · RESUMEN</a>
     <a href="#sNAC1" data-target="sNAC1" style="border-left:3px solid #f85149;padding-left:8px;background:rgba(248,81,73,0.06);"><span class="num num-icon" aria-label="Década nacional"><svg viewBox="0 0 20 20"><path d="M2 17V7l4-3 4 3 4-3 4 3v10" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><circle cx="14" cy="7" r="2.2" fill="currentColor"/></svg></span><span style="color:#f85149;font-weight:700;">DÉCADA NACIONAL</span></a>
+    <a href="#sCOL" data-target="sCOL" style="border-left:3px solid #a78bfa;padding-left:8px;background:rgba(167,139,250,0.06);"><span class="num num-icon" aria-label="Columnas"><svg viewBox="0 0 20 20"><path d="M4 3v14M4 3h7a3 3 0 013 3v11M4 17h13M7 6h4M7 9h4M7 12h4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span style="color:#a78bfa;font-weight:700;">COLUMNAS</span></a>
     <a href="#s0" data-target="s0"><span class="num num-icon" aria-label="Mapa"><svg viewBox="0 0 20 20"><path d="M10 2C6.5 2 4 4.5 4 8c0 4.5 6 10 6 10s6-5.5 6-10c0-3.5-2.5-6-6-6zm0 8.3a2.3 2.3 0 110-4.6 2.3 2.3 0 010 4.6z" fill="currentColor"/></svg></span>MAPA</a>
     <a href="#sAC" data-target="sAC" style="border-left:3px solid #fbbf24;padding-left:8px;background:rgba(251,191,36,0.06);"><span class="num num-icon" aria-label="Ángulo Conveniente"><svg viewBox="0 0 20 20"><path d="M3 17 L10 4 L17 17" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="4" r="1.6" fill="currentColor"/><line x1="6.5" y1="11" x2="13.5" y2="11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/></svg></span><span style="color:#fbbf24;font-weight:700;">EL ÁNGULO CONVENIENTE</span></a>
     <a href="#sR" data-target="sR"><span class="num num-icon" aria-label="Ranking"><svg viewBox="0 0 20 20"><rect x="2.5" y="12" width="3.5" height="5.5" rx="0.6" fill="currentColor"/><rect x="8.25" y="7.5" width="3.5" height="10" rx="0.6" fill="currentColor"/><rect x="14" y="3" width="3.5" height="14.5" rx="0.6" fill="currentColor"/></svg></span>RANKING ESTATAL</a>
@@ -8102,6 +8103,277 @@
 </section>
 
 
+<!-- ============================================================
+     SECCIÓN sCOL · Columnas · Análisis editorial firmado
+     "Lo que Harfuch celebra y lo que oculta"
+     Cifras verificadas vs SESNSP archivo público abr-2026 +
+     RNPDNO snapshot 1-dic-2025. Ley de Campbell como marco.
+     ============================================================ -->
+<style>
+  #sCOL {
+    padding: 90px 24px 80px;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(167,139,250,0.05) 0%, transparent 55%),
+      linear-gradient(180deg, #0d1117 0%, #0a0f1a 100%);
+    color: #c9d1d9;
+  }
+  #sCOL .col-wrap { max-width: 780px; margin: 0 auto; }
+
+  /* CABECERA · estilo opinión periodística */
+  #sCOL .col-head {
+    border-bottom: 1px solid rgba(48,54,61,0.6);
+    padding-bottom: 28px; margin-bottom: 36px;
+  }
+  #sCOL .col-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 3.5px; text-transform: uppercase;
+    color: #a78bfa; font-weight: 700; margin-bottom: 14px;
+  }
+  #sCOL .col-title {
+    font-family: 'Fraunces', serif;
+    font-size: 46px; font-weight: 800; line-height: 1.05;
+    color: #e6edf3; letter-spacing: -1.5px; margin: 0 0 18px;
+  }
+  #sCOL .col-deck {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 19px; line-height: 1.4; color: #c9d1d9;
+    font-weight: 400; margin: 0 0 22px;
+  }
+  #sCOL .col-meta {
+    display: flex; flex-wrap: wrap; gap: 18px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: #8b949e; letter-spacing: 1.2px; text-transform: uppercase;
+  }
+  #sCOL .col-meta strong { color: #a78bfa; font-weight: 700; }
+
+  /* CUERPO · tipografía editorial */
+  #sCOL .col-body {
+    font-family: 'Fraunces', serif;
+    font-size: 17.5px; line-height: 1.78; color: #c9d1d9;
+  }
+  #sCOL .col-body p {
+    margin: 0 0 1.2em;
+    text-align: justify; hyphens: auto;
+  }
+  #sCOL .col-body p:first-of-type::first-letter {
+    font-size: 64px; font-weight: 800;
+    float: left; line-height: 0.92; padding: 6px 12px 0 0;
+    color: #fbbf24; font-family: 'Fraunces', serif;
+  }
+  #sCOL .col-body p strong { color: #e6edf3; font-weight: 700; }
+  #sCOL .col-body p em { color: #fbbf24; font-style: italic; font-weight: 500; }
+  #sCOL .col-body h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px; font-weight: 700; color: #e6edf3;
+    margin: 50px 0 18px; line-height: 1.2; letter-spacing: -0.3px;
+    padding-top: 24px; border-top: 1px solid rgba(48,54,61,0.4);
+  }
+  #sCOL .col-body h3:first-of-type { padding-top: 0; border-top: 0; }
+  #sCOL .col-body ul {
+    margin: 0 0 1.2em; padding-left: 0; list-style: none;
+  }
+  #sCOL .col-body ul li {
+    padding: 8px 0 8px 28px; position: relative;
+    text-align: justify; hyphens: auto;
+    line-height: 1.7;
+  }
+  #sCOL .col-body ul li::before {
+    content: "›"; position: absolute; left: 8px; top: 4px;
+    color: #fbbf24; font-weight: 700; font-size: 18px;
+  }
+
+  /* CITA DESTACADA · Ley de Campbell */
+  #sCOL .col-cita-bloque {
+    margin: 30px 0;
+    padding: 28px 32px;
+    background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(13,17,23,0.5));
+    border-left: 4px solid #a78bfa;
+    border-radius: 4px 12px 12px 4px;
+    position: relative;
+  }
+  #sCOL .col-cita-bloque::before {
+    content: "“"; position: absolute; top: -8px; left: 14px;
+    font-family: 'Fraunces', serif; font-size: 64px;
+    color: rgba(167,139,250,0.4); line-height: 1;
+  }
+  #sCOL .col-cita {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 20px; line-height: 1.5; color: #e6edf3;
+    margin: 0 0 12px; padding-left: 18px;
+  }
+  #sCOL .col-cita-fuente {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: #a78bfa; padding-left: 18px;
+  }
+  #sCOL .col-cita-fuente strong { color: #c4b5fd; }
+
+  /* SEPARADOR ornamental */
+  #sCOL .col-sep {
+    display: flex; align-items: center; justify-content: center;
+    margin: 40px 0; gap: 14px;
+    color: #6e7681; font-family: 'JetBrains Mono', monospace; font-size: 14px;
+  }
+  #sCOL .col-sep::before, #sCOL .col-sep::after {
+    content: ""; height: 1px; flex: 1; background: rgba(48,54,61,0.5);
+  }
+
+  /* PIE · firma + fuentes */
+  #sCOL .col-foot {
+    margin-top: 50px; padding-top: 24px;
+    border-top: 1px solid rgba(48,54,61,0.6);
+    font-family: 'Inter', sans-serif;
+  }
+  #sCOL .col-foot h4 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: #fbbf24; font-weight: 700; margin: 0 0 12px;
+  }
+  #sCOL .col-foot ul {
+    margin: 0; padding: 0; list-style: none;
+    font-size: 12.5px; line-height: 1.65; color: #8b949e;
+  }
+  #sCOL .col-foot ul li {
+    padding: 4px 0 4px 14px; position: relative;
+  }
+  #sCOL .col-foot ul li::before {
+    content: "·"; position: absolute; left: 4px; color: #6e7681;
+  }
+  #sCOL .col-foot ul li strong { color: #c9d1d9; }
+  #sCOL .col-foot .col-foot-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+    margin-top: 14px;
+  }
+
+  @media (max-width: 720px) {
+    #sCOL { padding: 60px 18px 50px; }
+    #sCOL .col-title { font-size: 34px; }
+    #sCOL .col-deck { font-size: 17px; }
+    #sCOL .col-body { font-size: 16px; }
+    #sCOL .col-body p:first-of-type::first-letter { font-size: 48px; }
+    #sCOL .col-foot .col-foot-grid { grid-template-columns: 1fr; gap: 22px; }
+    #sCOL .col-cita { font-size: 17px; padding-left: 8px; }
+  }
+</style>
+
+<section id="sCOL" aria-labelledby="sCOL-title">
+  <div class="col-wrap">
+
+    <header class="col-head">
+      <div class="col-eyebrow">COLUMNAS · ANÁLISIS EDITORIAL FIRMADO</div>
+      <h1 class="col-title" id="sCOL-title">Lo que Harfuch <em style="color:#fbbf24;">celebra</em> y lo que <em style="color:#a78bfa;">oculta</em></h1>
+      <p class="col-deck">
+        El secretario federal anunció una caída del 62.8% en homicidios de Morelos. La cifra es verificable. El ángulo, no.
+      </p>
+      <div class="col-meta">
+        <span>45 Digital Noticias</span>
+        <span>Mayo 2026</span>
+        <span><strong>Análisis editorial</strong></span>
+      </div>
+    </header>
+
+    <article class="col-body">
+
+      <p>El 27 de mayo, en la conferencia matutina de la presidenta Claudia Sheinbaum, el secretario de Seguridad federal <strong>Omar García Harfuch</strong> anunció que el homicidio doloso en Morelos había caído <strong>62.8%</strong> entre noviembre de 2024 y mayo de 2026. La cifra suena espectacular. Pasamos, dijo, de un promedio de 4.3 víctimas diarias a apenas 1.6.</p>
+
+      <p>La cifra es verificable. Lo confirmamos contra el archivo público del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública: noviembre de 2024 cerró con 128 víctimas de homicidio doloso en Morelos, exactamente 4.27 por día. La aritmética del secretario no miente.</p>
+
+      <p>Lo que miente es el ángulo.</p>
+
+      <h3>La trampa del baseline</h3>
+
+      <p>Para anunciar una baja del 62%, hay que elegir un punto de partida. Harfuch escogió noviembre de 2024. La elección no es inocente. <strong>El verdadero pico de violencia letal en Morelos no fue noviembre, sino abril de 2024</strong>, con 5.97 víctimas diarias —44% más alto que el promedio anual—. Si el secretario hubiera comparado contra ese mes, la baja sería del <strong>73%</strong>, tan grande que cualquiera notaría la selección conveniente del periodo base.</p>
+
+      <p>Si en cambio hubiera comparado <strong>2024 anual contra mayo 2026</strong> —año contra mes corriente—, la reducción sería de <strong>61.5%</strong>. Si hubiera comparado <strong>mayo 2025 contra mayo 2026</strong> —el estándar metodológico para controlar estacionalidad—, la baja sería de <strong>43.7%</strong>. Y si se aplicara el criterio más riguroso, <strong>6 meses simétricos contra 6 meses simétricos</strong>, la caída se desinfla a <strong>8.5%</strong>.</p>
+
+      <p>La cifra que Harfuch pregona es el punto medio entre la selección obvia y la métrica honesta: lo suficientemente espectacular para titular, lo suficientemente discreta para no ser obvia.</p>
+
+      <p>Hay un dato adicional que la mañanera no menciona. <strong>La curva descendente del homicidio en Morelos comenzó en julio de 2024</strong>, cuando el promedio diario pasó de 4.37 a 3.48 víctimas. Eso ocurrió tres meses antes de que Sheinbaum tomara protesta y antes de que el Gabinete de Seguridad coordinado entrara en operación. El secretario presume como resultado de su estrategia lo que, en buena parte, ya era inercia.</p>
+
+      <h3>La ley que el indicador no resiste</h3>
+
+      <p>En 1976, el sociólogo estadounidense Donald T. Campbell formuló un principio que la literatura académica conoce como <em>Ley de Campbell</em>:</p>
+
+      <div class="col-cita-bloque">
+        <p class="col-cita">Cuanto más se usa un indicador cuantitativo para la toma de decisiones sociales, más sujeto está a presiones de corrupción y más distorsiona los procesos sociales que pretende medir.</p>
+        <p class="col-cita-fuente"><strong>Donald T. Campbell · 1976</strong> · <em>Assessing the Impact of Planned Social Change</em></p>
+      </div>
+
+      <p>Es una observación empírica, no una crítica ideológica. Aparece en <em>Assessing the Impact of Planned Social Change</em> (Dartmouth College, 1976) y desde entonces ha sido validada en política educativa, salud pública, indicadores económicos y —especialmente— estadística criminal. El estudio canónico es el de Eli Silverman y John Eterno sobre el CompStat de la policía de Nueva York (<em>The Crime Numbers Game</em>, CRC Press, 2012), donde documentaron cómo la presión sobre el indicador "homicidio" generó incentivos burocráticos para reclasificar casos hacia categorías menos visibles.</p>
+
+      <p>La Ley de Campbell no afirma que haya mala fe. Afirma algo más incómodo: que <strong>cualquier organización</strong>, sometida a presión política sobre un solo indicador, modifica sus procesos de clasificación —a veces de manera consciente, a veces no— hasta que el indicador deja de medir la realidad que originalmente medía.</p>
+
+      <p>Es la lente exacta con la que conviene mirar el −62.8% de Morelos.</p>
+
+      <h3>Cuando un delito baja, otros suben</h3>
+
+      <p>El homicidio no es el único delito que registra Morelos. Cuando se comparan <strong>6 meses simétricos</strong> —noviembre 2024 a abril 2025 contra noviembre 2025 a abril 2026, el periodo exacto que Harfuch celebra— las otras cifras dicen otra cosa.</p>
+
+      <ul>
+        <li><strong>Extorsión: +116%.</strong> Las carpetas pasaron de <strong>147 a 318</strong> en el mismo intervalo. En abril de 2026, un solo mes, el SESNSP registró <strong>82 carpetas de extorsión en Morelos</strong> —máximo histórico mensual en la serie disponible—. El negocio criminal no solo no fue contenido: se duplicó mientras el homicidio bajaba.</li>
+        <li><strong>Violencia familiar: +18.9%.</strong> De <strong>2,693 a 3,201</strong> carpetas. Es el delito de mayor volumen absoluto entre los que crecieron, y el que más directamente refleja el deterioro del tejido social cotidiano.</li>
+        <li><strong>Feminicidio: +14.3%.</strong> De 14 a 16 carpetas. El alza es menor en términos porcentuales por la base baja, pero cada incremento en este indicador es una víctima identificada por la propia autoridad bajo el agravante específico de género.</li>
+        <li><strong>Servidores públicos · delitos: +112%.</strong> De 34 a 72 carpetas. Las imputaciones por delitos cometidos desde el servicio público se duplicaron en el mismo periodo en que se anuncia la baja de la violencia letal.</li>
+      </ul>
+
+      <h3>La violencia no se redujo, cambió de etiqueta</h3>
+
+      <p>Cuando un indicador delictivo baja por compromiso político y otros suben en paralelo, hay que mirar dónde se reclasificó la violencia. En Morelos, la base SESNSP muestra tres salidas activas en el mismo semestre simétrico:</p>
+
+      <ul>
+        <li><strong>Homicidio culposo: −24.7%.</strong> De 223 carpetas a 168. Este dato es importante: <em>descarta</em> que Morelos esté usando la salida clásica de reclasificar homicidios dolosos como "accidentes". Aquí el secretario no está mintiendo por esta vía. Pero hay otras.</li>
+        <li><strong>Lesiones culposas: +24.5%.</strong> De 1,514 carpetas a <strong>1,885</strong>. La categoría absorbe accidentes reales, sí, pero también casos donde la víctima muere después del incidente y el expediente no se actualiza a homicidio. Un alza de esta magnitud sin causa epidemiológica visible exige auditoría.</li>
+        <li><strong>"Otros delitos contra la vida y la integridad corporal": +24.3%.</strong> De 267 a 332 carpetas. Esta es la categoría más sospechosa porque es <em>residual</em> —definida por exclusión—. Aquí caben muertes violentas no clasificadas precisamente, homicidios donde no se determinó intencionalidad, "hechos por aclarar".</li>
+      </ul>
+
+      <p>Y finalmente, las desapariciones. El Registro Nacional de Personas Desaparecidas y No Localizadas contiene <strong>2,063 registros</strong> para Morelos al corte del 1 de diciembre de 2025. De esos, <strong>835 —el 40.5%— están bajo confidencialidad total</strong>. Verificamos directamente la base: en esos 835 registros, ni la fecha de desaparición, ni la fecha de registro, ni el sexo, ni la edad, ni el municipio están públicos. El <strong>92% de esos confidenciales —824 de 835— fueron aportados por la propia Fiscalía General de Morelos y la Comisión Local de Búsqueda del estado</strong>. La opacidad no la pidieron las familias: la determinó la autoridad estatal.</p>
+
+      <p>Estadísticamente, si los confidenciales se distribuyen en el tiempo como los registros visibles, entre 300 y 400 de esos 835 corresponden al periodo que Harfuch celebra como éxito. Y ninguno se cuenta en estadísticas públicas.</p>
+
+      <div class="col-sep">§</div>
+
+      <h3>La pregunta editorial</h3>
+
+      <p>El homicidio doloso en Morelos sí bajó. Es cierto.</p>
+
+      <p>La pregunta no es si bajó, sino qué significó.</p>
+
+      <p>Cuando el homicidio cae con magnitud política y simultáneamente la extorsión sube 116% y alcanza máximo histórico mensual, la violencia familiar sube 19%, los delitos de servidores públicos suben 112%, las lesiones culposas suben 25%, los "otros delitos contra la vida" suben 24%, y el 40% de las desapariciones están bloqueadas bajo confidencialidad institucional, lo que tenemos no es un éxito de seguridad pública.</p>
+
+      <p>Lo que tenemos es <strong>un cambio de forma de la violencia, presentado como reducción de la violencia</strong>. Es la Ley de Campbell operando en tiempo real: el indicador "homicidio doloso" se volvió palanca política, perdió capacidad de medir la realidad social que medía, y el sistema de registro encontró otras categorías donde acomodar lo que ya no podía caber en la primera.</p>
+
+      <p>El secretario eligió el dato que mejor titula. Eligió el periodo que mejor luce. Y dejó fuera —porque no convenían al titular— las cinco cifras que en cualquier auditoría seria del mismo periodo apuntan en dirección opuesta.</p>
+
+      <p>Las cifras no son de oposición. Son del propio gobierno. Están en el portal de transparencia del SESNSP y en el Registro Nacional público. Lo que pedimos no es que el secretario deje de presumir su trabajo. Es que <strong>lo presuma completo</strong>.</p>
+
+    </article>
+
+    <footer class="col-foot">
+      <div class="col-foot-grid">
+        <div>
+          <h4>Fuentes oficiales</h4>
+          <ul>
+            <li><strong>SESNSP</strong> · Estatal-Delitos 2015-2025 (corte abr-2026)</li>
+            <li><strong>SESNSP</strong> · RNID Estatal 2026 (corte abr-2026)</li>
+            <li><strong>SESNSP</strong> · Víctimas Estatales 2015-2025 (corte abr-2026)</li>
+            <li><strong>RNPDNO público</strong> · snapshot 1-dic-2025 · Comisión Nacional de Búsqueda</li>
+            <li>Conferencia matutina presidencial · 27-may-2026</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Marco teórico</h4>
+          <ul>
+            <li><strong>Donald T. Campbell</strong> · <em>Assessing the Impact of Planned Social Change</em>, Dartmouth College, 1976</li>
+            <li><strong>Eli B. Silverman &amp; John A. Eterno</strong> · <em>The Crime Numbers Game: Management by Manipulation</em>, CRC Press, 2012</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</section>
+
+
 <!-- SECCIÓN 0 — HUB DE MUNICIPIOS MORELOS (v2.1) -->
 <section id="s0" class="map-hub">
   <div class="hub-header">
@@ -8258,6 +8530,7 @@
     font-family: 'Inter', sans-serif;
     font-size: 16px; line-height: 1.75; color: #c9d1d9;
     max-width: 820px; margin: 0 auto;
+    text-align: justify; hyphens: auto;
   }
   #sAC .ac-lead strong { color: #e6edf3; }
   #sAC .ac-lead em { color: #fbbf24; font-style: normal; font-weight: 600; }
@@ -8279,6 +8552,7 @@
   #sAC .ac-sect-head p {
     color: #8b949e; font-size: 14px; line-height: 1.65; max-width: 780px;
     margin: 0 auto;
+    text-align: justify; hyphens: auto;
   }
 
   /* PISO 1 — EL MÉTODO DEL TITULAR (5 pasos verticales) */
@@ -8386,6 +8660,7 @@
   #sAC .ac-cierre h3 em { color: #fbbf24; font-style: italic; font-weight: 600; }
   #sAC .ac-cierre p {
     color: #c9d1d9; font-size: 14.5px; line-height: 1.75; margin: 0 0 14px;
+    text-align: justify; hyphens: auto;
   }
   #sAC .ac-cierre p strong { color: #e6edf3; }
   #sAC .ac-cierre p em { color: #fbbf24; font-style: normal; font-weight: 600; }
