@@ -67,6 +67,14 @@
       () => prompt("Copia este enlace:", url)
     );
   }
+  function shareInstagram() {
+    // Instagram no tiene share intent web — copiamos el enlace y guiamos al usuario.
+    const url = buildShareURL();
+    navigator.clipboard?.writeText(url).then(
+      () => showToast("Enlace copiado · pégalo en tu Story, DM o bio de Instagram"),
+      () => prompt("Copia este enlace y pégalo en Instagram:", url)
+    );
+  }
   function nativeShare() {
     if (navigator.share) {
       navigator.share({
@@ -137,8 +145,50 @@
   .rb-wa  .ico { background: #25D366; }
   .rb-tw  .ico { background: #000;     }
   .rb-fb  .ico { background: #1877F2; }
+  .rb-ig  .ico { background: linear-gradient(135deg, #f9ce34, #ee2a7b 50%, #6228d7); }
   .rb-tg  .ico { background: #229ED9; }
   .rb-cp  .ico { background: #6b7280; }
+
+  /* ---------- Barra inline (botones grandes dentro de la página) ---------- */
+  .rb-inline-share {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    margin: 36px auto 8px; max-width: 760px;
+    padding: 18px 22px;
+    background: rgba(13,17,23,0.55);
+    border: 1px solid rgba(251,191,36,0.20);
+    border-radius: 14px;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .rb-inline-share .rb-inline-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: #fbbf24; font-weight: 700;
+    flex: 0 0 auto; margin-right: 6px;
+  }
+  .rb-inline-share-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 14px; border: 0; border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    color: #e6edf3; font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+    transition: transform 0.12s, background 0.12s, box-shadow 0.18s;
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+  .rb-inline-share-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+  }
+  .rb-inline-share-btn[data-rb-share="wa"]:hover { background: #25D366; color: #0d1117; border-color: #25D366; }
+  .rb-inline-share-btn[data-rb-share="ig"]:hover { background: linear-gradient(135deg, #f9ce34, #ee2a7b 50%, #6228d7); color: #fff; border-color: transparent; }
+  .rb-inline-share-btn[data-rb-share="fb"]:hover { background: #1877F2; color: #fff; border-color: #1877F2; }
+  .rb-inline-share-btn[data-rb-share="tw"]:hover { background: #000; color: #fff; border-color: #fff; }
+  .rb-inline-share-btn[data-rb-share="cp"]:hover { background: #fbbf24; color: #0d1117; border-color: #fbbf24; }
+  .rb-inline-share-btn svg { width: 16px; height: 16px; }
+  @media (max-width: 600px) {
+    .rb-inline-share { padding: 14px 14px; gap: 8px; }
+    .rb-inline-share .rb-inline-label { flex-basis: 100%; margin-bottom: 4px; }
+    .rb-inline-share-btn { padding: 8px 12px; font-size: 12px; }
+  }
   .rb-share-toast {
     position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%) translateY(20px);
     background: rgba(13,17,23,0.96); color: #fbbf24;
@@ -176,6 +226,10 @@
           <span class="ico"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span>
           Facebook
         </button>
+        <button class="rb-share-btn rb-ig" data-action="ig">
+          <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></span>
+          Instagram
+        </button>
         <button class="rb-share-btn rb-tg" data-action="tg">
           <span class="ico"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></span>
           Telegram
@@ -208,12 +262,27 @@
     document.addEventListener("click", e => {
       if (!fab.contains(e.target)) fab.classList.remove("open");
     });
+    const actions = {
+      wa: shareWhatsApp,
+      tw: shareTwitter,
+      fb: shareFacebook,
+      ig: shareInstagram,
+      tg: shareTelegram,
+      cp: copyLink,
+    };
     menu.addEventListener("click", e => {
       const btn = e.target.closest("[data-action]");
       if (!btn) return;
       fab.classList.remove("open");
-      const act = btn.dataset.action;
-      ({ wa: shareWhatsApp, tw: shareTwitter, fb: shareFacebook, tg: shareTelegram, cp: copyLink })[act]?.();
+      actions[btn.dataset.action]?.();
+    });
+
+    // Botones inline embebidos en la página: <button data-rb-share="wa|tw|fb|ig|cp">…</button>
+    document.addEventListener("click", e => {
+      const btn = e.target.closest("[data-rb-share]");
+      if (!btn) return;
+      e.preventDefault();
+      actions[btn.dataset.rbShare]?.();
     });
   }
 
