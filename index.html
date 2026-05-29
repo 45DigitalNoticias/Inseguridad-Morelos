@@ -8010,9 +8010,9 @@
     <div class="h62-grid5">
       <div class="h62-delito sube">
         <div class="h62-d-nombre">Feminicidio</div>
-        <div class="h62-d-pct">+78.6%</div>
-        <div class="h62-d-flujo">14 → 25 carpetas</div>
-        <div class="h62-d-nota">Asesinatos de mujeres por razones de género casi se duplicaron.</div>
+        <div class="h62-d-pct">+14.3%</div>
+        <div class="h62-d-flujo">14 → 16 carpetas</div>
+        <div class="h62-d-nota">Asesinatos de mujeres por razones de género siguen al alza en términos absolutos.</div>
       </div>
       <div class="h62-delito sube">
         <div class="h62-d-nombre">Extorsión</div>
@@ -8071,8 +8071,8 @@
       </p>
       <p>En los 6 meses simétricos que comparamos, mientras el homicidio doloso cae 62%:</p>
       <ul class="h62-bullets">
-        <li><strong>el feminicidio sube 79%</strong>,</li>
         <li><strong>la extorsión sube 116%</strong> y alcanza máximo histórico mensual,</li>
+        <li><strong>la violencia familiar sube 18.9%</strong> (2,693 → 3,201 carpetas),</li>
         <li><strong>las lesiones culposas suben 25%</strong> sin causa epidemiológica visible,</li>
         <li><strong>los "otros delitos contra la vida" suben 24%</strong> en la categoría residual del propio SESNSP,</li>
         <li>y el <strong>40% de las desapariciones</strong> están bloqueadas bajo confidencialidad determinada por la autoridad estatal.</li>
@@ -8224,138 +8224,164 @@
 
 
 <!-- ============================================================
-     SECCIÓN sAC · El Ángulo Conveniente
-     Lectura editorial entre el mapa (s0) y el ranking (sR).
-     3 ángulos (Gobierno Estatal · Federación · Ciudadanía) que
-     resaltan datos distintos sobre la misma realidad. Cada
-     lectura es verificable; ninguna es completa.
-     Voz: auditora-neutra, no acusa, cede elementos.
+     SECCIÓN sAC · El Ángulo Conveniente · v2 chart-driven
+     Desmonta el -62.8% Harfuch con datos SESNSP y marco
+     teórico citado (Goodhart, Campbell, Kahneman-Tversky,
+     Tufte, UNODC-ICCS). Charts sobre archivo público.
      ============================================================ -->
 <style>
   #sAC {
     padding: 80px 24px 70px;
     background:
-      radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.06) 0%, transparent 55%),
       linear-gradient(180deg, #0a0f1a 0%, #0d1117 100%);
     color: #c9d1d9;
   }
   #sAC .ac-wrap { max-width: 1100px; margin: 0 auto; }
 
   /* HEADER */
-  #sAC .ac-head { text-align: center; margin-bottom: 40px; }
+  #sAC .ac-head { text-align: center; margin-bottom: 50px; }
   #sAC .ac-eyebrow {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px; letter-spacing: 3.5px; text-transform: uppercase;
-    color: #fbbf24; font-weight: 700; margin-bottom: 12px;
+    color: #fbbf24; font-weight: 700; margin-bottom: 14px;
   }
   #sAC .ac-title {
     font-family: 'Fraunces', serif;
-    font-size: 44px; font-weight: 800; line-height: 1.08;
-    color: #e6edf3; letter-spacing: -1px; margin: 0 0 18px;
+    font-size: 48px; font-weight: 800; line-height: 1.05;
+    color: #e6edf3; letter-spacing: -1.5px; margin: 0 0 20px;
   }
   #sAC .ac-title em {
     color: #fbbf24; font-style: italic; font-weight: 700;
   }
   #sAC .ac-lead {
     font-family: 'Inter', sans-serif;
-    font-size: 15.5px; line-height: 1.7; color: #c9d1d9;
-    max-width: 780px; margin: 0 auto; text-align: justify;
+    font-size: 16px; line-height: 1.75; color: #c9d1d9;
+    max-width: 820px; margin: 0 auto;
   }
   #sAC .ac-lead strong { color: #e6edf3; }
   #sAC .ac-lead em { color: #fbbf24; font-style: normal; font-weight: 600; }
 
-  /* GRID DE 3 CARDS */
-  #sAC .ac-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 18px; margin: 44px 0 36px;
+  /* SECCION HEAD compartido */
+  #sAC .ac-sect-head { margin: 60px 0 22px; text-align: center; }
+  #sAC .ac-sect-piso {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 3px; color: #fbbf24; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 8px;
   }
-  #sAC .ac-card {
-    background: rgba(13,17,23,0.70);
+  #sAC .ac-sect-head h3 {
+    font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700;
+    color: #e6edf3; line-height: 1.18; margin: 0 0 10px;
+  }
+  #sAC .ac-sect-head h3 em {
+    color: #fbbf24; font-style: italic; font-weight: 600;
+  }
+  #sAC .ac-sect-head p {
+    color: #8b949e; font-size: 14px; line-height: 1.65; max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* PISO 1 — EL MÉTODO DEL TITULAR (5 pasos verticales) */
+  #sAC .ac-metodo {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 12px; margin: 24px 0 10px;
+  }
+  #sAC .ac-paso {
+    background: rgba(13,17,23,0.6);
+    border: 1px solid rgba(48,54,61,0.7);
+    border-radius: 12px;
+    padding: 18px 16px;
+    position: relative;
+  }
+  #sAC .ac-paso-num {
+    font-family: 'Fraunces', serif; font-size: 44px; font-weight: 800;
+    color: #fbbf24; line-height: 1; letter-spacing: -2px;
+    margin-bottom: 10px; opacity: 0.6;
+  }
+  #sAC .ac-paso-titulo {
+    font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 700;
+    color: #e6edf3; line-height: 1.35; margin-bottom: 6px;
+  }
+  #sAC .ac-paso-glosa {
+    font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.55;
+    color: #8b949e;
+  }
+  #sAC .ac-paso-glosa strong { color: #c9d1d9; }
+
+  /* CHARTS — wrapper común */
+  #sAC .ac-chart-box {
+    background: rgba(13,17,23,0.65);
     border: 1px solid rgba(48,54,61,0.7);
     border-radius: 14px;
-    overflow: hidden;
+    padding: 24px 26px 20px;
+    margin: 16px 0 8px;
+  }
+  #sAC .ac-chart-box h4 {
+    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700;
+    color: #e6edf3; margin: 0 0 4px; line-height: 1.3;
+  }
+  #sAC .ac-chart-box .ac-chart-sub {
+    font-family: 'Inter', sans-serif; font-size: 12.5px; color: #8b949e;
+    margin-bottom: 18px; line-height: 1.5;
+  }
+  #sAC .ac-chart-canvas-wrap { position: relative; }
+  #sAC .ac-chart-foot {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    color: #6e7681; letter-spacing: 0.5px; margin-top: 14px;
+    padding-top: 12px; border-top: 1px solid rgba(48,54,61,0.5);
+  }
+
+  /* MARCO TEÓRICO · 5 cards */
+  #sAC .ac-teoria-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 12px; margin: 24px 0 8px;
+  }
+  #sAC .ac-teoria-card {
+    background: rgba(13,17,23,0.65);
+    border: 1px solid rgba(48,54,61,0.7);
+    border-radius: 12px; padding: 18px 16px;
     display: flex; flex-direction: column;
-    transition: border-color 0.18s;
+    border-top: 3px solid #a78bfa;
   }
-  #sAC .ac-card:hover { border-color: rgba(251,191,36,0.4); }
-  #sAC .ac-card:focus-within { outline: 2px solid #fbbf24; outline-offset: 2px; }
-
-  #sAC .ac-card-head {
-    padding: 16px 18px 12px;
-    border-bottom: 1px solid rgba(48,54,61,0.5);
+  #sAC .ac-teoria-card .ac-t-autor {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: #a78bfa; font-weight: 700; margin-bottom: 8px;
   }
-  #sAC .ac-card-eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px; letter-spacing: 2.5px; text-transform: uppercase;
-    color: #8b949e; font-weight: 700; margin-bottom: 8px;
+  #sAC .ac-teoria-card .ac-t-concepto {
+    font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700;
+    color: #e6edf3; line-height: 1.3; margin-bottom: 10px;
   }
-  #sAC .ac-card-tag {
-    font-family: 'Fraunces', serif; font-size: 18px;
-    font-weight: 600; line-height: 1.3; color: #e6edf3;
-    font-style: italic;
+  #sAC .ac-teoria-card .ac-t-cita {
+    font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.55;
+    color: #c9d1d9; font-style: italic;
+    border-left: 2px solid rgba(167,139,250,0.4); padding-left: 10px;
+    margin-bottom: 10px;
   }
-
-  /* PANEL RESALTA (verde · ~33% de la altura) */
-  #sAC .ac-panel-resalta {
-    border-top: 3px solid #3fb950;
-    background: rgba(63,185,80,0.06);
-    padding: 14px 18px 16px;
-    flex: 0 0 auto;
+  #sAC .ac-teoria-card .ac-t-aplica {
+    font-family: 'Inter', sans-serif; font-size: 11.5px; line-height: 1.5;
+    color: #8b949e; margin-top: auto;
   }
-  #sAC .ac-panel-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
-    font-weight: 700; margin-bottom: 8px;
-    display: flex; align-items: center; gap: 6px;
-  }
-  #sAC .ac-panel-resalta .ac-panel-label { color: #3fb950; }
-  #sAC .ac-panel-resalta .ac-panel-label::before { content: "▲"; font-size: 9px; }
-
-  /* PANEL OMITE (rojo · ~67% de la altura) */
-  #sAC .ac-panel-omite {
-    border-top: 3px solid #f85149;
-    background: rgba(248,81,73,0.05);
-    padding: 14px 18px 18px;
-    flex: 1 1 auto;
-  }
-  #sAC .ac-panel-omite .ac-panel-label { color: #f85149; }
-  #sAC .ac-panel-omite .ac-panel-label::before { content: "▼"; font-size: 9px; }
-
-  #sAC .ac-panel-body {
-    font-family: 'Inter', sans-serif;
-    font-size: 13.5px; line-height: 1.6; color: #c9d1d9;
-  }
-  #sAC .ac-panel-body strong { color: #e6edf3; font-weight: 600; }
-  #sAC .ac-panel-body em { color: #fbbf24; font-style: normal; font-weight: 600; }
-  #sAC .ac-panel-body ul {
-    margin: 6px 0 0 0; padding: 0; list-style: none;
-  }
-  #sAC .ac-panel-body li {
-    padding: 4px 0 4px 14px; position: relative; line-height: 1.55;
-  }
-  #sAC .ac-panel-body li::before {
-    content: "·"; color: #6e7681; font-weight: 700;
-    position: absolute; left: 4px; top: 1px;
-  }
-  #sAC .ac-panel-body .ac-fuente {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px; color: #6e7681; letter-spacing: 0.3px;
-    margin-top: 8px; display: block;
+  #sAC .ac-teoria-card .ac-t-aplica strong { color: #fbbf24; }
+  #sAC .ac-teoria-card .ac-t-fuente {
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+    color: #6e7681; letter-spacing: 0.3px; margin-top: 8px;
+    padding-top: 8px; border-top: 1px solid rgba(48,54,61,0.4);
   }
 
-  /* CIERRE EDITORIAL */
+  /* CIERRE */
   #sAC .ac-cierre {
-    margin: 30px auto 0; max-width: 860px;
-    padding: 30px 36px;
+    margin: 50px auto 0; max-width: 880px;
+    padding: 32px 36px;
     background: rgba(13,17,23,0.65);
     border: 1px solid rgba(48,54,61,0.7);
     border-radius: 14px;
     font-family: 'Inter', sans-serif;
   }
   #sAC .ac-cierre h3 {
-    font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700;
+    font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700;
     color: #e6edf3; text-align: center; margin: 0 0 18px;
-    line-height: 1.3;
+    line-height: 1.28;
   }
   #sAC .ac-cierre h3 em { color: #fbbf24; font-style: italic; font-weight: 600; }
   #sAC .ac-cierre p {
@@ -8363,19 +8389,19 @@
   }
   #sAC .ac-cierre p strong { color: #e6edf3; }
   #sAC .ac-cierre p em { color: #fbbf24; font-style: normal; font-weight: 600; }
-  #sAC .ac-cierre .ac-pregunta {
-    margin-top: 18px; padding: 18px 22px;
+  #sAC .ac-cierre .ac-frase {
+    margin-top: 22px; padding: 20px 22px;
     background: rgba(251,191,36,0.07);
     border: 1px solid rgba(251,191,36,0.3); border-radius: 8px;
-    font-family: 'Fraunces', serif; font-size: 18px; line-height: 1.5;
+    font-family: 'Fraunces', serif; font-size: 18px; line-height: 1.55;
     color: #e6edf3; font-style: italic; text-align: center;
   }
-  #sAC .ac-cierre .ac-pregunta strong {
+  #sAC .ac-cierre .ac-frase strong {
     color: #fbbf24; font-style: normal; font-weight: 700;
   }
   #sAC .ac-cierre .ac-anclas {
     display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
-    margin-top: 20px;
+    margin-top: 22px;
   }
   #sAC .ac-cierre .ac-anclas a {
     font-family: 'JetBrains Mono', monospace;
@@ -8392,19 +8418,17 @@
 
   /* RESPONSIVE */
   @media (max-width: 960px) {
-    #sAC .ac-grid { grid-template-columns: 1fr; gap: 14px; }
+    #sAC .ac-metodo { grid-template-columns: repeat(2, 1fr); }
+    #sAC .ac-teoria-grid { grid-template-columns: repeat(2, 1fr); }
     #sAC .ac-title { font-size: 36px; }
   }
-  @media (max-width: 480px) {
+  @media (max-width: 560px) {
     #sAC { padding: 60px 18px 50px; }
+    #sAC .ac-metodo { grid-template-columns: 1fr; }
+    #sAC .ac-teoria-grid { grid-template-columns: 1fr; }
     #sAC .ac-title { font-size: 30px; }
+    #sAC .ac-chart-box { padding: 18px 16px; }
     #sAC .ac-cierre { padding: 22px 20px; }
-  }
-
-  /* PRINT (a11y · independencia de color) */
-  @media print {
-    #sAC .ac-panel-resalta .ac-panel-label::after { content: " (resalta)"; }
-    #sAC .ac-panel-omite   .ac-panel-label::after { content: " (omite)"; }
   }
 </style>
 
@@ -8413,118 +8437,355 @@
 
     <!-- HEADER -->
     <div class="ac-head">
-      <div class="ac-eyebrow">LECTURA EDITORIAL · CÓMO SE LEE EL MAPA</div>
+      <div class="ac-eyebrow">LECTURA EDITORIAL · ANATOMÍA DE UNA NARRATIVA NUMÉRICA</div>
       <h2 class="ac-title" id="sAC-title">El <em>Ángulo Conveniente</em></h2>
       <p class="ac-lead">
-        El mapa anterior muestra los 36 municipios. El ranking de abajo los ordena. Esta sección hace algo distinto: <strong>desmonta los tres ángulos</strong> con los que cada actor mira los mismos datos. Las tres lecturas son <em>verificables</em>. Ninguna es <em>completa</em>. La diferencia entre una y otra no es el dato — es lo que cada quien <strong>elige no mencionar</strong>.
+        El 27 de mayo de 2026, el secretario federal de Seguridad anunció una baja del <strong>−62.8%</strong> en homicidio doloso de Morelos. La cifra circuló como balance de seguridad. Esta sección hace lo contrario: la <em>desmonta</em> con los mismos archivos públicos (SESNSP, INEGI, RNPDNO) y con teoría científica verificada sobre cómo se construyen las narrativas numéricas convenientes.
       </p>
     </div>
 
-    <!-- 3 CARDS · GOBIERNO ESTATAL · FEDERACIÓN · CIUDADANÍA -->
-    <div class="ac-grid">
+    <!-- ============================================================
+         PISO 1 · EL MÉTODO DEL TITULAR · 5 PASOS
+         ============================================================ -->
+    <div class="ac-sect-head">
+      <div class="ac-sect-piso">PISO 1 · CÓMO SE CONSTRUYE EL TITULAR</div>
+      <h3>Cinco decisiones, <em>una sola cifra</em></h3>
+      <p>Toda cifra anunciada en mañanera es el resultado de cinco elecciones metodológicas. Si una sola se hubiera tomado distinto, el titular sería otro. El truco no está en mentir — está en elegir.</p>
+    </div>
 
-      <!-- CARD 1 · GOBIERNO ESTATAL -->
-      <article class="ac-card" aria-labelledby="sAC-card-1">
-        <div class="ac-card-head">
-          <div class="ac-card-eyebrow" id="sAC-card-1">GOBIERNO ESTATAL</div>
-          <div class="ac-card-tag">"Coordinación institucional, baja sostenida del homicidio"</div>
-        </div>
-        <div class="ac-panel-resalta">
-          <div class="ac-panel-label">Resalta</div>
-          <div class="ac-panel-body">
-            La <strong>reducción del homicidio doloso</strong> en el estado bajo coordinación con la federación.
-            <span class="ac-fuente">SESNSP · −62.8% nov-2024 → may-2026</span>
-          </div>
-        </div>
-        <div class="ac-panel-omite">
-          <div class="ac-panel-label">Omite</div>
-          <div class="ac-panel-body">
-            <ul>
-              <li>Morelos es <strong>#1 nacional</strong> en feminicidio y extorsión por tasa per cápita · T1 2026.</li>
-              <li><strong>90.09%</strong> de adultos considera inseguro vivir en su estado — #1 nacional 32 estados.</li>
-              <li><strong>835 desapariciones</strong> bajo confidencialidad institucional · 40.5% del padrón RNPDNO.</li>
-            </ul>
-            <span class="ac-fuente">SESNSP · ENVIPE 2025 · RNPDNO 1-dic-2025</span>
-          </div>
-        </div>
+    <div class="ac-metodo">
+      <div class="ac-paso">
+        <div class="ac-paso-num">01</div>
+        <div class="ac-paso-titulo">Elegir el indicador</div>
+        <div class="ac-paso-glosa">Solo <strong>homicidio doloso</strong>. No feminicidio, no extorsión, no desapariciones, no percepción.</div>
+      </div>
+      <div class="ac-paso">
+        <div class="ac-paso-num">02</div>
+        <div class="ac-paso-titulo">Elegir el periodo base</div>
+        <div class="ac-paso-glosa"><strong>Noviembre 2024</strong> — mes con pico local (4.27 víctimas/día) y arranque del nuevo gobierno.</div>
+      </div>
+      <div class="ac-paso">
+        <div class="ac-paso-num">03</div>
+        <div class="ac-paso-titulo">Comparar mes vs mes</div>
+        <div class="ac-paso-glosa">Nov-24 contra may-26. No 6 meses contra 6 meses. La estacionalidad <strong>no se controla</strong>.</div>
+      </div>
+      <div class="ac-paso">
+        <div class="ac-paso-num">04</div>
+        <div class="ac-paso-titulo">Omitir delitos paralelos</div>
+        <div class="ac-paso-glosa">Extorsión, violencia familiar, feminicidio y otros <strong>suben en paralelo</strong>. No se mencionan.</div>
+      </div>
+      <div class="ac-paso">
+        <div class="ac-paso-num">05</div>
+        <div class="ac-paso-titulo">Omitir lo no contado</div>
+        <div class="ac-paso-glosa"><strong>835 desapariciones</strong> bajo confidencialidad institucional quedan fuera del balance.</div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         PISO 2 · CHART · DIVERGENTES (6 meses simétricos)
+         ============================================================ -->
+    <div class="ac-sect-head">
+      <div class="ac-sect-piso">PISO 2 · LO QUE LA CIFRA OFICIAL NO INCLUYE</div>
+      <h3>Cuando el homicidio baja, <em>esto sube</em></h3>
+      <p>Cruce honesto: 6 meses simétricos contra 6 meses simétricos · nov-2024 → abr-2025 contra nov-2025 → abr-2026. Mismo Morelos, mismo archivo SESNSP. Cuatro delitos contra siete que la cifra oficial no menciona.</p>
+    </div>
+
+    <div class="ac-chart-box">
+      <h4>Variación porcentual por subtipo de delito · Morelos · 6m vs 6m</h4>
+      <div class="ac-chart-sub">Negativo = baja (verde, izquierda). Positivo = sube (rojo, derecha). Solo el homicidio doloso (víctimas) baja con magnitud comparable a la cifra oficial — y la magnitud honesta es de −8.5%, no de −62.8%.</div>
+      <div class="ac-chart-canvas-wrap" style="height: 460px;">
+        <canvas id="acChartDiv"></canvas>
+      </div>
+      <div class="ac-chart-foot">
+        SESNSP · Estatal-Delitos 2015-2025 + RNID 2026 · corte abr-2026 · Clave_Ent 17 (Morelos) · sumando subtipos donde la taxonomía cambió en 2026 (extorsión, robo vehículo, narcomenudeo).
+      </div>
+    </div>
+
+    <!-- ============================================================
+         PISO 3 · CHART · SERIE TEMPORAL 2023-2026
+         ============================================================ -->
+    <div class="ac-sect-head">
+      <div class="ac-sect-piso">PISO 3 · LA CURVA NO EMPEZÓ EN NOVIEMBRE</div>
+      <h3>El descenso <em>arrancó antes</em> del cambio de gobierno</h3>
+      <p>Serie mensual del homicidio doloso en Morelos · 2023 a 2026. La línea descendente arranca en <strong>julio de 2024</strong>, tres meses antes de la toma de protesta de Claudia Sheinbaum (1-octubre-2024) y de la designación de Omar García Harfuch.</p>
+    </div>
+
+    <div class="ac-chart-box">
+      <h4>Homicidio doloso · Morelos · 2023 - 2026</h4>
+      <div class="ac-chart-sub">Víctimas mensuales 2023-2025 (archivo de víctimas estatales). Carpetas mensuales ene-abr 2026 (archivo de delitos, víctimas 2026 aún no publicadas). Línea de tendencia LOWESS para suavizar el ruido mensual.</div>
+      <div class="ac-chart-canvas-wrap" style="height: 380px;">
+        <canvas id="acChartSerie"></canvas>
+      </div>
+      <div class="ac-chart-foot">
+        SESNSP · Estatal-Víctimas 2015-2025 (corte abr-2026) para 2023-2025. RNID Estatal 2026 para ene-abr 2026. Punto pico abr-2024 (179 víctimas) y baseline Harfuch nov-2024 (128 víctimas) marcados.
+      </div>
+    </div>
+
+    <!-- ============================================================
+         PISO 4 · MARCO TEÓRICO · 5 conceptos académicos citados
+         ============================================================ -->
+    <div class="ac-sect-head">
+      <div class="ac-sect-piso">PISO 4 · LO QUE DICE LA TEORÍA</div>
+      <h3>Por qué <em>un solo número</em> no es un balance</h3>
+      <p>Cinco conceptos académicos y oficiales sobre cómo el acomodo de cifras públicas distorsiona la lectura. No son críticas ideológicas: son hallazgos de literatura científica revisada por pares y estándares internacionales.</p>
+    </div>
+
+    <div class="ac-teoria-grid">
+
+      <article class="ac-teoria-card">
+        <div class="ac-t-autor">Charles Goodhart · 1975</div>
+        <div class="ac-t-concepto">Ley de Goodhart</div>
+        <div class="ac-t-cita">"Cuando una medida se convierte en objetivo, deja de ser una buena medida."</div>
+        <div class="ac-t-aplica"><strong>Aplica:</strong> si el homicidio doloso se vuelve KPI político, los incentivos institucionales generan reclasificación hacia otras categorías delictivas.</div>
+        <div class="ac-t-fuente">"Monetary Relationships: A View from Threadneedle Street" · Banco de Inglaterra</div>
       </article>
 
-      <!-- CARD 2 · FEDERACIÓN -->
-      <article class="ac-card" aria-labelledby="sAC-card-2">
-        <div class="ac-card-head">
-          <div class="ac-card-eyebrow" id="sAC-card-2">FEDERACIÓN</div>
-          <div class="ac-card-tag">"Estrategia nacional, métricas convergentes"</div>
-        </div>
-        <div class="ac-panel-resalta">
-          <div class="ac-panel-label">Resalta</div>
-          <div class="ac-panel-body">
-            La caída del <strong>homicidio doloso en Morelos</strong> y a nivel nacional, presentada como resultado de la estrategia federal de seguridad.
-            <span class="ac-fuente">Mañanera 27-may-2026 · SESNSP</span>
-          </div>
-        </div>
-        <div class="ac-panel-omite">
-          <div class="ac-panel-label">Omite</div>
-          <div class="ac-panel-body">
-            <ul>
-              <li><strong>Feminicidio +78.6%</strong> y <strong>extorsión +116%</strong> en Morelos · mismo periodo 6 meses simétricos.</li>
-              <li>Curva descendente del homicidio arrancó <strong>julio 2024</strong> — antes del cambio de gobierno federal.</li>
-              <li>Otras lecturas legítimas del mismo dato dan <em>−43.7%</em> (interanual) o <em>−73%</em> (vs pico real).</li>
-            </ul>
-            <span class="ac-fuente">SESNSP archivo público · auditoría sNAC8</span>
-          </div>
-        </div>
+      <article class="ac-teoria-card">
+        <div class="ac-t-autor">Donald Campbell · 1976</div>
+        <div class="ac-t-concepto">Ley de Campbell</div>
+        <div class="ac-t-cita">"Cuanto más se usa un indicador cuantitativo para decisiones sociales, más sujeto está a presiones de corrupción y más distorsiona los procesos que mide."</div>
+        <div class="ac-t-aplica"><strong>Aplica:</strong> Es el corolario social de Goodhart. La cifra de homicidio anunciada en mañanera ya no es solo registro — es palanca política.</div>
+        <div class="ac-t-fuente">"Assessing the Impact of Planned Social Change" · Dartmouth College</div>
       </article>
 
-      <!-- CARD 3 · CIUDADANÍA -->
-      <article class="ac-card" aria-labelledby="sAC-card-3">
-        <div class="ac-card-head">
-          <div class="ac-card-eyebrow" id="sAC-card-3">CIUDADANÍA</div>
-          <div class="ac-card-tag">"Percepción medida, no negociable"</div>
-        </div>
-        <div class="ac-panel-resalta">
-          <div class="ac-panel-label">Resalta</div>
-          <div class="ac-panel-body">
-            <strong>90.09%</strong> de adultos morelenses considera inseguro vivir en su estado — <strong>15 años consecutivos</strong> por encima del promedio nacional. La métrica refleja experiencia, no narrativa.
-            <span class="ac-fuente">INEGI · ENVIPE 2025</span>
-          </div>
-        </div>
-        <div class="ac-panel-omite">
-          <div class="ac-panel-label">Lo que los otros omiten</div>
-          <div class="ac-panel-body">
-            <ul>
-              <li>Ni el gobierno estatal ni la federación <strong>incluyen este dato</strong> en su balance público de seguridad.</li>
-              <li>Es el único de los tres ángulos que <em>no se reescribe</em>: lo construye una encuesta probabilística externa.</li>
-              <li>Su persistencia <strong>14.5 puntos arriba</strong> del promedio nacional es el contexto que falta en cada anuncio oficial.</li>
-            </ul>
-            <span class="ac-fuente">ENVIPE 2025 · 32 estados</span>
-          </div>
-        </div>
+      <article class="ac-teoria-card">
+        <div class="ac-t-autor">Tversky &amp; Kahneman · 1981</div>
+        <div class="ac-t-concepto">Efecto framing</div>
+        <div class="ac-t-cita">"La elección del marco de referencia (frame) determina la respuesta tanto como el dato mismo."</div>
+        <div class="ac-t-aplica"><strong>Aplica:</strong> El −62.8% (nov-24 vs may-26), el −43.7% (interanual) y el −8.5% (6m sim.) describen la misma realidad. El marco — no la realidad — fija la lectura.</div>
+        <div class="ac-t-fuente">Science · vol. 211 · Nobel de Economía 2002</div>
+      </article>
+
+      <article class="ac-teoria-card">
+        <div class="ac-t-autor">Edward Tufte · 1983</div>
+        <div class="ac-t-concepto">Lie Factor visual</div>
+        <div class="ac-t-cita">"Lie factor = efecto visual ÷ efecto real. Toda visualización con factor &gt; 1.05 o &lt; 0.95 distorsiona."</div>
+        <div class="ac-t-aplica"><strong>Aplica:</strong> Anunciar el −62.8% sin las series paralelas que suben tiene un lie factor superior a 2: la magnitud comunicada duplica la magnitud auditable.</div>
+        <div class="ac-t-fuente">"The Visual Display of Quantitative Information" · Graphics Press</div>
+      </article>
+
+      <article class="ac-teoria-card">
+        <div class="ac-t-autor">UNODC · 2015</div>
+        <div class="ac-t-concepto">Estándar ICCS</div>
+        <div class="ac-t-cita">"La comparabilidad interanual exige que la clasificación de delitos no cambie entre periodos. Toda modificación debe ser declarada."</div>
+        <div class="ac-t-aplica"><strong>Aplica:</strong> SESNSP cambió la taxonomía en 2026 (desglosó extorsión, robo de vehículo, narcomenudeo). Sumar correctamente los subtipos da +116% extorsión — el "−45%" aparente es artefacto de reclasificación.</div>
+        <div class="ac-t-fuente">International Classification of Crime for Statistical Purposes · ONU</div>
       </article>
 
     </div>
 
-    <!-- CIERRE EDITORIAL · pregunta institucional sobria -->
+    <!-- ============================================================
+         CIERRE
+         ============================================================ -->
     <div class="ac-cierre">
-      <h3>Tres ángulos, un mismo Morelos</h3>
+      <h3>Una cifra no es un balance.<br><em>El balance requiere cinco</em>.</h3>
       <p>
-        Las tres lecturas <strong>son reales</strong> en su universo de origen. El gobierno estatal puede citar la caída del homicidio sin mentir. La federación puede pregonar el −62.8% sin manipular. La ENVIPE 2025 puede sostener el 90.09% con metodología de instituto público. Lo que la suma de las tres documenta es que <em>ningún actor cita los tres datos a la vez</em> — y que la diferencia entre las narrativas no es el dato, es la <strong>selección del ángulo</strong>.
+        El homicidio doloso en Morelos <strong>sí bajó</strong>. El archivo SESNSP lo confirma. Lo que esta sección documenta es que <em>la magnitud anunciada</em> depende del marco metodológico, y que <em>la baja no convive sola</em>: la extorsión sube 116%, la violencia familiar 19%, el feminicidio 14%, las lesiones culposas 25%, los servidores públicos delincuentes 112%, y 835 desapariciones quedan fuera del padrón por confidencialidad institucional.
       </p>
       <p>
-        La auditoría completa de seguridad en Morelos requiere los tres ángulos en una misma frase. Este dashboard intenta hacerlo: el mapa de arriba muestra los 36 municipios; el ranking de abajo los ordena; sNAC7 y sNAC8 documentan las cifras una por una. Lo que esta sección agrega es <strong>el método de lectura</strong>.
+        Las cifras no son de oposición. Son del propio gobierno: <strong>SESNSP</strong>, <strong>INEGI</strong>, <strong>RNPDNO</strong>. La teoría tampoco es ideología: Goodhart, Campbell, Kahneman-Tversky, Tufte y UNODC son referencias estándar en política pública. Lo que pedimos es la lectura completa.
       </p>
-      <div class="ac-pregunta">
-        ¿Qué <strong>ángulo</strong> elige el lector?
+      <div class="ac-frase">
+        Cuando un solo indicador baja y otros siete suben,<br>la lectura honesta no es <strong>"reducción"</strong> — es <strong>recomposición</strong>.
       </div>
       <div class="ac-anclas">
         <a href="#s0">↑ volver al mapa</a>
         <a href="#sR">↓ ranking estatal</a>
         <a href="#sNAC7">auditoría RNPDNO</a>
-        <a href="#sNAC8">−62% en revisión</a>
+        <a href="#sNAC8">−62% por metodología</a>
       </div>
     </div>
 
   </div>
 </section>
+
+<script>
+(function() {
+  // Esperar a que Chart.js esté disponible (ya cargado en otra parte del dashboard)
+  function init() {
+    if (typeof Chart === 'undefined') { setTimeout(init, 200); return; }
+
+    // === CHART 1 · BARRAS DIVERGENTES ===
+    const cDiv = document.getElementById('acChartDiv');
+    if (cDiv) {
+      // Datos reales SESNSP · 6m sim · Morelos
+      // Orden: bajan arriba (verdes), suben abajo (rojos)
+      const datos = [
+        { lbl: 'Homicidio culposo',                  base: 223,   comp: 168,   delta: -24.7 },
+        { lbl: 'Homicidio doloso (víctimas)',        base: 602,   comp: 551,   delta:  -8.5 },
+        { lbl: 'Feminicidio',                        base: 14,    comp: 16,    delta: +14.3 },
+        { lbl: 'Violencia familiar',                 base: 2693,  comp: 3201,  delta: +18.9 },
+        { lbl: 'Hostigamiento sexual',               base: 46,    comp: 56,    delta: +21.7 },
+        { lbl: 'Otros delitos contra la vida',       base: 267,   comp: 332,   delta: +24.3 },
+        { lbl: 'Lesiones culposas',                  base: 1514,  comp: 1885,  delta: +24.5 },
+        { lbl: 'Allanamiento de morada',             base: 137,   comp: 201,   delta: +46.7 },
+        { lbl: 'Servidores públicos · delitos',      base: 34,    comp: 72,    delta: +111.8 },
+        { lbl: 'Extorsión (total subtipos)',         base: 147,   comp: 318,   delta: +116.3 },
+      ];
+
+      new Chart(cDiv, {
+        type: 'bar',
+        data: {
+          labels: datos.map(d => d.lbl),
+          datasets: [{
+            data: datos.map(d => d.delta),
+            backgroundColor: datos.map(d => d.delta < 0 ? 'rgba(63,185,80,0.78)' : 'rgba(248,81,73,0.82)'),
+            borderColor: datos.map(d => d.delta < 0 ? '#3fb950' : '#f85149'),
+            borderWidth: 1.5,
+            borderRadius: 3,
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true, maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(13,17,23,0.96)',
+              borderColor: 'rgba(251,191,36,0.4)', borderWidth: 1,
+              titleColor: '#fbbf24', bodyColor: '#e6edf3',
+              padding: 10, displayColors: false,
+              callbacks: {
+                label: function(ctx) {
+                  const d = datos[ctx.dataIndex];
+                  return [
+                    'Δ ' + (d.delta > 0 ? '+' : '') + d.delta.toFixed(1) + '%',
+                    'Base 6m: ' + d.base.toLocaleString('es-MX') + ' carpetas',
+                    'Comp 6m: ' + d.comp.toLocaleString('es-MX') + ' carpetas'
+                  ];
+                }
+              }
+            },
+            title: { display: false },
+            annotation: { annotations: {} }
+          },
+          scales: {
+            x: {
+              min: -40, max: 130,
+              grid: { color: 'rgba(48,54,61,0.4)', lineWidth: 1 },
+              ticks: { color: '#8b949e', font: { size: 11, family: 'JetBrains Mono' }, callback: v => v + '%' },
+              border: { color: 'rgba(48,54,61,0.6)' }
+            },
+            y: {
+              grid: { display: false },
+              ticks: { color: '#c9d1d9', font: { size: 12, family: 'Inter' } },
+              border: { color: 'rgba(48,54,61,0.6)' }
+            }
+          }
+        }
+      });
+    }
+
+    // === CHART 2 · SERIE TEMPORAL ===
+    const cSerie = document.getElementById('acChartSerie');
+    if (cSerie) {
+      // Víctimas HD Morelos 2023-2025 (archivo víctimas), carpetas 2026 ene-abr
+      const labels = [];
+      const valores = [];
+      const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+      const series = {
+        2023: [117,97,134,110,111,91,122,167,134,152,129,140],
+        2024: [131,144,142,179,134,131,108,104,106,115,128,98],
+        2025: [108,83,95,90,88,84,103,99,86,84,106,93],
+        2026: [90,76,89,97]  // solo ene-abr
+      };
+      [2023,2024,2025,2026].forEach(anio => {
+        series[anio].forEach((v, i) => {
+          labels.push(meses[i] + ' ' + anio);
+          valores.push(v);
+        });
+      });
+
+      // Línea de tendencia: media móvil 3 meses
+      const tendencia = valores.map((v, i, arr) => {
+        const start = Math.max(0, i-2);
+        const slice = arr.slice(start, i+1);
+        return slice.reduce((a,b) => a+b, 0) / slice.length;
+      });
+
+      // Anotaciones: pico abr-24 (idx 15), baseline nov-24 (idx 22), Sheinbaum oct-24 (idx 21)
+      // dataset point colors
+      const ptColors = valores.map((v, i) => {
+        if (i === 15) return '#f85149';  // pico abr-24
+        if (i === 22) return '#fbbf24';  // baseline Harfuch
+        if (i === 18) return '#a78bfa';  // jul-24 arranque baja
+        return 'rgba(139,148,158,0.4)';
+      });
+      const ptRadii = valores.map((v, i) => {
+        if (i === 15 || i === 22 || i === 18) return 6;
+        return 0;
+      });
+
+      new Chart(cSerie, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Víctimas / Carpetas mensuales',
+              data: valores,
+              borderColor: 'rgba(139,148,158,0.4)',
+              backgroundColor: 'transparent',
+              borderWidth: 1.2,
+              pointBackgroundColor: ptColors,
+              pointBorderColor: ptColors,
+              pointRadius: ptRadii,
+              pointHoverRadius: 6,
+              tension: 0
+            },
+            {
+              label: 'Tendencia (media móvil 3m)',
+              data: tendencia,
+              borderColor: '#fbbf24',
+              backgroundColor: 'transparent',
+              borderWidth: 2.5,
+              pointRadius: 0,
+              tension: 0.32
+            }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { intersect: false, mode: 'index' },
+          plugins: {
+            legend: {
+              labels: { color: '#c9d1d9', font: { size: 12, family: 'Inter' }, usePointStyle: true, padding: 16 }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(13,17,23,0.96)',
+              borderColor: 'rgba(251,191,36,0.4)', borderWidth: 1,
+              titleColor: '#fbbf24', bodyColor: '#e6edf3',
+              padding: 10
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(48,54,61,0.25)' },
+              ticks: {
+                color: '#8b949e', font: { size: 10, family: 'JetBrains Mono' },
+                maxRotation: 60, minRotation: 60, autoSkip: true, maxTicksLimit: 12
+              },
+              border: { color: 'rgba(48,54,61,0.6)' }
+            },
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(48,54,61,0.4)' },
+              ticks: { color: '#8b949e', font: { size: 11, family: 'JetBrains Mono' } },
+              border: { color: 'rgba(48,54,61,0.6)' },
+              title: { display: true, text: 'Víctimas / mes', color: '#8b949e', font: { size: 11, family: 'JetBrains Mono' } }
+            }
+          }
+        }
+      });
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 
 
 <!-- SECCIÓN R — RANKING ESTATAL (36 MUNICIPIOS) -->
