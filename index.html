@@ -8513,7 +8513,7 @@
     <div class="ac-chart-box">
       <h4>Homicidio doloso · Morelos · 2023 - 2026</h4>
       <div class="ac-chart-sub">Víctimas mensuales 2023-2025 (archivo de víctimas estatales). Carpetas mensuales ene-abr 2026 (archivo de delitos, víctimas 2026 aún no publicadas). Línea de tendencia LOWESS para suavizar el ruido mensual.</div>
-      <div class="ac-chart-canvas-wrap" style="height: 380px;">
+      <div class="ac-chart-canvas-wrap" style="height: 520px;">
         <canvas id="acChartSerie"></canvas>
       </div>
       <div class="ac-chart-foot">
@@ -8679,7 +8679,6 @@
     // === CHART 2 · SERIE TEMPORAL ===
     const cSerie = document.getElementById('acChartSerie');
     if (cSerie) {
-      // Víctimas HD Morelos 2023-2025 (archivo víctimas), carpetas 2026 ene-abr
       const labels = [];
       const valores = [];
       const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
@@ -8687,7 +8686,7 @@
         2023: [117,97,134,110,111,91,122,167,134,152,129,140],
         2024: [131,144,142,179,134,131,108,104,106,115,128,98],
         2025: [108,83,95,90,88,84,103,99,86,84,106,93],
-        2026: [90,76,89,97]  // solo ene-abr
+        2026: [90,76,89,97]
       };
       [2023,2024,2025,2026].forEach(anio => {
         series[anio].forEach((v, i) => {
@@ -8696,25 +8695,93 @@
         });
       });
 
-      // Línea de tendencia: media móvil 3 meses
+      // Tendencia: media móvil centrada 3 meses
       const tendencia = valores.map((v, i, arr) => {
-        const start = Math.max(0, i-2);
-        const slice = arr.slice(start, i+1);
+        const start = Math.max(0, i-1);
+        const end = Math.min(arr.length, i+2);
+        const slice = arr.slice(start, end);
         return slice.reduce((a,b) => a+b, 0) / slice.length;
       });
 
-      // Anotaciones: pico abr-24 (idx 15), baseline nov-24 (idx 22), Sheinbaum oct-24 (idx 21)
-      // dataset point colors
+      // Hitos: idx, color, label corto, label largo, posición (above/below)
+      // Idx 15 = Abr 2024 (mes 4 de 2024, 12+3 = 15)
+      // Idx 18 = Jul 2024 (12+6 = 18)
+      // Idx 21 = Oct 2024 (Sheinbaum protesta · 12+9 = 21)
+      // Idx 22 = Nov 2024 (baseline Harfuch · 12+10 = 22)
+      // Idx 39 = Abr 2026 (último dato disponible · 36+3 = 39)
+      const hitos = [
+        { idx: 15, color: '#f85149', tag: 'PICO ABR-24', sub: '179 víctimas', pos: 'above', dy: -16 },
+        { idx: 18, color: '#a78bfa', tag: 'JUL-24 · BAJA INICIA', sub: 'antes del cambio de gobierno', pos: 'above', dy: -16 },
+        { idx: 21, color: '#3fb950', tag: 'SHEINBAUM · 1-OCT-24', sub: 'toma protesta', pos: 'below', dy: 28 },
+        { idx: 22, color: '#fbbf24', tag: 'NOV-24 · BASELINE HARFUCH', sub: '128 víctimas · 4.27/día', pos: 'above', dy: -16 },
+      ];
+
       const ptColors = valores.map((v, i) => {
-        if (i === 15) return '#f85149';  // pico abr-24
-        if (i === 22) return '#fbbf24';  // baseline Harfuch
-        if (i === 18) return '#a78bfa';  // jul-24 arranque baja
-        return 'rgba(139,148,158,0.4)';
+        const h = hitos.find(x => x.idx === i);
+        return h ? h.color : 'rgba(201,209,217,0.0)';
       });
-      const ptRadii = valores.map((v, i) => {
-        if (i === 15 || i === 22 || i === 18) return 6;
-        return 0;
-      });
+      const ptRadii = valores.map((v, i) => hitos.find(x => x.idx === i) ? 7 : 0);
+
+      // Plugin custom: anotaciones (líneas verticales + etiquetas)
+      const annotationPlugin = {
+        id: 'acAnnotations',
+        afterDatasetsDraw(chart) {
+          const { ctx, chartArea, scales } = chart;
+          if (!scales.x || !scales.y) return;
+          ctx.save();
+
+          // 1. Sombreado del "periodo Harfuch" (nov-24 a abr-26 · idx 22 a 39)
+          const xStart = scales.x.getPixelForValue(22);
+          const xEnd   = scales.x.getPixelForValue(39);
+          ctx.fillStyle = 'rgba(251,191,36,0.06)';
+          ctx.fillRect(xStart, chartArea.top, xEnd - xStart, chartArea.bottom - chartArea.top);
+          // Etiqueta del sombreado, arriba a la derecha
+          ctx.font = 'bold 10px "JetBrains Mono", monospace';
+          ctx.fillStyle = 'rgba(251,191,36,0.85)';
+          ctx.textAlign = 'center';
+          ctx.fillText('PERIODO QUE HARFUCH CELEBRA', (xStart + xEnd) / 2, chartArea.top + 14);
+
+          // 2. Línea vertical Sheinbaum oct-24 (idx 21)
+          const xSh = scales.x.getPixelForValue(21);
+          ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = 'rgba(63,185,80,0.55)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(xSh, chartArea.top + 28);
+          ctx.lineTo(xSh, chartArea.bottom);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          // 3. Etiquetas sobre cada hito
+          hitos.forEach(h => {
+            const xPx = scales.x.getPixelForValue(h.idx);
+            const yPx = scales.y.getPixelForValue(valores[h.idx]);
+
+            ctx.font = 'bold 10.5px "JetBrains Mono", monospace';
+            ctx.fillStyle = h.color;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = h.pos === 'above' ? 'bottom' : 'top';
+
+            const labelY = yPx + h.dy;
+            ctx.fillText(h.tag, xPx, labelY);
+
+            ctx.font = '10px Inter, sans-serif';
+            ctx.fillStyle = 'rgba(201,209,217,0.7)';
+            const subY = h.pos === 'above' ? labelY + 12 : labelY + 13;
+            ctx.fillText(h.sub, xPx, subY);
+
+            // Línea conector punto → label
+            ctx.strokeStyle = h.color;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(xPx, yPx);
+            ctx.lineTo(xPx, h.pos === 'above' ? labelY + 4 : labelY - 2);
+            ctx.stroke();
+          });
+
+          ctx.restore();
+        }
+      };
 
       new Chart(cSerie, {
         type: 'line',
@@ -8722,15 +8789,16 @@
           labels: labels,
           datasets: [
             {
-              label: 'Víctimas / Carpetas mensuales',
+              label: 'Víctimas / carpetas mensuales',
               data: valores,
-              borderColor: 'rgba(139,148,158,0.4)',
+              borderColor: 'rgba(201,209,217,0.55)',
               backgroundColor: 'transparent',
-              borderWidth: 1.2,
+              borderWidth: 1.6,
               pointBackgroundColor: ptColors,
-              pointBorderColor: ptColors,
+              pointBorderColor: '#0d1117',
+              pointBorderWidth: 1.5,
               pointRadius: ptRadii,
-              pointHoverRadius: 6,
+              pointHoverRadius: 7,
               tension: 0
             },
             {
@@ -8738,44 +8806,63 @@
               data: tendencia,
               borderColor: '#fbbf24',
               backgroundColor: 'transparent',
-              borderWidth: 2.5,
+              borderWidth: 3,
               pointRadius: 0,
-              tension: 0.32
+              tension: 0.35
             }
           ]
         },
         options: {
           responsive: true, maintainAspectRatio: false,
           interaction: { intersect: false, mode: 'index' },
+          layout: { padding: { top: 56, right: 16, bottom: 8, left: 8 } },
           plugins: {
             legend: {
-              labels: { color: '#c9d1d9', font: { size: 12, family: 'Inter' }, usePointStyle: true, padding: 16 }
+              position: 'bottom',
+              labels: { color: '#c9d1d9', font: { size: 12, family: 'Inter' }, usePointStyle: true, padding: 18, boxWidth: 12 }
             },
             tooltip: {
               backgroundColor: 'rgba(13,17,23,0.96)',
               borderColor: 'rgba(251,191,36,0.4)', borderWidth: 1,
               titleColor: '#fbbf24', bodyColor: '#e6edf3',
-              padding: 10
+              padding: 10,
+              callbacks: {
+                label: function(ctx) {
+                  const dsLbl = ctx.dataset.label;
+                  const v = Math.round(ctx.parsed.y);
+                  return dsLbl + ': ' + v;
+                }
+              }
             }
           },
           scales: {
             x: {
-              grid: { color: 'rgba(48,54,61,0.25)' },
+              grid: { color: 'rgba(48,54,61,0.18)' },
               ticks: {
                 color: '#8b949e', font: { size: 10, family: 'JetBrains Mono' },
-                maxRotation: 60, minRotation: 60, autoSkip: true, maxTicksLimit: 12
+                maxRotation: 0, minRotation: 0, autoSkip: true, maxTicksLimit: 9,
+                callback: function(value, index) {
+                  // Mostrar solo cada 6 meses (Ene/Jul) + último
+                  const lbl = this.getLabelForValue(value);
+                  const m = lbl.split(' ')[0];
+                  if (m === 'Ene' || m === 'Jul') return lbl;
+                  if (index === labels.length - 1) return lbl;
+                  return '';
+                }
               },
               border: { color: 'rgba(48,54,61,0.6)' }
             },
             y: {
-              beginAtZero: true,
-              grid: { color: 'rgba(48,54,61,0.4)' },
-              ticks: { color: '#8b949e', font: { size: 11, family: 'JetBrains Mono' } },
+              beginAtZero: false,
+              min: 40, max: 200,
+              grid: { color: 'rgba(48,54,61,0.35)' },
+              ticks: { color: '#8b949e', font: { size: 11, family: 'JetBrains Mono' }, stepSize: 40 },
               border: { color: 'rgba(48,54,61,0.6)' },
-              title: { display: true, text: 'Víctimas / mes', color: '#8b949e', font: { size: 11, family: 'JetBrains Mono' } }
+              title: { display: true, text: 'Víctimas / carpetas por mes', color: '#8b949e', font: { size: 11, family: 'JetBrains Mono' } }
             }
           }
-        }
+        },
+        plugins: [annotationPlugin]
       });
     }
   }
