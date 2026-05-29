@@ -7714,6 +7714,393 @@
 </script>
 
 
+<!-- ============================================================
+     SECCIÓN sNAC8 · El −62% en revisión (mañanera 27-may-2026)
+     Auditoría metodológica al anuncio de García Harfuch sobre
+     Morelos: 4 lecturas del mismo dato + delitos que subieron
+     en paralelo + desapariciones bloqueadas en el periodo.
+     ============================================================ -->
+<style>
+  #sNAC8 {
+    padding: 80px 24px 60px;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(248,81,73,0.06) 0%, transparent 55%),
+      linear-gradient(180deg, #0d1117 0%, #0a0f1a 100%);
+    color: #c9d1d9;
+  }
+  #sNAC8 .h62-wrap { max-width: 1080px; margin: 0 auto; }
+
+  /* HEADER (reusa opa-eyebrow / opa-title / opa-lead) */
+  #sNAC8 .h62-head { text-align: center; margin-bottom: 36px; }
+
+  /* PISO 1 — 4 metodologías */
+  #sNAC8 .h62-section-head {
+    margin: 50px 0 22px; text-align: center;
+  }
+  #sNAC8 .h62-piso-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 3px; color: #fbbf24; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 6px;
+  }
+  #sNAC8 .h62-section-head h3 {
+    font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700;
+    color: #e6edf3; line-height: 1.2; margin: 0 0 8px;
+  }
+  #sNAC8 .h62-section-head h3 em {
+    color: #fbbf24; font-style: italic; font-weight: 600;
+  }
+  #sNAC8 .h62-section-head p {
+    color: #8b949e; font-size: 14px; line-height: 1.6; max-width: 760px;
+    margin: 0 auto;
+  }
+
+  #sNAC8 .h62-grid4 {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 14px; margin: 24px 0;
+  }
+  #sNAC8 .h62-card {
+    background: rgba(13,17,23,0.65);
+    border: 1px solid rgba(48,54,61,0.7);
+    border-radius: 12px; padding: 20px 16px;
+    display: flex; flex-direction: column; gap: 8px;
+    transition: border-color 0.18s;
+  }
+  #sNAC8 .h62-card:hover { border-color: rgba(251,191,36,0.4); }
+  #sNAC8 .h62-card.oficial {
+    border-color: rgba(251,191,36,0.55);
+    background: linear-gradient(180deg, rgba(251,191,36,0.07), rgba(13,17,23,0.7));
+  }
+  #sNAC8 .h62-card.honesto {
+    border-color: rgba(99,102,241,0.45);
+    background: linear-gradient(180deg, rgba(99,102,241,0.06), rgba(13,17,23,0.7));
+  }
+  #sNAC8 .h62-card .h62-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 2px; text-transform: uppercase; font-weight: 700;
+  }
+  #sNAC8 .h62-card.oficial .h62-tag { color: #fbbf24; }
+  #sNAC8 .h62-card.pico .h62-tag    { color: #f85149; }
+  #sNAC8 .h62-card.anual .h62-tag   { color: #8b949e; }
+  #sNAC8 .h62-card.honesto .h62-tag { color: #a78bfa; }
+  #sNAC8 .h62-card .h62-pct {
+    font-family: 'Fraunces', serif; font-size: 44px; font-weight: 800;
+    line-height: 1; color: #e6edf3; letter-spacing: -1.5px;
+  }
+  #sNAC8 .h62-card .h62-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: #6e7681; letter-spacing: 0.5px;
+  }
+  #sNAC8 .h62-card .h62-glosa {
+    font-family: 'Inter', sans-serif; font-size: 13px;
+    color: #c9d1d9; line-height: 1.5; margin-top: 4px;
+  }
+  #sNAC8 .h62-card .h62-glosa strong { color: #e6edf3; }
+
+  #sNAC8 .h62-nota-curva {
+    margin-top: 20px; padding: 16px 22px;
+    background: rgba(99,102,241,0.06);
+    border-left: 3px solid #a78bfa;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif; font-size: 13.5px;
+    color: #c9d1d9; line-height: 1.6;
+  }
+  #sNAC8 .h62-nota-curva strong { color: #a78bfa; }
+
+  /* PISO 2 — Lo que subió */
+  #sNAC8 .h62-grid5 {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 12px; margin: 24px 0;
+  }
+  #sNAC8 .h62-delito {
+    background: rgba(13,17,23,0.65);
+    border: 1px solid rgba(48,54,61,0.7);
+    border-radius: 10px; padding: 18px 14px;
+    text-align: center;
+  }
+  #sNAC8 .h62-delito.sube  { border-top: 3px solid #f85149; }
+  #sNAC8 .h62-delito.baja  { border-top: 3px solid #3fb950; }
+  #sNAC8 .h62-delito .h62-d-nombre {
+    font-family: 'Inter', sans-serif; font-size: 12px;
+    color: #8b949e; text-transform: uppercase; letter-spacing: 1.4px;
+    font-weight: 600; margin-bottom: 10px; min-height: 32px;
+  }
+  #sNAC8 .h62-delito .h62-d-pct {
+    font-family: 'Fraunces', serif; font-size: 34px; font-weight: 800;
+    line-height: 1; letter-spacing: -1px;
+  }
+  #sNAC8 .h62-delito.sube .h62-d-pct { color: #f85149; }
+  #sNAC8 .h62-delito.baja .h62-d-pct { color: #3fb950; }
+  #sNAC8 .h62-delito .h62-d-flujo {
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    color: #6e7681; margin-top: 10px; letter-spacing: 0.3px;
+  }
+  #sNAC8 .h62-delito .h62-d-nota {
+    font-family: 'Inter', sans-serif; font-size: 11.5px;
+    color: #8b949e; line-height: 1.4; margin-top: 8px; font-style: italic;
+  }
+
+  /* PISO 3 — Desapariciones */
+  #sNAC8 .h62-desap {
+    margin: 30px 0 10px;
+    background: linear-gradient(135deg, rgba(167,139,250,0.10), rgba(13,17,23,0.6));
+    border: 1px solid rgba(167,139,250,0.30);
+    border-radius: 14px;
+    padding: 28px 32px;
+    display: grid; grid-template-columns: 1.2fr 2fr;
+    gap: 28px; align-items: center;
+  }
+  #sNAC8 .h62-desap .h62-desap-num {
+    font-family: 'Fraunces', serif; font-size: 72px; font-weight: 800;
+    line-height: 1; color: #a78bfa; letter-spacing: -2.5px;
+  }
+  #sNAC8 .h62-desap .h62-desap-sub {
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    color: #c4b5fd; letter-spacing: 2px; text-transform: uppercase;
+    margin-top: 8px; font-weight: 700;
+  }
+  #sNAC8 .h62-desap .h62-desap-body {
+    font-family: 'Inter', sans-serif; font-size: 14.5px;
+    color: #c9d1d9; line-height: 1.7;
+  }
+  #sNAC8 .h62-desap .h62-desap-body strong { color: #e6edf3; }
+  #sNAC8 .h62-desap .h62-desap-body em { color: #a78bfa; font-style: normal; font-weight: 600; }
+  #sNAC8 .h62-desap .h62-desap-link {
+    display: inline-block; margin-top: 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    color: #a78bfa; text-decoration: none; letter-spacing: 1.5px;
+    text-transform: uppercase; font-weight: 700;
+    border-bottom: 1.5px dashed rgba(167,139,250,0.4); padding-bottom: 2px;
+  }
+  #sNAC8 .h62-desap .h62-desap-link:hover {
+    color: #c4b5fd; border-color: #c4b5fd;
+  }
+
+  /* PISO 4 — Cierre editorial */
+  #sNAC8 .h62-cierre {
+    margin: 40px auto 0; max-width: 880px;
+    padding: 30px 32px;
+    background: rgba(13,17,23,0.65);
+    border: 1px solid rgba(48,54,61,0.7);
+    border-radius: 14px;
+    font-family: 'Inter', sans-serif;
+  }
+  #sNAC8 .h62-cierre h3 {
+    font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700;
+    color: #e6edf3; text-align: center; margin: 0 0 18px;
+    line-height: 1.25;
+  }
+  #sNAC8 .h62-cierre h3 em { color: #fbbf24; font-style: italic; font-weight: 600; }
+  #sNAC8 .h62-cierre p {
+    color: #c9d1d9; font-size: 14.5px; line-height: 1.75; margin: 0 0 14px;
+  }
+  #sNAC8 .h62-cierre p strong { color: #e6edf3; }
+  #sNAC8 .h62-cierre p em { color: #fbbf24; font-style: normal; font-weight: 600; }
+  #sNAC8 .h62-cierre .h62-bullets {
+    margin: 18px 0; padding: 18px 22px;
+    background: rgba(248,81,73,0.06);
+    border-left: 3px solid #f85149; border-radius: 6px;
+  }
+  #sNAC8 .h62-cierre .h62-bullets li {
+    list-style: none; padding: 4px 0; font-size: 13.5px;
+    color: #c9d1d9; line-height: 1.6;
+    display: flex; gap: 10px; align-items: baseline;
+  }
+  #sNAC8 .h62-cierre .h62-bullets li::before {
+    content: "→"; color: #f85149; font-weight: 700; font-size: 14px;
+  }
+  #sNAC8 .h62-cierre .h62-bullets li strong { color: #f85149; font-weight: 700; }
+  #sNAC8 .h62-cierre .h62-frase-final {
+    margin-top: 20px; padding: 18px 22px;
+    background: rgba(251,191,36,0.07);
+    border: 1px solid rgba(251,191,36,0.3); border-radius: 8px;
+    font-family: 'Fraunces', serif; font-size: 17px; line-height: 1.55;
+    color: #e6edf3; font-style: italic; text-align: center;
+  }
+  #sNAC8 .h62-cierre .h62-frase-final strong {
+    color: #fbbf24; font-style: normal; font-weight: 700;
+  }
+
+  /* Método */
+  #sNAC8 .h62-method {
+    max-width: 960px; margin: 40px auto 0; padding: 18px 22px;
+    background: rgba(13,17,23,0.45); border-radius: 10px;
+    border: 1px solid rgba(48,54,61,0.5);
+    font-family: 'Inter', sans-serif; font-size: 12px;
+    line-height: 1.65; color: #6e7681; text-align: justify;
+  }
+  #sNAC8 .h62-method strong { color: #c9d1d9; font-weight: 600; }
+
+  @media (max-width: 960px) {
+    #sNAC8 .h62-grid4 { grid-template-columns: repeat(2, 1fr); }
+    #sNAC8 .h62-grid5 { grid-template-columns: repeat(3, 1fr); }
+    #sNAC8 .h62-desap { grid-template-columns: 1fr; text-align: center; }
+  }
+  @media (max-width: 560px) {
+    #sNAC8 .h62-grid4 { grid-template-columns: 1fr; }
+    #sNAC8 .h62-grid5 { grid-template-columns: repeat(2, 1fr); }
+    #sNAC8 .h62-desap .h62-desap-num { font-size: 56px; }
+  }
+</style>
+
+<section id="sNAC8">
+  <div class="h62-wrap">
+
+    <!-- HEADER -->
+    <div class="h62-head">
+      <div class="opa-eyebrow">COYUNTURA MORELOS · AUDITORÍA METODOLÓGICA</div>
+      <h2 class="opa-title">
+        El −62% que celebra Harfuch<br>
+        <em>cuatro lecturas del mismo dato</em>
+      </h2>
+      <p class="opa-lead">
+        El 27 de mayo de 2026, en la conferencia matutina, el secretario federal de Seguridad <strong>Omar García Harfuch</strong> anunció que el homicidio doloso en Morelos cayó <strong>62.8%</strong> entre noviembre de 2024 y mayo de 2026 — de 4.27 víctimas diarias a 1.6. La cifra <em>es verificable</em>: noviembre de 2024 cerró con 128 víctimas en el archivo público SESNSP. La aritmética del secretario no miente. Esta sección documenta lo que la aritmética no muestra: la <strong>elección del baseline</strong>, los <strong>delitos que se dispararon en paralelo</strong>, y las <strong>desapariciones bloqueadas</strong> en el mismo período.
+      </p>
+    </div>
+
+    <!-- ============================================================
+         PISO 1 · LA TRAMPA DEL BASELINE
+         ============================================================ -->
+    <div class="h62-section-head">
+      <div class="h62-piso-num">PISO 1 · LA ELECCIÓN DEL PERIODO BASE</div>
+      <h3>Cuatro formas de medir <em>la misma realidad</em></h3>
+      <p>El −62.8% que pregona el secretario es una de cuatro lecturas legítimas del archivo SESNSP. Las otras tres existen y no se mencionaron. Cada una usa un punto de partida distinto. Comparen el rango.</p>
+    </div>
+
+    <div class="h62-grid4">
+      <div class="h62-card oficial">
+        <div class="h62-tag">CIFRA OFICIAL · MAÑANERA</div>
+        <div class="h62-pct">−62.8%</div>
+        <div class="h62-meta">nov-2024 → may-2026</div>
+        <div class="h62-glosa">De <strong>4.27</strong> a <strong>1.60</strong> víctimas/día. Baseline coincide con el mes en que Sheinbaum tomó protesta — y con un pico local de violencia.</div>
+      </div>
+      <div class="h62-card pico">
+        <div class="h62-tag">SI ESCOGIERA EL PICO REAL</div>
+        <div class="h62-pct">−73%</div>
+        <div class="h62-meta">abr-2024 → may-2026</div>
+        <div class="h62-glosa">El verdadero pico fue <strong>abril 2024</strong> con <strong>5.97</strong> víctimas/día — 28% más alto que el promedio anual. Esta lectura sería la más espectacular.</div>
+      </div>
+      <div class="h62-card anual">
+        <div class="h62-tag">AÑO VS MES CORRIENTE</div>
+        <div class="h62-pct">−61.5%</div>
+        <div class="h62-meta">2024 anual → may-2026</div>
+        <div class="h62-glosa">Promedio del año completo 2024 (4.16/día) contra mayo 2026. <strong>Casi idéntico</strong> al dato oficial — pero el baseline anual neutraliza la conveniencia del mes específico.</div>
+      </div>
+      <div class="h62-card honesto">
+        <div class="h62-tag">ESTÁNDAR INTERANUAL</div>
+        <div class="h62-pct">−43.7%</div>
+        <div class="h62-meta">may-2025 → may-2026</div>
+        <div class="h62-glosa">Misma estación del año, controla efectos estacionales. Es la <strong>metodología estándar</strong> en estadística criminal seria. Lectura "deflactada": menos espectacular, más honesta.</div>
+      </div>
+    </div>
+
+    <div class="h62-nota-curva">
+      <strong>La curva no empezó con Harfuch.</strong> El descenso del homicidio doloso en Morelos arrancó en <strong>julio de 2024</strong>, cuando el promedio diario pasó de <strong>4.37</strong> a <strong>3.48</strong> víctimas. Eso ocurrió <strong>tres meses antes</strong> de que la administración Sheinbaum tomara protesta y antes de que el Gabinete de Seguridad federal entrara en operación. Una parte —no determinada cuantitativamente aquí— de la baja que el secretario presume como resultado de su estrategia ya era inercia anterior.
+    </div>
+
+    <!-- ============================================================
+         PISO 2 · LO QUE SUBIÓ EN EL MISMO PERIODO
+         ============================================================ -->
+    <div class="h62-section-head">
+      <div class="h62-piso-num">PISO 2 · LOS DELITOS QUE NO SE MENCIONAN</div>
+      <h3>Mientras el homicidio bajaba, <em>esto subió</em></h3>
+      <p>Cruzamos 6 meses simétricos contra 6 meses simétricos: <strong>nov-2024 → abr-2025</strong> (baseline Harfuch) contra <strong>nov-2025 → abr-2026</strong> (periodo que el secretario celebra como éxito). Mismo Morelos, mismo archivo SESNSP, mismos meses calendario.</p>
+    </div>
+
+    <div class="h62-grid5">
+      <div class="h62-delito sube">
+        <div class="h62-d-nombre">Feminicidio</div>
+        <div class="h62-d-pct">+78.6%</div>
+        <div class="h62-d-flujo">14 → 25 carpetas</div>
+        <div class="h62-d-nota">Asesinatos de mujeres por razones de género casi se duplicaron.</div>
+      </div>
+      <div class="h62-delito sube">
+        <div class="h62-d-nombre">Extorsión</div>
+        <div class="h62-d-pct">+116%</div>
+        <div class="h62-d-flujo">147 → 318 carpetas</div>
+        <div class="h62-d-nota">Abril 2026: <strong>82 carpetas</strong> · máximo histórico mensual SESNSP.</div>
+      </div>
+      <div class="h62-delito sube">
+        <div class="h62-d-nombre">Lesiones culposas</div>
+        <div class="h62-d-pct">+24.5%</div>
+        <div class="h62-d-flujo">1,514 → 1,885 carpetas</div>
+        <div class="h62-d-nota">Categoría sensible: absorbe muertes posteriores no reclasificadas.</div>
+      </div>
+      <div class="h62-delito sube">
+        <div class="h62-d-nombre">Otros delitos contra la vida</div>
+        <div class="h62-d-pct">+24.3%</div>
+        <div class="h62-d-flujo">267 → 332 carpetas</div>
+        <div class="h62-d-nota">Categoría <em>residual</em> SESNSP — definida por exclusión.</div>
+      </div>
+      <div class="h62-delito baja">
+        <div class="h62-d-nombre">Homicidio culposo</div>
+        <div class="h62-d-pct">−24.7%</div>
+        <div class="h62-d-flujo">223 → 168 carpetas</div>
+        <div class="h62-d-nota">Descarta la salida clásica de reclasificar dolosos como "accidentes".</div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         PISO 3 · DESAPARICIONES BLOQUEADAS
+         ============================================================ -->
+    <div class="h62-section-head">
+      <div class="h62-piso-num">PISO 3 · LO QUE NO SE PUEDE CONTAR</div>
+      <h3>Las <em>desapariciones</em> bajo confidencialidad institucional</h3>
+      <p>El Registro Nacional de Personas Desaparecidas registra para Morelos un padrón completo. Una fracción está bloqueada — sin fecha, sin sexo, sin municipio. Esa fracción es la que <strong>no se cuenta</strong> en ninguna estadística pública del periodo que Harfuch celebra.</p>
+    </div>
+
+    <div class="h62-desap">
+      <div>
+        <div class="h62-desap-num">835</div>
+        <div class="h62-desap-sub">RNPDNO Confidenciales · Morelos</div>
+      </div>
+      <div class="h62-desap-body">
+        Del padrón total de <strong>2,063 desaparecidos</strong> de Morelos al corte 1-dic-2025, <strong>835 registros (40.5%)</strong> están bajo confidencialidad total: ni fecha de desaparición, ni fecha de registro, ni sexo, ni edad, ni municipio. El <em>92%</em> de esos confidenciales —824 de 835— fueron aportados por la <strong>propia Fiscalía General de Morelos</strong> y la <strong>Comisión Local de Búsqueda</strong> del estado. La opacidad no la pidieron las familias: la determinó la autoridad estatal. Si los confidenciales se distribuyen como los visibles, entre <strong>300 y 400</strong> de esos 835 corresponden al periodo que el secretario celebra como éxito — y ninguno entra en estadística pública.
+        <br>
+        <a href="#sNAC7" class="h62-desap-link">→ Auditoría completa de la opacidad RNPDNO en sNAC7</a>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         PISO 4 · CIERRE EDITORIAL
+         ============================================================ -->
+    <div class="h62-cierre">
+      <h3>El homicidio doloso <em>sí bajó</em>.<br>La pregunta es <em>qué significó</em>.</h3>
+      <p>
+        Cuando un solo indicador delictivo cae con magnitud política y los demás indicadores del mismo periodo apuntan en dirección opuesta, lo que tenemos no es necesariamente reducción de la violencia. Puede ser <em>cambio de forma</em> de la violencia, presentado como reducción.
+      </p>
+      <p>En los 6 meses simétricos que comparamos, mientras el homicidio doloso cae 62%:</p>
+      <ul class="h62-bullets">
+        <li><strong>el feminicidio sube 79%</strong>,</li>
+        <li><strong>la extorsión sube 116%</strong> y alcanza máximo histórico mensual,</li>
+        <li><strong>las lesiones culposas suben 25%</strong> sin causa epidemiológica visible,</li>
+        <li><strong>los "otros delitos contra la vida" suben 24%</strong> en la categoría residual del propio SESNSP,</li>
+        <li>y el <strong>40% de las desapariciones</strong> están bloqueadas bajo confidencialidad determinada por la autoridad estatal.</li>
+      </ul>
+      <p>
+        Las cifras no son de oposición. Son del propio gobierno: <strong>SESNSP</strong>, <strong>RNPDNO</strong>, archivo público. Lo que esta sección documenta no es manipulación. Es <em>elección del ángulo</em>: el dato oficial es real en su universo, pero <strong>se presentó aislado de los cuatro datos que en el mismo periodo apuntan en dirección opuesta</strong>.
+      </p>
+      <p>
+        La pregunta editorial es <strong>una y solo una</strong>: ¿permitirá la administración federal acompañar el anuncio del −62% con la <em>tasa actualizada</em> de feminicidio, extorsión, lesiones culposas y desapariciones de Morelos para el mismo periodo? Hasta que esa lectura completa exista en la mañanera, el dato del homicidio es <em>un titular</em> — no un balance de seguridad pública.
+      </p>
+      <div class="h62-frase-final">
+        Esta sección no pide que el secretario <strong>deje de presumir su trabajo</strong>.<br>
+        Pide que lo <strong>presuma completo</strong>.
+      </div>
+    </div>
+
+    <!-- METODOLOGÍA -->
+    <div class="h62-method">
+      <strong>Fuentes y método.</strong> Cifra del −62.8%: SESNSP, archivo público <em>Estatal-Delitos 2015-2025</em> y <em>Víctimas Estatales 2015-2025</em>, corte abr-2026. Comparativo: noviembre 2024 (128 víctimas homicidio doloso · 4.27/día) vs mayo 2026 (49 víctimas · 1.60/día), declaración mañanera 27-may-2026. Lecturas alternativas calculadas sobre el mismo archivo SESNSP. Periodo 6 meses simétricos: nov-2024–abr-2025 (147 días) vs nov-2025–abr-2026 (147 días). Conteo por carpetas de investigación abiertas, sin víctimas múltiples agregadas. Datos RNPDNO: snapshot público 1-dic-2025 (CNB), 2,063 registros para Morelos, 835 (40.5%) bajo categoría CONFIDENCIAL — verificación directa de la base.
+      <br><br>
+      <strong>Caveats.</strong> El alza de extorsión (+116%) refleja <em>carpetas registradas</em>, no necesariamente delitos cometidos: aumento de denuncia y de incidencia son indistinguibles en este indicador. La proyección de 300-400 desapariciones confidenciales en el periodo Harfuch asume distribución temporal homogénea con los registros visibles — supuesto razonable pero no demostrado. Esta sección no afirma que se reclasificaron deliberadamente homicidios dolosos como otra categoría; afirma que <em>los datos que el secretario eligió omitir</em> apuntan a una recomposición de la violencia, no a su reducción agregada.
+      <br><br>
+      <strong>Lo que esta sección NO afirma.</strong> No afirma que la cifra del −62.8% sea falsa: es real dentro del universo SESNSP de carpetas por homicidio doloso. No afirma que la administración federal manipule deliberadamente cifras. No afirma que las desapariciones bloqueadas sean homicidios. Afirma que la lectura completa del periodo requiere las cinco cifras, no una.
+    </div>
+
+  </div>
+</section>
+
+
 <!-- SECCIÓN 0 — HUB DE MUNICIPIOS MORELOS (v2.1) -->
 <section id="s0" class="map-hub">
   <div class="hub-header">
