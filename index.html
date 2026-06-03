@@ -6026,6 +6026,46 @@
   #sExec .ex-drill:hover { background: #fbbf24; color: #0a0d12; }
   #sExec .ex-drill svg { width: 14px; height: 14px; }
 
+  /* Sub-selector de regiones PED · chips horizontales */
+  #sExec .ex-regiones-bar {
+    display: flex; gap: 8px; align-items: center;
+    padding: 10px 12px; margin-bottom: 16px;
+    background: rgba(13,17,23,0.6);
+    border: 1px solid #1a1f26; border-radius: 9px;
+    flex-wrap: wrap;
+  }
+  #sExec .ex-regiones-bar[hidden] { display: none; }
+  #sExec .ex-reg-btn {
+    padding: 7px 12px; border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+    color: #8b949e; background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; gap: 7px;
+  }
+  #sExec .ex-reg-btn:hover { color: #e6edf3; background: rgba(251,191,36,0.06); }
+  #sExec .ex-reg-btn.active {
+    color: #0a0d12;
+    background: var(--reg-color, #fbbf24);
+    border-color: var(--reg-color, #fbbf24);
+  }
+  #sExec .ex-reg-btn .pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+    background: rgba(139,148,158,0.18); color: #8b949e;
+    padding: 1px 5px; border-radius: 999px;
+    letter-spacing: 0.8px; font-weight: 700;
+  }
+  #sExec .ex-reg-btn.active .pill {
+    background: rgba(13,17,23,0.20); color: rgba(13,17,23,0.85);
+  }
+  /* Estilo del SVG choropleth: munis fuera de la región se atenúan */
+  #sExec #exChoropleth path.muni.is-out-of-region {
+    opacity: 0.10;
+    filter: grayscale(0.8);
+    pointer-events: none;
+  }
+
   /* KPI ROW */
   #sExec .ex-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 14px; }
   #sExec .ex-kpi {
@@ -6661,14 +6701,21 @@
     <!-- SELECTOR DE ALCANCE -->
     <div class="ex-scope" role="tablist" aria-label="Seleccionar alcance del dashboard">
       <span class="ex-scope-lbl">Alcance:</span>
-      <button class="ex-tab active" role="tab" aria-selected="true">Estado completo <span class="pill">36 munis</span></button>
-      <button class="ex-tab disabled" role="tab" aria-selected="false" disabled title="Disponible en próxima iteración">7 regiones PED <span class="pill">próx.</span></button>
+      <button class="ex-tab active" id="exTabEstado" role="tab" aria-selected="true">Estado completo <span class="pill">36 munis</span></button>
+      <button class="ex-tab" id="exTabRegiones" role="tab" aria-selected="false">7 regiones PED <span class="pill">filtrar</span></button>
       <button class="ex-tab disabled" role="tab" aria-selected="false" disabled title="Disponible en próxima iteración">Municipio <span class="pill">próx.</span></button>
       <span class="ex-spacer"></span>
       <a class="ex-drill" href="municipio.html?id=cuernavaca">
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h8M7 3l4 4-4 4"/></svg>
         Ver radiografía municipal
       </a>
+    </div>
+
+    <!-- Sub-selector de regiones PED (visible solo cuando tab regiones está activo) -->
+    <div class="ex-regiones-bar" id="exRegionesBar" role="tablist" aria-label="Seleccionar región PED" hidden>
+      <span class="ex-scope-lbl">Región:</span>
+      <button class="ex-reg-btn active" data-region="" data-color="#fbbf24">Todas <span class="pill">36 munis</span></button>
+      <!-- Chips de regiones inyectados por JS -->
     </div>
 
     <!-- KPI ROW -->
@@ -35114,6 +35161,7 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
      municipios_delitos.js inlinea EXEC_DELITOS_DATA como global (evita fetch)
      ============================================================ -->
 <script src="municipios_delitos.js"></script>
+<script src="regiones_ped.js"></script>
 <script>
 (function() {
   // -------- Datos delitos por municipio --------
@@ -35254,6 +35302,9 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
       // FIX v2.21: usar style.fill (gana sobre CSS por especificidad)
       p.style.fill = colorFor(v, max);
       p.setAttribute('data-val', v);
+      // F2: atenuar los munis fuera de la región seleccionada
+      const isIn = muniIsInRegion(name);
+      p.classList.toggle('is-out-of-region', !isIn);
     });
 
     // Header labels
@@ -35283,6 +35334,8 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
 
     const ranked = Object.entries(dconf.data)
       .filter(([k,v]) => typeof v === 'number' && v > 0)
+      // F2: si hay región activa, filtrar solo a sus munis
+      .filter(([m, _]) => muniIsInRegion(m))
       .sort((a, b) => b[1] - a[1]);
     const total = ranked.reduce((s, [_, v]) => s + v, 0) || 1;
     const max = ranked[0] ? ranked[0][1] : 1;
@@ -35606,6 +35659,119 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     });
   }
 
+  // -------- FILTRO POR REGIÓN PED --------
+  // Colores característicos por región (heredados del nav del sitio narrativo)
+  const REGION_COLORES = {
+    'Noroeste': '#58a6ff',
+    'Centro':   '#fbbf24',
+    'Norte':    '#84cc16',
+    'Noreste':  '#14b8a6',
+    'Oriente':  '#a371f7',
+    'Sur':      '#f85149',
+    'Poniente': '#ec4899',
+  };
+  let CURRENT_REGION = null;  // null = todas las regiones
+
+  function buildRegionChips() {
+    const bar = document.getElementById('exRegionesBar');
+    if (!bar || typeof REGIONES_PED === 'undefined') return;
+    // Botón "Todas" ya está; agregar las 7 regiones después
+    const orden = ['Noroeste','Centro','Norte','Noreste','Oriente','Sur','Poniente'];
+    orden.forEach(reg => {
+      const info = REGIONES_PED[reg];
+      if (!info) return;
+      const color = REGION_COLORES[reg] || '#fbbf24';
+      const b = document.createElement('button');
+      b.className = 'ex-reg-btn';
+      b.dataset.region = reg;
+      b.dataset.color = color;
+      b.style.setProperty('--reg-color', color);
+      b.innerHTML = reg + ' <span class="pill">' + info.munis.length + '</span>';
+      b.addEventListener('click', () => setRegion(reg));
+      bar.appendChild(b);
+    });
+    // Botón "Todas"
+    bar.querySelector('[data-region=""]').addEventListener('click', () => setRegion(null));
+  }
+
+  function setRegion(reg) {
+    CURRENT_REGION = reg;
+    // Highlight chip
+    document.querySelectorAll('.ex-reg-btn').forEach(b => {
+      const isActive = (b.dataset.region || null) === (reg || null);
+      b.classList.toggle('active', isActive);
+      if (isActive) {
+        b.style.setProperty('--reg-color', b.dataset.color || '#fbbf24');
+      }
+    });
+    paintMap();          // repinta y filtra el coroplético
+    updateKPIsRegion();  // actualiza 4 KPIs según región
+  }
+
+  function muniIsInRegion(muni) {
+    if (!CURRENT_REGION) return true;
+    const munis = REGIONES_PED[CURRENT_REGION]?.munis || [];
+    return munis.some(m => m === muni || m.startsWith(muni) || muni.startsWith(m));
+  }
+
+  function updateKPIsRegion() {
+    // KPI 2 · Víctimas HD: si hay región, mostrar hd_2025 de esa región
+    // KPI 3 · Extorsión: idem (ext_2025)
+    // KPI 1 (percepción) y KPI 4 (RNPDNO) no tienen desglose regional · mantener
+    if (typeof REGIONES_PED === 'undefined') return;
+
+    const kpis = document.querySelectorAll('#sExec .ex-kpis .ex-kpi');
+    if (kpis.length < 4) return;
+
+    if (CURRENT_REGION && REGIONES_PED[CURRENT_REGION]) {
+      const info = REGIONES_PED[CURRENT_REGION];
+      // KPI 2 · víctimas HD
+      const k2 = kpis[1];
+      k2.querySelector('.ex-kpi-num').textContent = info.hd_2025.toLocaleString('es-MX');
+      const delta2 = k2.querySelector('.ex-kpi-delta');
+      delta2.innerHTML = '<span class="lbl">Región ' + CURRENT_REGION + ' · ' + info.munis.length + ' munis · pop ' + (info.pop/1000).toFixed(0) + 'K</span>';
+      // KPI 3 · extorsión
+      const k3 = kpis[2];
+      k3.querySelector('.ex-kpi-num').textContent = info.ext_2025.toLocaleString('es-MX');
+      k3.querySelector('.ex-kpi-lbl').lastChild.textContent = ' Extorsión Región';
+      const delta3 = k3.querySelector('.ex-kpi-delta');
+      delta3.innerHTML = '<span class="lbl">' + CURRENT_REGION + ' · total ' + info.total_2025.toLocaleString('es-MX') + ' carpetas</span>';
+    } else {
+      // Restaurar valores estatales originales
+      const k2 = kpis[1];
+      k2.querySelector('.ex-kpi-num').textContent = '1,119';
+      k2.querySelector('.ex-kpi-delta').innerHTML = '<span class="v dn">−26.4%</span><span class="lbl">vs 2024 · 1 cada 7.83 hrs</span>';
+      const k3 = kpis[2];
+      k3.querySelector('.ex-kpi-num').textContent = '259';
+      k3.querySelector('.ex-kpi-lbl').lastChild.textContent = ' Extorsión Cuautla';
+      k3.querySelector('.ex-kpi-delta').innerHTML = '<span class="v up">+72.7%</span><span class="lbl">vs 2024 · #1 nacional</span>';
+    }
+  }
+
+  // Hooks de Tabs principales (Estado completo / 7 regiones PED)
+  function setupScopeTabs() {
+    const tabEstado = document.getElementById('exTabEstado');
+    const tabRegiones = document.getElementById('exTabRegiones');
+    const regBar = document.getElementById('exRegionesBar');
+    if (!tabEstado || !tabRegiones || !regBar) return;
+
+    tabEstado.addEventListener('click', () => {
+      tabEstado.classList.add('active');
+      tabRegiones.classList.remove('active');
+      tabEstado.setAttribute('aria-selected', 'true');
+      tabRegiones.setAttribute('aria-selected', 'false');
+      regBar.setAttribute('hidden', '');
+      setRegion(null);
+    });
+    tabRegiones.addEventListener('click', () => {
+      tabRegiones.classList.add('active');
+      tabEstado.classList.remove('active');
+      tabRegiones.setAttribute('aria-selected', 'true');
+      tabEstado.setAttribute('aria-selected', 'false');
+      regBar.removeAttribute('hidden');
+    });
+  }
+
   // -------- Init: leer variable global EXEC_DELITOS_DATA (inlineada) --------
   function tryBoot(attempt) {
     attempt = attempt || 0;
@@ -35614,6 +35780,9 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
       CURRENT_DELITO = DATA.default || 'total';
       buildDelitoPicker();
       renderMap();
+      // F2: setup de filtros por región PED
+      buildRegionChips();
+      setupScopeTabs();
       return;
     }
     if (attempt > 40) {
