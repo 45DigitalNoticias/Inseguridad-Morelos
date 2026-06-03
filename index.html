@@ -6193,6 +6193,121 @@
   }
   #sExec .ex-rank-row.hi .ex-rank-val { color: #fbbf24; }
 
+  /* === CHOROPLETH del mapa === */
+  #sExec .ex-map-panel { position: relative; }
+  #sExec .ex-delito-picker {
+    display: flex; gap: 5px; flex-wrap: wrap;
+    margin-bottom: 12px; padding: 6px;
+    background: #06080c; border: 1px solid #1a1f26; border-radius: 8px;
+  }
+  #sExec .ex-delito-btn {
+    padding: 5px 10px; border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+    letter-spacing: 1px; text-transform: uppercase; font-weight: 700;
+    color: #6b7480; background: transparent; border: 0;
+    cursor: pointer; transition: all 0.12s;
+  }
+  #sExec .ex-delito-btn:hover { color: #c9d1d9; background: rgba(251,191,36,0.06); }
+  #sExec .ex-delito-btn.active { color: #0a0d12; background: #fbbf24; }
+  #sExec .ex-delito-btn.is-total.active { background: #a78bfa; color: #0a0d12; }
+
+  #sExec .ex-map-canvas {
+    flex: 1; position: relative; min-height: 220px;
+    border-radius: 7px; overflow: hidden;
+  }
+  #sExec #exChoropleth path.muni {
+    fill: #1a1f26; stroke: #06080c; stroke-width: 0.0008;
+    cursor: pointer; transition: filter 0.12s, stroke 0.12s;
+  }
+  #sExec #exChoropleth path.muni:hover {
+    stroke: #fbbf24; stroke-width: 0.0025;
+    filter: brightness(1.18);
+  }
+  #sExec #exChoropleth text.muni-label {
+    font-family: 'Inter', sans-serif; font-size: 0.008px; font-weight: 700;
+    fill: #fff; text-anchor: middle; pointer-events: none;
+    text-shadow: 0 0 2px #000;
+  }
+
+  #sExec .ex-map-tooltip {
+    position: absolute; pointer-events: none;
+    background: rgba(13,17,23,0.97); border: 1px solid #fbbf24;
+    padding: 10px 14px; border-radius: 7px;
+    font-family: 'Inter', sans-serif; font-size: 11.5px;
+    color: #e6edf3; line-height: 1.4;
+    opacity: 0; transition: opacity 0.12s;
+    z-index: 100; box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    min-width: 180px;
+  }
+  #sExec .ex-map-tooltip.show { opacity: 1; }
+  #sExec .ex-map-tooltip .t-muni {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: #fbbf24; font-weight: 700; margin-bottom: 4px;
+  }
+  #sExec .ex-map-tooltip .t-val strong {
+    font-family: 'Fraunces', serif; font-size: 22px; color: #fff;
+    font-weight: 600; letter-spacing: -0.5px;
+  }
+  #sExec .ex-map-tooltip .t-val span {
+    font-size: 10.5px; color: #8b949e; margin-left: 4px;
+  }
+  #sExec .ex-map-tooltip .t-rank {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: #c9d1d9; letter-spacing: 0.5px; margin-top: 4px;
+  }
+  #sExec .ex-map-tooltip .t-action {
+    margin-top: 6px; padding-top: 6px;
+    border-top: 1px solid #1a1f26;
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    letter-spacing: 1.2px; color: #6b7480; text-transform: uppercase;
+  }
+
+  #sExec .ex-map-legend-grad {
+    display: flex; align-items: center; gap: 10px; margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: #6b7480; letter-spacing: 1px;
+  }
+  #sExec .ex-leg-bar {
+    flex: 1; height: 10px; border-radius: 2px;
+    background: linear-gradient(90deg, #1a1f26 0%, #fbbf24 40%, #ec4899 70%, #f85149 100%);
+  }
+  #sExec .ex-leg-min, #sExec .ex-leg-max { font-weight: 700; color: #c9d1d9; }
+
+  /* === FULLSCREEN TAKEOVER ===
+     Cuando body tiene clase 'dashboard-mode', sExec ocupa toda la ventana
+     y el resto del sitio queda oculto. Se activa con click al nav o hash #sExec. */
+  body.dashboard-mode { overflow: hidden; }
+  body.dashboard-mode #sExec {
+    position: fixed; inset: 0;
+    width: 100vw; height: 100vh; max-height: 100vh;
+    margin: 0; padding: 24px 24px 28px;
+    z-index: 9000; overflow: auto;
+    border-top: none; border-bottom: none;
+  }
+  body.dashboard-mode > *:not(#sExec):not(.dashboard-overlay):not(.rb-share-fab):not(.rb-share-toast):not(.cine-go-top) {
+    display: none !important;
+  }
+  body.dashboard-mode .ex-wrap {
+    max-width: 1600px;
+  }
+
+  /* Botón de cerrar (X) que solo aparece en modo dashboard */
+  #sExec .ex-exit-fs {
+    display: none;
+    margin-left: 14px;
+    padding: 8px 14px; border-radius: 7px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+    background: rgba(248,81,73,0.10); color: #f85149;
+    border: 1px solid rgba(248,81,73,0.45);
+    cursor: pointer; transition: all 0.15s;
+    align-items: center; gap: 8px;
+  }
+  #sExec .ex-exit-fs:hover { background: #f85149; color: #fff; }
+  #sExec .ex-exit-fs svg { width: 12px; height: 12px; }
+  body.dashboard-mode #sExec .ex-exit-fs { display: inline-flex; }
+
   /* RESPONSIVE */
   @media (max-width: 1100px) {
     #sExec .ex-kpis { grid-template-columns: repeat(2, 1fr); }
@@ -6219,6 +6334,10 @@
       <div class="ex-actions">
         <div class="h-tag">Corte: marzo 2026 · Q1 parcial</div>
         <div class="h-tag live"><span class="dot"></span>Live</div>
+        <button class="ex-exit-fs" id="exExitFs" aria-label="Cerrar dashboard y volver al análisis narrativo">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l6 6M9 3l-6 6"/></svg>
+          Cerrar dashboard
+        </button>
       </div>
     </div>
 
@@ -6289,71 +6408,34 @@
     <!-- ROW 2 · Mapa + Serie + Donut -->
     <div class="ex-row2">
 
-      <!-- MAPA -->
-      <div class="ex-panel">
+      <!-- MAPA · CHOROPLETH INTERACTIVO -->
+      <div class="ex-panel ex-map-panel">
         <div class="ex-panel-head">
-          <div class="ex-panel-title">36 municipios · intensidad de delito</div>
-          <div class="ex-panel-action">SESNSP 2025</div>
+          <div class="ex-panel-title">
+            Mapa de calor · 36 municipios <span id="exMapDelitoLabel">Cargando...</span>
+          </div>
+          <div class="ex-panel-action" id="exMapTotalEstatal">—</div>
         </div>
-        <div class="ex-map">
-          <svg viewBox="0 0 400 320">
-            <path d="M 180 30 L 240 40 L 280 65 L 310 110 L 320 165 L 318 225 L 290 270 L 240 295 L 180 305 L 130 295 L 85 260 L 65 200 L 70 140 L 95 90 L 140 50 Z" fill="rgba(13,17,23,0.5)" stroke="rgba(251,191,36,0.35)" stroke-width="1.2"/>
-            <a href="municipio.html?id=cuernavaca">
-              <circle cx="170" cy="155" r="26" fill="#f85149" opacity="0.85"/>
-              <text x="170" y="158" fill="#fff" font-size="10" font-weight="700" text-anchor="middle">CNV</text>
-            </a>
-            <a href="municipio.html?id=cuautla">
-              <circle cx="245" cy="165" r="20" fill="#f85149" opacity="0.7"/>
-              <text x="245" y="168" fill="#fff" font-size="8" font-weight="700" text-anchor="middle">CTL</text>
-            </a>
-            <a href="municipio.html?id=jiutepec">
-              <circle cx="195" cy="180" r="16" fill="#ec4899" opacity="0.65"/>
-              <text x="195" y="183" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">JTP</text>
-            </a>
-            <a href="municipio.html?id=temixco">
-              <circle cx="155" cy="190" r="13" fill="#ec4899" opacity="0.55"/>
-              <text x="155" y="193" fill="#fff" font-size="6.5" font-weight="700" text-anchor="middle">TMX</text>
-            </a>
-            <circle cx="210" cy="220" r="10" fill="#fbbf24" opacity="0.5"/>
-            <circle cx="270" cy="220" r="9" fill="#fbbf24" opacity="0.45"/>
-            <circle cx="135" cy="120" r="8" fill="#fbbf24" opacity="0.4"/>
-            <circle cx="220" cy="115" r="8" fill="#a78bfa" opacity="0.4"/>
-            <circle cx="105" cy="160" r="7" fill="#3fb950" opacity="0.4"/>
-            <circle cx="285" cy="155" r="8" fill="#fbbf24" opacity="0.4"/>
-            <circle cx="160" cy="240" r="9" fill="#3fb950" opacity="0.35"/>
-            <circle cx="225" cy="260" r="7" fill="#3fb950" opacity="0.35"/>
-            <circle cx="180" cy="110" r="6" fill="#a78bfa" opacity="0.35"/>
-            <circle cx="100" cy="220" r="6" fill="#3fb950" opacity="0.3"/>
-            <circle cx="265" cy="100" r="6" fill="#a78bfa" opacity="0.3"/>
-            <circle cx="290" cy="195" r="6" fill="#3fb950" opacity="0.3"/>
-            <circle cx="140" cy="265" r="5" fill="#3fb950" opacity="0.3"/>
-            <circle cx="245" cy="80" r="5" fill="#3fb950" opacity="0.3"/>
-            <circle cx="115" cy="195" r="5" fill="#3fb950" opacity="0.3"/>
-            <circle cx="195" cy="65" r="5" fill="#a78bfa" opacity="0.3"/>
-            <circle cx="305" cy="220" r="5" fill="#3fb950" opacity="0.3"/>
-            <circle cx="80" cy="190" r="4" fill="#3fb950" opacity="0.3"/>
-            <circle cx="250" cy="285" r="4" fill="#3fb950" opacity="0.3"/>
-            <circle cx="165" cy="280" r="4" fill="#3fb950" opacity="0.3"/>
-            <circle cx="295" cy="135" r="4" fill="#3fb950" opacity="0.3"/>
-            <circle cx="220" cy="285" r="3" fill="#3fb950" opacity="0.25"/>
-            <circle cx="120" cy="280" r="3" fill="#3fb950" opacity="0.25"/>
-            <circle cx="280" cy="245" r="3" fill="#3fb950" opacity="0.25"/>
-            <circle cx="155" cy="80" r="3" fill="#3fb950" opacity="0.25"/>
-            <circle cx="275" cy="285" r="3" fill="#3fb950" opacity="0.25"/>
-            <circle cx="190" cy="295" r="3" fill="#3fb950" opacity="0.25"/>
-            <circle cx="85" cy="155" r="3" fill="#3fb950" opacity="0.25"/>
-            <circle cx="305" cy="180" r="3" fill="#3fb950" opacity="0.25"/>
-            <circle cx="100" cy="115" r="3" fill="#3fb950" opacity="0.25"/>
-            <circle cx="250" cy="240" r="3" fill="#3fb950" opacity="0.25"/>
-            <circle cx="135" cy="165" r="2.5" fill="#3fb950" opacity="0.25"/>
-            <circle cx="225" cy="195" r="2.5" fill="#3fb950" opacity="0.25"/>
-          </svg>
+        <!-- Selector de delito -->
+        <div class="ex-delito-picker" id="exDelitoPicker" role="tablist" aria-label="Seleccionar delito para el mapa de calor">
+          <!-- inyectado por JS -->
         </div>
-        <div class="ex-map-legend">
-          <span><span class="dot" style="background:#f85149;"></span>Alta</span>
-          <span><span class="dot" style="background:#ec4899;"></span>Media-alta</span>
-          <span><span class="dot" style="background:#fbbf24;"></span>Media</span>
-          <span><span class="dot" style="background:#3fb950;"></span>Baja</span>
+        <!-- Canvas del mapa -->
+        <div class="ex-map-canvas" id="exMapCanvas">
+          <svg id="exChoropleth" viewBox="-99.6 -19.2 1.0 0.95" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;"></svg>
+        </div>
+        <!-- Tooltip -->
+        <div class="ex-map-tooltip" id="exMapTooltip" aria-hidden="true">
+          <div class="t-muni">Municipio</div>
+          <div class="t-val"><strong id="ttVal">—</strong> <span id="ttUnit">carpetas</span></div>
+          <div class="t-rank" id="ttRank">—</div>
+          <div class="t-action">Click para abrir radiografía</div>
+        </div>
+        <!-- Leyenda -->
+        <div class="ex-map-legend-grad" id="exMapLegendGrad">
+          <span class="ex-leg-min">0</span>
+          <div class="ex-leg-bar"></div>
+          <span class="ex-leg-max">—</span>
         </div>
       </div>
 
@@ -34564,6 +34646,270 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
   } else {
     init();
   }
+})();
+</script>
+
+
+<!-- ============================================================
+     sExec · Choropleth interactivo + Fullscreen takeover (v2.19)
+     ============================================================ -->
+<script src="morelos.geojson.js" defer></script>
+<script defer>
+(function() {
+  // -------- Datos delitos por municipio --------
+  // Cargados via fetch desde municipios_delitos.json
+  let DATA = null;
+  let CURRENT_DELITO = null;
+
+  // Slugs comunes para mapear nombres del geojson a IDs (para municipio.html?id=)
+  function slug(s) {
+    return s.toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g,'')
+      .replace(/ /g,'-').replace(/[^\w-]/g,'');
+  }
+
+  // -------- Construcción manual del path SVG desde GeoJSON --------
+  // (Es geometría plana lon/lat, no necesitamos proyección compleja)
+  function polygonToPath(coords) {
+    // coords es [[ring1], [ring2], ...] en Polygon, o más anidado en MultiPolygon
+    let d = '';
+    coords.forEach(ring => {
+      ring.forEach((pt, i) => {
+        // Invertir Y para que lat positiva esté arriba
+        const x = pt[0];
+        const y = -pt[1]; // invert
+        d += (i === 0 ? 'M' : 'L') + x.toFixed(5) + ',' + y.toFixed(5);
+      });
+      d += 'Z';
+    });
+    return d;
+  }
+  function geomToPath(geom) {
+    if (geom.type === 'Polygon') return polygonToPath(geom.coordinates);
+    if (geom.type === 'MultiPolygon') {
+      return geom.coordinates.map(c => polygonToPath(c)).join('');
+    }
+    return '';
+  }
+
+  // -------- Calcular bbox del GeoJSON para viewBox --------
+  function computeBBox(features) {
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    function visit(coords) {
+      if (typeof coords[0] === 'number') {
+        const x = coords[0], y = -coords[1];
+        if (x < minX) minX = x; if (x > maxX) maxX = x;
+        if (y < minY) minY = y; if (y > maxY) maxY = y;
+      } else { coords.forEach(visit); }
+    }
+    features.forEach(f => visit(f.geometry.coordinates));
+    return [minX, minY, maxX - minX, maxY - minY];
+  }
+
+  // -------- Escala de color secuencial (oscuro → ámbar → magenta → rojo) --------
+  function colorFor(v, max) {
+    if (max <= 0 || v <= 0) return '#1a1f26';
+    const t = Math.min(1, v / max);
+    // Curva cuadrática para realzar valores medios-bajos
+    const s = Math.pow(t, 0.6);
+    if (s < 0.35) {
+      // gris → ámbar tenue
+      const k = s / 0.35;
+      return interp('#26303a', '#7c5a1a', k);
+    } else if (s < 0.65) {
+      const k = (s - 0.35) / 0.30;
+      return interp('#7c5a1a', '#fbbf24', k);
+    } else if (s < 0.85) {
+      const k = (s - 0.65) / 0.20;
+      return interp('#fbbf24', '#ec4899', k);
+    } else {
+      const k = (s - 0.85) / 0.15;
+      return interp('#ec4899', '#f85149', k);
+    }
+  }
+  function interp(c1, c2, t) {
+    const r1 = parseInt(c1.slice(1,3),16), g1 = parseInt(c1.slice(3,5),16), b1 = parseInt(c1.slice(5,7),16);
+    const r2 = parseInt(c2.slice(1,3),16), g2 = parseInt(c2.slice(3,5),16), b2 = parseInt(c2.slice(5,7),16);
+    const r = Math.round(r1 + (r2-r1)*t);
+    const g = Math.round(g1 + (g2-g1)*t);
+    const b = Math.round(b1 + (b2-b1)*t);
+    return '#' + [r,g,b].map(n => n.toString(16).padStart(2,'0')).join('');
+  }
+
+  // -------- Render del SVG y los paths --------
+  function renderMap() {
+    if (!window.MORELOS_GEOJSON) {
+      console.warn('GeoJSON Morelos no cargado todavía');
+      setTimeout(renderMap, 250);
+      return;
+    }
+    const svg = document.getElementById('exChoropleth');
+    if (!svg) return;
+    const feats = MORELOS_GEOJSON.features;
+    const bbox = computeBBox(feats);
+    // Agregar 2% de padding
+    const padX = bbox[2] * 0.02, padY = bbox[3] * 0.02;
+    svg.setAttribute('viewBox', `${bbox[0]-padX} ${bbox[1]-padY} ${bbox[2]+padX*2} ${bbox[3]+padY*2}`);
+    svg.innerHTML = '';
+    feats.forEach(f => {
+      const name = f.properties.n;
+      const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('class', 'muni');
+      p.setAttribute('d', geomToPath(f.geometry));
+      p.setAttribute('data-muni', name);
+      p.setAttribute('data-slug', slug(name));
+      svg.appendChild(p);
+    });
+    paintMap();
+    bindMapEvents();
+  }
+
+  // -------- Pintar según delito seleccionado --------
+  function paintMap() {
+    if (!DATA || !CURRENT_DELITO) return;
+    const dconf = DATA.delitos[CURRENT_DELITO];
+    if (!dconf) return;
+    const data = dconf.data;
+    const values = Object.values(data).filter(v => typeof v === 'number');
+    const max = Math.max(...values);
+
+    document.querySelectorAll('#exChoropleth path.muni').forEach(p => {
+      const name = p.getAttribute('data-muni');
+      // intentos de match
+      let v = data[name];
+      if (v === undefined) {
+        // probar variantes
+        const variants = [
+          name, name + ' de Zapata', name + ' de Leandro Valle',
+          name + ' de Amilpas', name + ' del Volcán', name + ' del Río',
+        ];
+        for (const k of Object.keys(data)) {
+          if (k.startsWith(name) || name.startsWith(k.split(' ')[0])) { v = data[k]; break; }
+        }
+      }
+      if (v === undefined) v = 0;
+      p.setAttribute('fill', colorFor(v, max));
+      p.setAttribute('data-val', v);
+    });
+
+    // Header labels
+    const lbl = document.getElementById('exMapDelitoLabel');
+    if (lbl) lbl.textContent = '· ' + dconf.nombre;
+    const tot = document.getElementById('exMapTotalEstatal');
+    if (tot) tot.textContent = `Total estatal · ${dconf.total_estatal.toLocaleString('es-MX')}`;
+    const legMax = document.querySelector('#exMapLegendGrad .ex-leg-max');
+    if (legMax) legMax.textContent = max.toLocaleString('es-MX') + '+';
+
+    // Highlight botón activo
+    document.querySelectorAll('.ex-delito-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.delito === CURRENT_DELITO);
+    });
+  }
+
+  // -------- Hover + click sobre municipios --------
+  function bindMapEvents() {
+    const tooltip = document.getElementById('exMapTooltip');
+    const canvas = document.getElementById('exMapCanvas');
+    document.querySelectorAll('#exChoropleth path.muni').forEach(p => {
+      p.addEventListener('mouseenter', e => {
+        const muni = p.getAttribute('data-muni');
+        const val = parseInt(p.getAttribute('data-val') || 0, 10);
+        const dconf = DATA.delitos[CURRENT_DELITO];
+        const arr = Object.entries(dconf.data).sort((a,b) => b[1]-a[1]);
+        const rankIdx = arr.findIndex(([k]) => k === muni || k.startsWith(muni));
+        tooltip.querySelector('.t-muni').textContent = muni;
+        document.getElementById('ttVal').textContent = val.toLocaleString('es-MX');
+        document.getElementById('ttUnit').textContent = 'carpetas ' + dconf.nombre;
+        document.getElementById('ttRank').textContent =
+          rankIdx >= 0 ? `Posición ${rankIdx+1} de 36 en Morelos` : '—';
+        tooltip.classList.add('show');
+      });
+      p.addEventListener('mousemove', e => {
+        const rect = canvas.getBoundingClientRect();
+        let x = e.clientX - rect.left + 14;
+        let y = e.clientY - rect.top + 14;
+        // evitar que se salga
+        if (x + 220 > rect.width) x = e.clientX - rect.left - 220;
+        if (y + 100 > rect.height) y = e.clientY - rect.top - 100;
+        tooltip.style.left = x + 'px';
+        tooltip.style.top = y + 'px';
+      });
+      p.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
+      p.addEventListener('click', () => {
+        const id = p.getAttribute('data-slug');
+        window.location.href = 'municipio.html?id=' + id;
+      });
+    });
+  }
+
+  // -------- Picker de delitos --------
+  function buildDelitoPicker() {
+    const picker = document.getElementById('exDelitoPicker');
+    if (!picker || !DATA) return;
+    picker.innerHTML = '';
+    // Orden personalizado: total primero (visible y destacado), luego los otros por total estatal
+    const entries = Object.entries(DATA.delitos)
+      .sort((a, b) => {
+        if (a[0] === 'total') return -1;
+        if (b[0] === 'total') return 1;
+        return b[1].total_estatal - a[1].total_estatal;
+      });
+    entries.forEach(([slug, info]) => {
+      const b = document.createElement('button');
+      b.className = 'ex-delito-btn' + (slug === 'total' ? ' is-total' : '');
+      b.dataset.delito = slug;
+      b.textContent = info.nombre;
+      b.addEventListener('click', () => { CURRENT_DELITO = slug; paintMap(); });
+      picker.appendChild(b);
+    });
+  }
+
+  // -------- Init: cargar JSON y arrancar --------
+  fetch('municipios_delitos.json')
+    .then(r => r.json())
+    .then(d => {
+      DATA = d;
+      CURRENT_DELITO = d.default || 'total';
+      buildDelitoPicker();
+      renderMap();
+    })
+    .catch(err => console.error('Error cargando municipios_delitos.json:', err));
+
+  // -------- FULLSCREEN TAKEOVER --------
+  function applyDashboardMode() {
+    if (window.location.hash === '#sExec') {
+      document.body.classList.add('dashboard-mode');
+      // scroll top dentro de la sección
+      const sec = document.getElementById('sExec');
+      if (sec) sec.scrollTop = 0;
+    } else {
+      document.body.classList.remove('dashboard-mode');
+    }
+  }
+  window.addEventListener('hashchange', applyDashboardMode);
+  document.addEventListener('DOMContentLoaded', applyDashboardMode);
+  // Por si ya cargó:
+  applyDashboardMode();
+
+  // Botón cerrar
+  const exitBtn = document.getElementById('exExitFs');
+  if (exitBtn) {
+    exitBtn.addEventListener('click', () => {
+      window.location.hash = '';
+      document.body.classList.remove('dashboard-mode');
+      // Limpiar hash de la URL
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    });
+  }
+
+  // ESC también cierra
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.body.classList.contains('dashboard-mode')) {
+      window.location.hash = '';
+      document.body.classList.remove('dashboard-mode');
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  });
 })();
 </script>
 
