@@ -6359,39 +6359,58 @@
   #sExec .ex-serie-grid { stroke: #1a1f26; stroke-width: 0.5; }
   #sExec .ex-serie-marker { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.5px; }
 
-  /* Donut · respiración entre número, donut y leyenda */
+  /* Donut · grande + caption fuera del círculo */
   #sExec .ex-donut-wrap {
-    display: flex; align-items: center; gap: 36px; flex: 1;
-    padding: 14px 8px;
+    display: flex; align-items: center; gap: 32px; flex: 1;
+    padding: 18px 12px;
   }
-  #sExec .ex-donut { width: 160px; height: 160px; flex-shrink: 0; }
+  #sExec .ex-donut-side {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 12px; flex-shrink: 0;
+  }
+  #sExec .ex-donut { width: 220px; height: 220px; }
   #sExec .ex-donut-center {
-    font-family: 'Fraunces', serif; font-size: 32px; font-weight: 600;
-    letter-spacing: -0.5px; text-anchor: middle; dominant-baseline: central; fill: #e6edf3;
+    font-family: 'Fraunces', serif; font-size: 42px; font-weight: 700;
+    letter-spacing: -1px; text-anchor: middle; dominant-baseline: central; fill: #e6edf3;
   }
-  #sExec .ex-donut-center-lbl {
-    font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
-    letter-spacing: 1.8px; text-anchor: middle; fill: #6b7480; text-transform: uppercase;
+  #sExec .ex-donut-caption {
+    text-align: center; line-height: 1.2;
   }
-  #sExec .ex-donut-legend { display: flex; flex-direction: column; gap: 18px; flex: 1; }
+  #sExec .ex-donut-caption .clbl {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 2.5px; color: #fbbf24; text-transform: uppercase;
+    font-weight: 700; display: block; margin-bottom: 3px;
+  }
+  #sExec .ex-donut-caption .csub {
+    font-family: 'Inter', sans-serif; font-size: 11px;
+    color: #6b7480; letter-spacing: 0.3px;
+  }
+  #sExec .ex-donut-legend {
+    display: flex; flex-direction: column; gap: 20px; flex: 1;
+    justify-content: center;
+  }
   #sExec .ex-dl-item {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding-bottom: 14px; border-bottom: 1px solid #14181f;
+    display: flex; align-items: flex-start; gap: 14px;
+    padding-bottom: 18px; border-bottom: 1px solid #14181f;
   }
   #sExec .ex-dl-item:last-child { border-bottom: none; padding-bottom: 0; }
   #sExec .ex-dl-dot {
-    width: 10px; height: 10px; border-radius: 2px;
-    flex-shrink: 0; margin-top: 4px;
+    width: 12px; height: 12px; border-radius: 3px;
+    flex-shrink: 0; margin-top: 5px;
   }
   #sExec .ex-dl-name {
-    font-size: 12.5px; color: #c9d1d9; line-height: 1.3;
-    font-weight: 600; margin-bottom: 4px;
+    font-size: 14px; color: #e6edf3; line-height: 1.25;
+    font-weight: 700; margin-bottom: 6px; letter-spacing: -0.1px;
   }
   #sExec .ex-dl-num {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
     color: #8b949e; letter-spacing: 0.6px;
+    display: flex; align-items: baseline; gap: 8px;
   }
-  #sExec .ex-dl-num strong { color: #e6edf3; font-weight: 700; }
+  #sExec .ex-dl-num strong {
+    color: #e6edf3; font-weight: 700; font-size: 18px;
+    letter-spacing: -0.3px;
+  }
 
   /* Row 3 · barras + tabla + ranking nacional */
   #sExec .ex-row3 { display: grid; grid-template-columns: 1.2fr 1.1fr 1fr; gap: 14px; min-height: 360px; }
@@ -6818,18 +6837,41 @@
           <div class="ex-panel-action">víctimas</div>
         </div>
         <div class="ex-donut-wrap">
-          <svg class="ex-donut" viewBox="0 0 160 160">
-            <circle cx="80" cy="80" r="62" fill="none" stroke="#1a1f26" stroke-width="14"/>
-            <circle cx="80" cy="80" r="62" fill="none" stroke="#f85149" stroke-width="14" stroke-dasharray="277 113" stroke-dashoffset="0" stroke-linecap="butt" transform="rotate(-90 80 80)"/>
-            <circle cx="80" cy="80" r="62" fill="none" stroke="#fbbf24" stroke-width="14" stroke-dasharray="103 287" stroke-dashoffset="-279" stroke-linecap="butt" transform="rotate(-90 80 80)"/>
-            <circle cx="80" cy="80" r="62" fill="none" stroke="#a78bfa" stroke-width="14" stroke-dasharray="9 381" stroke-dashoffset="-385" stroke-linecap="butt" transform="rotate(-90 80 80)"/>
-            <text class="ex-donut-center" x="80" y="76">1,571</text>
-            <text class="ex-donut-center-lbl" x="80" y="95">víctimas total</text>
-          </svg>
+          <div class="ex-donut-side">
+            <svg class="ex-donut" viewBox="0 0 220 220">
+              <circle cx="110" cy="110" r="86" fill="none" stroke="#1a1f26" stroke-width="20"/>
+              <circle cx="110" cy="110" r="86" fill="none" stroke="#f85149" stroke-width="20" stroke-dasharray="384 156" stroke-dashoffset="0" stroke-linecap="butt" transform="rotate(-90 110 110)"/>
+              <circle cx="110" cy="110" r="86" fill="none" stroke="#fbbf24" stroke-width="20" stroke-dasharray="143 397" stroke-dashoffset="-386" stroke-linecap="butt" transform="rotate(-90 110 110)"/>
+              <circle cx="110" cy="110" r="86" fill="none" stroke="#a78bfa" stroke-width="20" stroke-dasharray="12 528" stroke-dashoffset="-531" stroke-linecap="butt" transform="rotate(-90 110 110)"/>
+              <text class="ex-donut-center" x="110" y="110">1,571</text>
+            </svg>
+            <div class="ex-donut-caption">
+              <span class="clbl">Víctimas totales · 2025</span>
+              <span class="csub">Morelos · SESNSP víctimas</span>
+            </div>
+          </div>
           <div class="ex-donut-legend">
-            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#f85149;"></span><div><div class="ex-dl-name">Homicidio doloso</div><div class="ex-dl-num"><strong>1,119</strong> · 71.2%</div></div></div>
-            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#fbbf24;"></span><div><div class="ex-dl-name">Homicidio culposo</div><div class="ex-dl-num"><strong>417</strong> · 26.5%</div></div></div>
-            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#a78bfa;"></span><div><div class="ex-dl-name">Feminicidio</div><div class="ex-dl-num"><strong>35</strong> · 2.2%</div></div></div>
+            <div class="ex-dl-item">
+              <span class="ex-dl-dot" style="background:#f85149;"></span>
+              <div>
+                <div class="ex-dl-name">Homicidio doloso</div>
+                <div class="ex-dl-num"><strong>1,119</strong> víctimas · 71.2%</div>
+              </div>
+            </div>
+            <div class="ex-dl-item">
+              <span class="ex-dl-dot" style="background:#fbbf24;"></span>
+              <div>
+                <div class="ex-dl-name">Homicidio culposo</div>
+                <div class="ex-dl-num"><strong>417</strong> víctimas · 26.5%</div>
+              </div>
+            </div>
+            <div class="ex-dl-item">
+              <span class="ex-dl-dot" style="background:#a78bfa;"></span>
+              <div>
+                <div class="ex-dl-name">Feminicidio</div>
+                <div class="ex-dl-num"><strong>35</strong> víctimas · 2.2%</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
