@@ -6093,48 +6093,87 @@
     height: 130px !important;
     max-height: 130px !important;
   }
-  /* Panel lateral con 3 indicadores stack */
-  #sExec .ex-side-stack { display: flex; flex-direction: column; gap: 14px; }
-  #sExec .ex-side-card {
+  /* Panel lateral · ranking compacto top 5 munis */
+  #sExec .ex-side-panel {
     background: #0d1117; border: 1px solid #1a1f26; border-radius: 11px;
-    padding: 16px 18px; flex: 1; min-height: 0;
-    display: flex; flex-direction: column; gap: 8px;
-    position: relative; overflow: hidden;
+    padding: 14px 16px; display: flex; flex-direction: column;
+    overflow: hidden;
   }
-  #sExec .ex-side-card.is-rank-1 { border-left: 3px solid #f85149; }
-  #sExec .ex-side-card.is-rank-2 { border-left: 3px solid #fbbf24; }
-  #sExec .ex-side-card.is-rank-3 { border-left: 3px solid #a78bfa; }
-  #sExec .ex-side-head { display: flex; justify-content: space-between; align-items: baseline; }
-  #sExec .ex-side-tag {
+  #sExec .ex-side-head-bar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 10px; margin-bottom: 6px;
+    border-bottom: 1px solid #1a1f26;
+  }
+  #sExec .ex-side-title {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9.5px; letter-spacing: 1.8px; text-transform: uppercase;
-    color: #6b7480; font-weight: 700;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: #fbbf24; font-weight: 700;
   }
-  #sExec .ex-side-rank {
-    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700;
-    color: #6b7480; line-height: 1;
+  #sExec .ex-side-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 1.2px; color: #6b7480;
+    font-weight: 600; text-transform: uppercase;
   }
-  #sExec .ex-side-card.is-rank-1 .ex-side-rank { color: #f85149; }
-  #sExec .ex-side-card.is-rank-2 .ex-side-rank { color: #fbbf24; }
-  #sExec .ex-side-card.is-rank-3 .ex-side-rank { color: #a78bfa; }
-  #sExec .ex-side-muni {
-    font-family: 'Fraunces', serif; font-size: 21px; font-weight: 600;
-    color: #e6edf3; line-height: 1.1; letter-spacing: -0.4px;
-    margin-top: 4px;
+  #sExec .ex-side-row {
+    display: grid;
+    grid-template-columns: 18px 1fr auto;
+    align-items: center; gap: 9px;
+    padding: 7px 0;
+    border-bottom: 1px solid #14181f;
+    cursor: pointer; transition: background 0.12s;
   }
-  #sExec .ex-side-num {
-    font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700;
-    color: #fbbf24; line-height: 1; letter-spacing: -0.5px;
-    margin-top: auto;
+  #sExec .ex-side-row:last-child { border-bottom: none; }
+  #sExec .ex-side-row:hover { background: rgba(251,191,36,0.05); }
+  #sExec .ex-side-row .pos {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    font-size: 10.5px; color: #6b7480; letter-spacing: 0.3px;
   }
-  #sExec .ex-side-card.is-rank-1 .ex-side-num { color: #f85149; }
-  #sExec .ex-side-card.is-rank-3 .ex-side-num { color: #a78bfa; }
-  #sExec .ex-side-meta {
-    font-family: 'Inter', sans-serif; font-size: 11px;
-    color: #8b949e; line-height: 1.4;
+  #sExec .ex-side-row.r1 .pos { color: #f85149; }
+  #sExec .ex-side-row.r2 .pos { color: #fbbf24; }
+  #sExec .ex-side-row.r3 .pos { color: #a78bfa; }
+  #sExec .ex-side-row .body {
+    display: flex; flex-direction: column; gap: 3px; min-width: 0;
   }
-  #sExec .ex-side-meta strong { color: #c9d1d9; font-weight: 600; }
-  #sExec .ex-side-card:hover { border-color: rgba(251,191,36,0.4); cursor: pointer; }
+  #sExec .ex-side-row .name {
+    font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600;
+    color: #e6edf3; line-height: 1; letter-spacing: -0.1px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  #sExec .ex-side-row.r1 .name { color: #f85149; }
+  #sExec .ex-side-row .bar-track {
+    height: 4px; background: rgba(48,54,61,0.5);
+    border-radius: 2px; overflow: hidden;
+  }
+  #sExec .ex-side-row .bar-fill {
+    height: 100%; background: linear-gradient(90deg, rgba(248,81,73,0.4), #f85149);
+    border-radius: 2px; transition: width 0.25s ease-out;
+  }
+  #sExec .ex-side-row.r1 .bar-fill { background: linear-gradient(90deg, rgba(248,81,73,0.6), #f85149); }
+  #sExec .ex-side-row.r2 .bar-fill { background: linear-gradient(90deg, rgba(251,191,36,0.5), #fbbf24); }
+  #sExec .ex-side-row.r3 .bar-fill { background: linear-gradient(90deg, rgba(167,139,250,0.5), #a78bfa); }
+  #sExec .ex-side-row .vals {
+    text-align: right; display: flex; flex-direction: column;
+    align-items: flex-end; gap: 1px;
+  }
+  #sExec .ex-side-row .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    color: #e6edf3; letter-spacing: 0.2px; line-height: 1;
+  }
+  #sExec .ex-side-row .pct {
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+    color: #6b7480; letter-spacing: 0.3px; line-height: 1;
+  }
+  #sExec .ex-side-footer {
+    margin-top: 8px; padding-top: 8px; border-top: 1px solid #1a1f26;
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 1px; color: #6b7480; text-transform: uppercase;
+  }
+  #sExec .ex-side-footer strong { color: #fbbf24; font-weight: 700; }
+  #sExec .ex-side-footer a {
+    color: #fbbf24; text-decoration: none; font-weight: 700;
+  }
+  #sExec .ex-side-footer a:hover { color: #fff; }
   /* Serie + donut · 2 columnas */
   #sExec .ex-row2 { display: grid; grid-template-columns: 1.7fr 1fr; gap: 14px; min-height: 340px; margin-bottom: 14px; }
 
@@ -6505,34 +6544,16 @@
         </div>
       </div>
 
-      <!-- Stack lateral · Top 3 munis del delito seleccionado (dinámico) -->
-      <div class="ex-side-stack" id="exSideStack">
-        <div class="ex-side-card is-rank-1" data-rank="0">
-          <div class="ex-side-head">
-            <span class="ex-side-tag">#1 · MAYOR CONCENTRACIÓN</span>
-            <span class="ex-side-rank">01</span>
-          </div>
-          <div class="ex-side-muni" data-bind="muni">—</div>
-          <div class="ex-side-num" data-bind="num">—</div>
-          <div class="ex-side-meta" data-bind="meta">Cargando…</div>
+      <!-- Panel lateral · ranking compacto top 5 munis del delito (dinámico) -->
+      <div class="ex-side-panel" id="exSidePanel">
+        <div class="ex-side-head-bar">
+          <span class="ex-side-title">Top municipios</span>
+          <span class="ex-side-subtitle" id="exSideSubtitle">— · cargando</span>
         </div>
-        <div class="ex-side-card is-rank-2" data-rank="1">
-          <div class="ex-side-head">
-            <span class="ex-side-tag">#2 · ALTA</span>
-            <span class="ex-side-rank">02</span>
-          </div>
-          <div class="ex-side-muni" data-bind="muni">—</div>
-          <div class="ex-side-num" data-bind="num">—</div>
-          <div class="ex-side-meta" data-bind="meta">—</div>
-        </div>
-        <div class="ex-side-card is-rank-3" data-rank="2">
-          <div class="ex-side-head">
-            <span class="ex-side-tag">#3 · ELEVADA</span>
-            <span class="ex-side-rank">03</span>
-          </div>
-          <div class="ex-side-muni" data-bind="muni">—</div>
-          <div class="ex-side-num" data-bind="num">—</div>
-          <div class="ex-side-meta" data-bind="meta">—</div>
+        <div id="exSideRows"><!-- top 5 inyectado por JS --></div>
+        <div class="ex-side-footer">
+          <span>Suma top 5 · <strong id="exSideTopPct">—</strong></span>
+          <a href="#sR">ver todos →</a>
         </div>
       </div>
     </div>
@@ -34914,30 +34935,44 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     updateSideStack(dconf);
   }
 
-  // -------- Stack lateral con top 3 (dinámico al delito) --------
+  // -------- Panel lateral · ranking top 5 (dinámico al delito) --------
   function updateSideStack(dconf) {
-    const stack = document.getElementById('exSideStack');
-    if (!stack) return;
+    const rowsEl = document.getElementById('exSideRows');
+    const subEl = document.getElementById('exSideSubtitle');
+    const pctEl = document.getElementById('exSideTopPct');
+    if (!rowsEl) return;
+
     const ranked = Object.entries(dconf.data)
-      .filter(([k,v]) => typeof v === 'number')
+      .filter(([k,v]) => typeof v === 'number' && v > 0)
       .sort((a, b) => b[1] - a[1]);
     const total = ranked.reduce((s, [_, v]) => s + v, 0) || 1;
+    const max = ranked[0] ? ranked[0][1] : 1;
+    const top5 = ranked.slice(0, 5);
+    const top5Total = top5.reduce((s, [_, v]) => s + v, 0);
 
-    stack.querySelectorAll('.ex-side-card').forEach((card, idx) => {
-      const entry = ranked[idx];
-      if (!entry) return;
-      const [muni, val] = entry;
+    if (subEl) subEl.textContent = dconf.nombre + ' · 2025';
+    if (pctEl) pctEl.textContent = (top5Total / total * 100).toFixed(1) + '% estatal';
+
+    rowsEl.innerHTML = '';
+    top5.forEach(([muni, val], idx) => {
       const pct = (val / total * 100).toFixed(1);
-      // Cálculo de variación rápida: usar total para deducir si subio/bajo es trivial sin data 2024
-      // Por ahora mostramos "% del total estatal"
-      card.querySelector('[data-bind="muni"]').textContent = muni;
-      card.querySelector('[data-bind="num"]').textContent = val.toLocaleString('es-MX');
-      card.querySelector('[data-bind="meta"]').innerHTML =
-        '<strong>' + pct + '%</strong> del total estatal · ' + dconf.nombre.toLowerCase();
-      card.onclick = () => {
-        const sid = (DATA.slugs && DATA.slugs[muni]) || muni.toLowerCase().replace(/ /g,'-');
-        window.location.href = 'municipio.html?id=' + sid;
-      };
+      const barW = (val / max * 100).toFixed(1);
+      const sid = (DATA.slugs && DATA.slugs[muni]) || muni.toLowerCase().replace(/ /g,'-');
+      const row = document.createElement('a');
+      row.className = 'ex-side-row r' + (idx + 1);
+      row.href = 'municipio.html?id=' + sid;
+      row.style.textDecoration = 'none';
+      row.innerHTML =
+        '<span class="pos">' + String(idx + 1).padStart(2, '0') + '</span>' +
+        '<div class="body">' +
+          '<span class="name">' + muni + '</span>' +
+          '<div class="bar-track"><div class="bar-fill" style="width:' + barW + '%"></div></div>' +
+        '</div>' +
+        '<div class="vals">' +
+          '<span class="num">' + val.toLocaleString('es-MX') + '</span>' +
+          '<span class="pct">' + pct + '%</span>' +
+        '</div>';
+      rowsEl.appendChild(row);
     });
   }
 
