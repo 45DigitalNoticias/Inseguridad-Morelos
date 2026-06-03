@@ -6406,12 +6406,27 @@
     margin-right: 4px; vertical-align: middle;
   }
 
-  /* Serie */
-  #sExec .ex-serie { flex: 1; position: relative; }
-  #sExec .ex-serie svg { width: 100%; height: 100%; }
+  /* Serie · dinámica */
+  #sExec .ex-serie { flex: 1; position: relative; min-height: 240px; }
+  #sExec .ex-serie svg { width: 100%; height: 100%; display: block; }
   #sExec .ex-serie-axis { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: #3a4047; }
   #sExec .ex-serie-grid { stroke: #1a1f26; stroke-width: 0.5; }
-  #sExec .ex-serie-marker { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.5px; }
+  #sExec .ex-serie-marker { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.5px; font-weight: 700; }
+  /* Picker de delitos de la serie */
+  #sExec .ex-serie-picker {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    padding: 5px; margin-bottom: 10px;
+    background: #06080c; border: 1px solid #1a1f26; border-radius: 7px;
+  }
+  #sExec .ex-serie-btn {
+    padding: 4px 9px; border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    letter-spacing: 0.8px; text-transform: uppercase; font-weight: 700;
+    color: #6b7480; background: transparent; border: 0;
+    cursor: pointer; transition: all 0.12s;
+  }
+  #sExec .ex-serie-btn:hover { color: #c9d1d9; background: rgba(248,81,73,0.06); }
+  #sExec .ex-serie-btn.active { color: #0a0d12; background: #f85149; }
 
   /* Donut · grande + caption fuera del círculo */
   #sExec .ex-donut-wrap {
@@ -6844,50 +6859,18 @@
     <!-- ROW 2 · Serie + Donut (2 columnas, sin mapa) -->
     <div class="ex-row2">
 
-      <!-- SERIE HD -->
+      <!-- SERIE TEMPORAL DINÁMICA -->
       <div class="ex-panel" id="exSerieHD">
         <div class="ex-panel-head">
-          <div class="ex-panel-title">Homicidio doloso · víctimas mensuales <span>2023-2026</span></div>
-          <div class="ex-panel-action">SESNSP víctimas</div>
+          <div class="ex-panel-title"><span id="exSerieTitle">Homicidio doloso</span> · carpetas mensuales <span id="exSerieRange">2016-2026</span></div>
+          <div class="ex-panel-action" id="exSerieScope">Estado completo</div>
         </div>
-        <div class="ex-serie">
-          <svg viewBox="0 0 700 250" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="exSerieGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#f85149" stop-opacity="0.45"/>
-                <stop offset="100%" stop-color="#f85149" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <line class="ex-serie-grid" x1="0" y1="50" x2="700" y2="50"/>
-            <line class="ex-serie-grid" x1="0" y1="100" x2="700" y2="100"/>
-            <line class="ex-serie-grid" x1="0" y1="150" x2="700" y2="150"/>
-            <line class="ex-serie-grid" x1="0" y1="200" x2="700" y2="200"/>
-            <text class="ex-serie-axis" x="2" y="48">180</text>
-            <text class="ex-serie-axis" x="2" y="98">140</text>
-            <text class="ex-serie-axis" x="2" y="148">100</text>
-            <text class="ex-serie-axis" x="2" y="198">60</text>
-            <rect x="280" y="0" width="280" height="220" fill="rgba(251,191,36,0.05)"/>
-            <text class="ex-serie-marker" x="420" y="14" fill="#fbbf24" text-anchor="middle" font-weight="700">PERIODO HARFUCH</text>
-            <path d="M 15 90 L 30 120 L 45 75 L 60 100 L 75 95 L 90 130 L 105 80 L 120 30 L 135 90 L 150 65 L 165 70 L 180 60 L 200 80 L 215 65 L 230 65 L 245 30 L 260 110 L 275 115 L 290 130 L 305 120 L 320 145 L 335 155 L 350 165 L 365 190 L 380 130 L 395 165 L 410 145 L 425 155 L 440 155 L 455 130 L 470 138 L 485 150 L 500 170 L 515 175 L 530 110 L 545 150 L 560 130 L 575 160 L 590 130 L 605 120 L 605 220 L 15 220 Z" fill="url(#exSerieGrad)"/>
-            <path d="M 15 90 L 30 120 L 45 75 L 60 100 L 75 95 L 90 130 L 105 80 L 120 30 L 135 90 L 150 65 L 165 70 L 180 60 L 200 80 L 215 65 L 230 65 L 245 30 L 260 110 L 275 115 L 290 130 L 305 120 L 320 145 L 335 155 L 350 165 L 365 190 L 380 130 L 395 165 L 410 145 L 425 155 L 440 155 L 455 130 L 470 138 L 485 150 L 500 170 L 515 175 L 530 110 L 545 150 L 560 130 L 575 160 L 590 130 L 605 120" fill="none" stroke="#f85149" stroke-width="1.6"/>
-            <path d="M 15 95 L 75 92 L 150 75 L 230 70 L 280 95 L 365 135 L 470 145 L 590 140" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
-            <!-- Pico abril 2024 -->
-            <circle cx="245" cy="30" r="5" fill="#f85149" stroke="#0d1117" stroke-width="2"/>
-            <line x1="245" y1="30" x2="245" y2="18" stroke="#f85149" stroke-width="1"/>
-            <text class="ex-serie-marker" x="245" y="14" fill="#f85149" text-anchor="middle" font-weight="700">PICO · ABR-24 · 179</text>
-            <!-- Julio 2024 baja inicia -->
-            <circle cx="280" cy="110" r="5" fill="#a78bfa" stroke="#0d1117" stroke-width="2"/>
-            <line x1="280" y1="110" x2="280" y2="92" stroke="#a78bfa" stroke-width="1"/>
-            <text class="ex-serie-marker" x="280" y="86" fill="#a78bfa" text-anchor="middle" font-weight="700">JUL-24 · INICIA BAJA</text>
-            <!-- Noviembre 2024 línea base -->
-            <circle cx="320" cy="145" r="5" fill="#fbbf24" stroke="#0d1117" stroke-width="2"/>
-            <line x1="320" y1="145" x2="320" y2="175" stroke="#fbbf24" stroke-width="1"/>
-            <text class="ex-serie-marker" x="320" y="188" fill="#fbbf24" text-anchor="middle" font-weight="700">NOV-24 · LÍNEA BASE</text>
-            <text class="ex-serie-axis" x="40" y="240">2023</text>
-            <text class="ex-serie-axis" x="200" y="240">2024</text>
-            <text class="ex-serie-axis" x="370" y="240">2025</text>
-            <text class="ex-serie-axis" x="540" y="240">2026</text>
-          </svg>
+        <!-- Sub-selector de delito para la serie -->
+        <div class="ex-serie-picker" id="exSeriePicker" role="tablist" aria-label="Cambiar delito de la serie temporal">
+          <!-- inyectado por JS -->
+        </div>
+        <div class="ex-serie" id="exSerieCanvas">
+          <svg id="exSerieSvg" preserveAspectRatio="none" style="width:100%;height:100%;"></svg>
         </div>
       </div>
 
@@ -35167,6 +35150,9 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
      ============================================================ -->
 <script src="municipios_delitos.js"></script>
 <script src="regiones_ped.js"></script>
+<script src="series_estatales.js"></script>
+<script src="series_regionales.js"></script>
+<script src="series_municipales.js"></script>
 <script>
 (function() {
   // -------- Datos delitos por municipio --------
@@ -35713,7 +35699,9 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     updateKPIsRegion();   // actualiza 4 KPIs según región
     updateTopTable();     // tabla top 10 munis filtrada
     updateDonutRegion();  // donut composición letal (regional o estatal)
-    markStatewideOnly();  // badge "estatal" en charts sin desglose regional
+    renderSerie();        // v2.31: serie temporal con datos regionales
+    renderBars();         // v2.31: bars divergentes 6m sym con datos regionales
+    markStatewideOnly();  // v2.31: limpia badges legacy
   }
 
   // -------- Tabla top 10 municipios · dinámica al delito + región --------
@@ -35835,25 +35823,311 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     }
   }
 
-  // -------- Badge "datos estatales · sin desglose regional" --------
+  // -------- Badge "datos estatales · sin desglose regional" (deprecated v2.31) --------
   function markStatewideOnly() {
-    const showBadge = !!CURRENT_REGION;
-    // Serie HD y Barras divergentes no tienen desglose regional
-    ['exSerieHD', 'exBarsDiv'].forEach(id => {
-      const panel = document.getElementById(id);
-      if (!panel) return;
-      let badge = panel.querySelector('.ex-statewide-badge');
-      if (showBadge) {
-        if (!badge) {
-          badge = document.createElement('div');
-          badge.className = 'ex-statewide-badge';
-          badge.innerHTML = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M7 4v3M7 9v0.5"/></svg> Datos estatales · sin desglose por región disponible';
-          panel.appendChild(badge);
-        }
-      } else {
-        badge?.remove();
-      }
+    // v2.31: con SERIES_REGIONALES y SERIES_MUNICIPALES, todos los charts respiran
+    // con la región. Función queda como no-op pero mantenida por compatibilidad.
+    document.querySelectorAll('.ex-statewide-badge').forEach(b => b.remove());
+  }
+
+  // ========================================================================
+  // === v2.31: RENDERER DINÁMICO de serie temporal y barras divergentes ====
+  // ========================================================================
+
+  // Estado del subselector de delito de la serie
+  let SERIE_DELITO = "homicidio_doloso";
+  // Lista de delitos disponibles en SERIES_*
+  const SERIE_DELITOS = [
+    { slug: "homicidio_doloso", nombre: "Homicidio doloso", color: "#f85149" },
+    { slug: "homicidio_culposo",nombre: "Homicidio culposo", color: "#fbbf24" },
+    { slug: "feminicidio",      nombre: "Feminicidio", color: "#a78bfa" },
+    { slug: "extorsion",        nombre: "Extorsión", color: "#22d3ee" },
+    { slug: "robo",             nombre: "Robo", color: "#ec4899" },
+    { slug: "narcomenudeo",     nombre: "Narcomenudeo", color: "#84cc16" },
+    { slug: "violencia_familiar",nombre:"Violencia familiar", color: "#f85149" },
+    { slug: "lesiones",         nombre: "Lesiones", color: "#fbbf24" },
+    { slug: "total",            nombre: "Total", color: "#fbbf24" },
+  ];
+
+  function buildSeriePicker() {
+    const picker = document.getElementById('exSeriePicker');
+    if (!picker) return;
+    picker.innerHTML = '';
+    SERIE_DELITOS.forEach(d => {
+      const b = document.createElement('button');
+      b.className = 'ex-serie-btn' + (d.slug === SERIE_DELITO ? ' active' : '');
+      b.dataset.slug = d.slug;
+      b.style.setProperty('--serie-color', d.color);
+      b.textContent = d.nombre;
+      b.addEventListener('click', () => {
+        SERIE_DELITO = d.slug;
+        document.querySelectorAll('.ex-serie-btn').forEach(x => x.classList.toggle('active', x.dataset.slug === d.slug));
+        renderSerie();
+      });
+      picker.appendChild(b);
     });
+  }
+
+  function getSerieData() {
+    // Retorna {anios: {2016: [12], ...}} según delito + región actual
+    if (CURRENT_REGION && typeof SERIES_REGIONALES !== 'undefined') {
+      return SERIES_REGIONALES.series[CURRENT_REGION]?.[SERIE_DELITO] || {};
+    }
+    if (typeof SERIES_ESTATALES !== 'undefined') {
+      return SERIES_ESTATALES[SERIE_DELITO] || {};
+    }
+    return {};
+  }
+
+  function renderSerie() {
+    const svg = document.getElementById('exSerieSvg');
+    if (!svg) return;
+    const data = getSerieData();
+    const cfg = SERIE_DELITOS.find(d => d.slug === SERIE_DELITO);
+    if (!cfg) return;
+
+    // Construir array plano [{anio,mes,val}]
+    const series = [];
+    const anios = Object.keys(data).map(Number).sort();
+    if (anios.length === 0) {
+      svg.innerHTML = '<text x="350" y="120" fill="#6b7480" font-size="14" text-anchor="middle">Sin datos disponibles</text>';
+      return;
+    }
+    anios.forEach(a => {
+      const meses = data[a] || [];
+      meses.forEach((v, i) => {
+        if (v !== null && v !== undefined) series.push({ anio: a, mes: i, val: v });
+      });
+    });
+
+    // Quitar ceros al final (meses no publicados)
+    while (series.length && series[series.length-1].val === 0) {
+      // mantener al menos los primeros 4 meses de 2026 si están a 0
+      const last = series[series.length-1];
+      if (last.anio < 2026) break;
+      if (last.anio === 2026 && last.mes <= 3) break;
+      series.pop();
+    }
+    if (series.length < 2) return;
+
+    // Setup SVG viewBox
+    const W = 700, H = 250;
+    const padL = 36, padR = 12, padT = 22, padB = 30;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+    const maxVal = Math.max(...series.map(s => s.val));
+    const yMax = maxVal * 1.15;
+    const xScale = (i) => padL + (i / (series.length-1)) * (W - padL - padR);
+    const yScale = (v) => padT + (1 - v/yMax) * (H - padT - padB);
+
+    // Construir el path
+    const linePts = series.map((s,i) => `${xScale(i).toFixed(1)} ${yScale(s.val).toFixed(1)}`).join(' L ');
+    const path = `M ${linePts}`;
+    const area = path + ` L ${xScale(series.length-1).toFixed(1)} ${(H-padB).toFixed(1)} L ${padL} ${(H-padB).toFixed(1)} Z`;
+
+    // Tendencia (media móvil 3 meses)
+    const trend = series.map((s, i) => {
+      const start = Math.max(0, i-2);
+      const slice = series.slice(start, i+1);
+      const avg = slice.reduce((a,b) => a + b.val, 0) / slice.length;
+      return `${xScale(i).toFixed(1)} ${yScale(avg).toFixed(1)}`;
+    }).join(' L ');
+
+    // Marcadores adaptativos: pico, valle del periodo
+    const idxPico = series.indexOf(series.reduce((a,b) => a.val > b.val ? a : b));
+    const idxValle = series.indexOf(series.reduce((a,b) => a.val < b.val ? a : b));
+
+    // Ejes (años)
+    const aniosUnicos = [...new Set(series.map(s => s.anio))];
+    const aniosTicks = aniosUnicos.map(a => {
+      const idx = series.findIndex(s => s.anio === a && s.mes === 0);
+      return idx >= 0 ? { x: xScale(idx), label: a } : null;
+    }).filter(Boolean);
+
+    // Periodo Harfuch (nov-24 a may-26) si tenemos esos meses
+    const idxNov24 = series.findIndex(s => s.anio === 2024 && s.mes === 10);
+    const idxAbr26 = series.findIndex(s => s.anio === 2026 && s.mes === 3);
+    const showHarfuch = (SERIE_DELITO === 'homicidio_doloso' || SERIE_DELITO === 'total') && idxNov24 >= 0 && idxAbr26 >= 0;
+
+    // Y-axis ticks
+    const yTicks = 4;
+    const yStep = yMax / yTicks;
+    let yAxisSvg = '';
+    for (let i = 0; i <= yTicks; i++) {
+      const y = padT + (i/yTicks) * (H - padT - padB);
+      const val = Math.round(yMax - i*yStep);
+      yAxisSvg += `<line class="ex-serie-grid" x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}"/>`;
+      yAxisSvg += `<text class="ex-serie-axis" x="${padL-4}" y="${y+3}" text-anchor="end">${val}</text>`;
+    }
+
+    // Gradient + paths
+    let svgContent = `<defs><linearGradient id="exSerieGradD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${cfg.color}" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="${cfg.color}" stop-opacity="0"/>
+    </linearGradient></defs>`;
+
+    svgContent += yAxisSvg;
+
+    // Periodo Harfuch sombreado
+    if (showHarfuch) {
+      const x1 = xScale(idxNov24), x2 = xScale(idxAbr26);
+      svgContent += `<rect x="${x1}" y="${padT}" width="${x2-x1}" height="${H-padT-padB}" fill="rgba(251,191,36,0.05)"/>`;
+      svgContent += `<text class="ex-serie-marker" x="${(x1+x2)/2}" y="${padT+10}" fill="#fbbf24" text-anchor="middle">PERIODO HARFUCH</text>`;
+    }
+
+    svgContent += `<path d="${area}" fill="url(#exSerieGradD)"/>`;
+    svgContent += `<path d="${path}" fill="none" stroke="${cfg.color}" stroke-width="1.4" stroke-linejoin="round"/>`;
+    svgContent += `<path d="M ${trend}" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+    // Marcadores adaptativos
+    if (idxPico >= 0) {
+      const p = series[idxPico];
+      const x = xScale(idxPico), y = yScale(p.val);
+      svgContent += `<circle cx="${x}" cy="${y}" r="4.5" fill="${cfg.color}" stroke="#0d1117" stroke-width="2"/>`;
+      const above = y > padT + 30;
+      const ty = above ? y - 12 : y + 22;
+      svgContent += `<line x1="${x}" y1="${y}" x2="${x}" y2="${above ? ty + 4 : ty - 4}" stroke="${cfg.color}" stroke-width="1"/>`;
+      svgContent += `<text class="ex-serie-marker" x="${x}" y="${ty}" fill="${cfg.color}" text-anchor="middle">PICO · ${formatMes(p.anio, p.mes)} · ${p.val}</text>`;
+    }
+    if (idxValle >= 0 && idxValle !== idxPico && series[idxValle].val < series[idxPico].val * 0.8) {
+      const p = series[idxValle];
+      const x = xScale(idxValle), y = yScale(p.val);
+      svgContent += `<circle cx="${x}" cy="${y}" r="4" fill="#3fb950" stroke="#0d1117" stroke-width="2"/>`;
+      svgContent += `<line x1="${x}" y1="${y}" x2="${x}" y2="${y + 22 - 4}" stroke="#3fb950" stroke-width="1"/>`;
+      svgContent += `<text class="ex-serie-marker" x="${x}" y="${y + 22}" fill="#3fb950" text-anchor="middle">MÍN · ${formatMes(p.anio, p.mes)} · ${p.val}</text>`;
+    }
+
+    // X-axis years
+    aniosTicks.forEach(t => {
+      svgContent += `<text class="ex-serie-axis" x="${t.x}" y="${H-8}" text-anchor="middle">${t.label}</text>`;
+    });
+
+    svg.innerHTML = svgContent;
+
+    // Update header
+    const titleEl = document.getElementById('exSerieTitle');
+    const rangeEl = document.getElementById('exSerieRange');
+    const scopeEl = document.getElementById('exSerieScope');
+    if (titleEl) titleEl.textContent = cfg.nombre;
+    if (rangeEl) rangeEl.textContent = `${aniosUnicos[0]}-${aniosUnicos[aniosUnicos.length-1]}`;
+    if (scopeEl) scopeEl.textContent = CURRENT_REGION ? `Región ${CURRENT_REGION}` : 'Estado completo';
+  }
+  function formatMes(anio, mes) {
+    const M = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+    return M[mes] + '-' + String(anio).slice(2);
+  }
+
+  // ========================================================================
+  // === Barras divergentes 6m sym (REAL desde series mensuales) ============
+  // ========================================================================
+  // Configuración: 6m base = nov24+dic24+ene25+feb25+mar25+abr25
+  //                6m comp = nov25+dic25+ene26+feb26+mar26+abr26
+  const BARS_DELITOS = [
+    { slug: "extorsion",         nombre: "Extorsión total" },
+    { slug: "violencia_familiar",nombre: "Violencia familiar" },
+    { slug: "lesiones",          nombre: "Lesiones" },
+    { slug: "feminicidio",       nombre: "Feminicidio" },
+    { slug: "homicidio_doloso",  nombre: "Homicidio doloso" },
+    { slug: "homicidio_culposo", nombre: "Homicidio culposo" },
+    { slug: "robo",              nombre: "Robo (todos)" },
+    { slug: "narcomenudeo",      nombre: "Narcomenudeo" },
+    { slug: "amenazas",          nombre: "Amenazas" },
+    { slug: "abuso_sexual",      nombre: "Abuso sexual" },
+    { slug: "violacion",         nombre: "Violación" },
+    { slug: "dano_propiedad",    nombre: "Daño propiedad" },
+    { slug: "fraude",            nombre: "Fraude" },
+  ];
+
+  function sum6m(seriePorAnio, anioStart, mesStart) {
+    // Sumar 6 meses comenzando en mesStart de anioStart
+    let sum = 0;
+    for (let i = 0; i < 6; i++) {
+      const m = (mesStart + i) % 12;
+      const a = anioStart + Math.floor((mesStart + i) / 12);
+      const arr = seriePorAnio[a];
+      if (arr && arr[m] !== undefined && arr[m] !== null) sum += arr[m];
+    }
+    return sum;
+  }
+
+  function getSeriesForBars() {
+    // Devuelve {delito: {anio:[12]}} estatal o regional
+    if (CURRENT_REGION && typeof SERIES_REGIONALES !== 'undefined') {
+      return SERIES_REGIONALES.series[CURRENT_REGION] || {};
+    }
+    return typeof SERIES_ESTATALES !== 'undefined' ? SERIES_ESTATALES : {};
+  }
+
+  function renderBars() {
+    const container = document.querySelector('#exBarsDiv .ex-bars');
+    if (!container) return;
+    const series = getSeriesForBars();
+
+    // Calcular delta para cada delito
+    const rows = BARS_DELITOS.map(d => {
+      const s = series[d.slug] || {};
+      const base = sum6m(s, 2024, 10);  // nov-24 a abr-25
+      const comp = sum6m(s, 2025, 10);  // nov-25 a abr-26
+      if (base === 0 && comp === 0) return null;
+      const delta = base > 0 ? ((comp - base) / base * 100) : (comp > 0 ? 999 : 0);
+      return { ...d, base, comp, delta };
+    }).filter(Boolean);
+
+    // Ordenar: positivos arriba (mayor a menor), negativos abajo (menor a mayor)
+    rows.sort((a, b) => b.delta - a.delta);
+
+    // Para escalar las barras: tomar el max absoluto
+    const maxAbs = Math.max(...rows.map(r => Math.abs(r.delta)));
+
+    // Iconos por delito (heredados de v2.26)
+    const ICONS = {
+      extorsion: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6"/><path d="M8 4v8M10 6.3c-.4-.7-1.2-1.1-2-1.1s-1.8.5-1.8 1.4.8 1.3 1.8 1.5 1.8.6 1.8 1.5-1 1.4-1.8 1.4-1.6-.4-2-1.1"/></svg>',
+      violencia_familiar: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 8l6-5 6 5v6H2V8z"/><path d="M8 8.5v2M8 12v.5" stroke-linecap="round" stroke-width="1.6"/></svg>',
+      lesiones: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="6" width="12" height="4" rx="1.5" transform="rotate(-30 8 8)"/></svg>',
+      feminicidio: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="6" r="3"/><path d="M8 9v5M5.5 12.5h5" stroke-linecap="round"/></svg>',
+      homicidio_doloso: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h3l1.5-3 2 6 1.5-3h6"/></svg>',
+      homicidio_culposo: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 11h12v-3l-2-3H4L2 8v3z"/><circle cx="5" cy="11.5" r="1"/><circle cx="11" cy="11.5" r="1"/></svg>',
+      robo: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7l5-4 5 4v6H3V7z"/><circle cx="8" cy="9" r="1"/></svg>',
+      narcomenudeo: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="5" cy="8" r="3"/><circle cx="11" cy="8" r="3"/></svg>',
+      amenazas: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 2l6 11H2L8 2z"/><path d="M8 7v3" stroke-linecap="round" stroke-width="1.6"/></svg>',
+      abuso_sexual: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 8h12M5 5l-3 3 3 3M11 5l3 3-3 3"/></svg>',
+      violacion: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6"/><path d="M5 5l6 6M11 5l-6 6"/></svg>',
+      dano_propiedad: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 13V6l5-3 5 3v7"/><path d="M3 13h10M6 13V8M10 13V8"/></svg>',
+      fraude: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="5" width="12" height="8" rx="1"/><path d="M2 8h12M5 11h3"/></svg>',
+    };
+
+    container.innerHTML = rows.map(r => {
+      const isUp = r.delta >= 0;
+      const sign = isUp ? '+' : '−';
+      const absD = Math.abs(r.delta);
+      const barW = (absD / maxAbs * 50).toFixed(1);
+      const display = r.delta >= 999 ? '+∞' : (sign + absD.toFixed(1) + '%');
+      const ico = ICONS[r.slug] || '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6"/></svg>';
+      const fluxText = r.slug === 'homicidio_doloso'
+        ? `<strong>${r.base.toLocaleString('es-MX')}</strong> → <strong>${r.comp.toLocaleString('es-MX')}</strong> carpetas`
+        : `<strong>${r.base.toLocaleString('es-MX')}</strong> → <strong>${r.comp.toLocaleString('es-MX')}</strong>`;
+      const fillStyle = isUp
+        ? `margin-left:50%;width:${barW}%`
+        : `margin-left:${(50-parseFloat(barW)).toFixed(1)}%;width:${barW}%`;
+      return `<div class="ex-bar-row ${isUp ? 'is-up' : 'is-dn'}">
+        <span class="ex-bar-ico">${ico}</span>
+        <div class="ex-bar-label">
+          <span class="name">${r.nombre}</span>
+          <span class="flux">${fluxText}</span>
+        </div>
+        <div class="ex-bar-track">
+          <span class="ex-bar-center"></span>
+          <div class="ex-bar-fill ${isUp ? 'pos' : 'neg'}" style="${fillStyle}"></div>
+        </div>
+        <div class="ex-bar-val ${isUp ? 'pos' : 'neg'}">${display}</div>
+      </div>`;
+    }).join('');
+
+    // Actualizar action del panel (scope info)
+    const action = document.querySelector('#exBarsDiv .ex-panel-action');
+    if (action) {
+      action.textContent = CURRENT_REGION ? `Región ${CURRENT_REGION}` : 'Estado · 6m sym';
+    }
   }
 
   function muniIsInRegion(muni) {
@@ -35933,6 +36207,10 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
       setupScopeTabs();
       // F2: inicializar la tabla top 10 (también será re-calculada al cambiar región)
       updateTopTable();
+      // v2.31: series mensuales dinámicas
+      buildSeriePicker();
+      renderSerie();
+      renderBars();
       return;
     }
     if (attempt > 40) {
