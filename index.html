@@ -6071,10 +6071,55 @@
   }
 
   /* GRID main · row 2 */
-  /* Mapa solo, full width, alto equilibrado */
-  #sExec .ex-row-map { margin-bottom: 16px; }
-  #sExec .ex-row-map .ex-panel { min-height: 420px; }
-  #sExec .ex-row-map .ex-map-canvas { min-height: 280px; }
+  /* Mapa 3/4 + panel lateral con 3 indicadores dinámicos del delito */
+  #sExec .ex-row-map {
+    display: grid; grid-template-columns: 3fr 1fr; gap: 14px;
+    margin-bottom: 16px;
+  }
+  #sExec .ex-row-map .ex-panel { min-height: 440px; }
+  #sExec .ex-row-map .ex-map-canvas { min-height: 320px; }
+  /* Panel lateral con 3 indicadores stack */
+  #sExec .ex-side-stack { display: flex; flex-direction: column; gap: 14px; }
+  #sExec .ex-side-card {
+    background: #0d1117; border: 1px solid #1a1f26; border-radius: 11px;
+    padding: 16px 18px; flex: 1; min-height: 0;
+    display: flex; flex-direction: column; gap: 8px;
+    position: relative; overflow: hidden;
+  }
+  #sExec .ex-side-card.is-rank-1 { border-left: 3px solid #f85149; }
+  #sExec .ex-side-card.is-rank-2 { border-left: 3px solid #fbbf24; }
+  #sExec .ex-side-card.is-rank-3 { border-left: 3px solid #a78bfa; }
+  #sExec .ex-side-head { display: flex; justify-content: space-between; align-items: baseline; }
+  #sExec .ex-side-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px; letter-spacing: 1.8px; text-transform: uppercase;
+    color: #6b7480; font-weight: 700;
+  }
+  #sExec .ex-side-rank {
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700;
+    color: #6b7480; line-height: 1;
+  }
+  #sExec .ex-side-card.is-rank-1 .ex-side-rank { color: #f85149; }
+  #sExec .ex-side-card.is-rank-2 .ex-side-rank { color: #fbbf24; }
+  #sExec .ex-side-card.is-rank-3 .ex-side-rank { color: #a78bfa; }
+  #sExec .ex-side-muni {
+    font-family: 'Fraunces', serif; font-size: 21px; font-weight: 600;
+    color: #e6edf3; line-height: 1.1; letter-spacing: -0.4px;
+    margin-top: 4px;
+  }
+  #sExec .ex-side-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700;
+    color: #fbbf24; line-height: 1; letter-spacing: -0.5px;
+    margin-top: auto;
+  }
+  #sExec .ex-side-card.is-rank-1 .ex-side-num { color: #f85149; }
+  #sExec .ex-side-card.is-rank-3 .ex-side-num { color: #a78bfa; }
+  #sExec .ex-side-meta {
+    font-family: 'Inter', sans-serif; font-size: 11px;
+    color: #8b949e; line-height: 1.4;
+  }
+  #sExec .ex-side-meta strong { color: #c9d1d9; font-weight: 600; }
+  #sExec .ex-side-card:hover { border-color: rgba(251,191,36,0.4); cursor: pointer; }
   /* Serie + donut · 2 columnas */
   #sExec .ex-row2 { display: grid; grid-template-columns: 1.7fr 1fr; gap: 14px; min-height: 340px; margin-bottom: 14px; }
 
@@ -6316,6 +6361,8 @@
   /* RESPONSIVE */
   @media (max-width: 1100px) {
     #sExec .ex-kpis { grid-template-columns: repeat(2, 1fr); }
+    #sExec .ex-row-map { grid-template-columns: 1fr; }
+    #sExec .ex-side-stack { flex-direction: row; }
     #sExec .ex-row2 { grid-template-columns: 1fr; height: auto; }
     #sExec .ex-row3 { grid-template-columns: 1fr; height: auto; }
     #sExec .ex-panel { min-height: 280px; }
@@ -6440,6 +6487,37 @@
           <span class="ex-leg-min">0</span>
           <div class="ex-leg-bar"></div>
           <span class="ex-leg-max">—</span>
+        </div>
+      </div>
+
+      <!-- Stack lateral · Top 3 munis del delito seleccionado (dinámico) -->
+      <div class="ex-side-stack" id="exSideStack">
+        <div class="ex-side-card is-rank-1" data-rank="0">
+          <div class="ex-side-head">
+            <span class="ex-side-tag">#1 · MAYOR CONCENTRACIÓN</span>
+            <span class="ex-side-rank">01</span>
+          </div>
+          <div class="ex-side-muni" data-bind="muni">—</div>
+          <div class="ex-side-num" data-bind="num">—</div>
+          <div class="ex-side-meta" data-bind="meta">Cargando…</div>
+        </div>
+        <div class="ex-side-card is-rank-2" data-rank="1">
+          <div class="ex-side-head">
+            <span class="ex-side-tag">#2 · ALTA</span>
+            <span class="ex-side-rank">02</span>
+          </div>
+          <div class="ex-side-muni" data-bind="muni">—</div>
+          <div class="ex-side-num" data-bind="num">—</div>
+          <div class="ex-side-meta" data-bind="meta">—</div>
+        </div>
+        <div class="ex-side-card is-rank-3" data-rank="2">
+          <div class="ex-side-head">
+            <span class="ex-side-tag">#3 · ELEVADA</span>
+            <span class="ex-side-rank">03</span>
+          </div>
+          <div class="ex-side-muni" data-bind="muni">—</div>
+          <div class="ex-side-num" data-bind="num">—</div>
+          <div class="ex-side-meta" data-bind="meta">—</div>
         </div>
       </div>
     </div>
@@ -34815,6 +34893,36 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     // Highlight botón activo
     document.querySelectorAll('.ex-delito-btn').forEach(b => {
       b.classList.toggle('active', b.dataset.delito === CURRENT_DELITO);
+    });
+
+    // Actualizar stack lateral · top 3 munis del delito actual
+    updateSideStack(dconf);
+  }
+
+  // -------- Stack lateral con top 3 (dinámico al delito) --------
+  function updateSideStack(dconf) {
+    const stack = document.getElementById('exSideStack');
+    if (!stack) return;
+    const ranked = Object.entries(dconf.data)
+      .filter(([k,v]) => typeof v === 'number')
+      .sort((a, b) => b[1] - a[1]);
+    const total = ranked.reduce((s, [_, v]) => s + v, 0) || 1;
+
+    stack.querySelectorAll('.ex-side-card').forEach((card, idx) => {
+      const entry = ranked[idx];
+      if (!entry) return;
+      const [muni, val] = entry;
+      const pct = (val / total * 100).toFixed(1);
+      // Cálculo de variación rápida: usar total para deducir si subio/bajo es trivial sin data 2024
+      // Por ahora mostramos "% del total estatal"
+      card.querySelector('[data-bind="muni"]').textContent = muni;
+      card.querySelector('[data-bind="num"]').textContent = val.toLocaleString('es-MX');
+      card.querySelector('[data-bind="meta"]').innerHTML =
+        '<strong>' + pct + '%</strong> del total estatal · ' + dconf.nombre.toLowerCase();
+      card.onclick = () => {
+        const sid = (DATA.slugs && DATA.slugs[muni]) || muni.toLowerCase().replace(/ /g,'-');
+        window.location.href = 'municipio.html?id=' + sid;
+      };
     });
   }
 
