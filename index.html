@@ -34670,11 +34670,10 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
   let DATA = null;
   let CURRENT_DELITO = null;
 
-  // Slugs comunes para mapear nombres del geojson a IDs (para municipio.html?id=)
+  // Tabla de slugs precomputada en Python (cero regex unicode aqui)
   function slug(s) {
-    return s.toLowerCase()
-      .normalize('NFD').replace(/[̀-ͯ]/g,'')
-      .replace(/ /g,'-').replace(/[^\w-]/g,'');
+    if (!DATA || !DATA.slugs) return String(s).toLowerCase();
+    return DATA.slugs[s] || String(s).toLowerCase().replace(/ +/g, '-');
   }
 
   // -------- Construcción manual del path SVG desde GeoJSON --------
@@ -34747,7 +34746,9 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
 
   // -------- Render del SVG y los paths --------
   function renderMap() {
-    if (!window.MORELOS_GEOJSON) {
+    // FIX v2.21: const en script global NO se expone en window.X en Chrome.
+    // Usar typeof + acceso directo.
+    if (typeof MORELOS_GEOJSON === 'undefined') {
       console.warn('GeoJSON Morelos no cargado todavía');
       setTimeout(renderMap, 250);
       return;
@@ -34797,7 +34798,8 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
         }
       }
       if (v === undefined) v = 0;
-      p.setAttribute('fill', colorFor(v, max));
+      // FIX v2.21: usar style.fill (gana sobre CSS por especificidad)
+      p.style.fill = colorFor(v, max);
       p.setAttribute('data-val', v);
     });
 
