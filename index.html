@@ -6065,6 +6065,20 @@
     filter: grayscale(0.8);
     pointer-events: none;
   }
+  /* Badge "datos estatales" para charts que no tienen desglose por región */
+  #sExec .ex-statewide-badge {
+    position: absolute; bottom: 10px; left: 10px;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 10px;
+    background: rgba(167,139,250,0.10);
+    border: 1px solid rgba(167,139,250,0.35);
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+    letter-spacing: 1px; color: #a78bfa;
+    font-weight: 700; text-transform: uppercase;
+    z-index: 5;
+  }
+  #sExec .ex-statewide-badge svg { width: 11px; height: 11px; flex-shrink: 0; }
 
   /* KPI ROW */
   #sExec .ex-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 14px; }
@@ -6831,7 +6845,7 @@
     <div class="ex-row2">
 
       <!-- SERIE HD -->
-      <div class="ex-panel">
+      <div class="ex-panel" id="exSerieHD">
         <div class="ex-panel-head">
           <div class="ex-panel-title">Homicidio doloso · víctimas mensuales <span>2023-2026</span></div>
           <div class="ex-panel-action">SESNSP víctimas</div>
@@ -6929,7 +6943,7 @@
     <div class="ex-row3">
 
       <!-- BARS DIVERGENTES -->
-      <div class="ex-panel">
+      <div class="ex-panel" id="exBarsDiv">
         <div class="ex-panel-head">
           <div class="ex-panel-title">Sube vs baja · 6m simétricos</div>
           <div class="ex-panel-action">Δ% nov24-abr25 vs nov25-abr26</div>
@@ -7001,24 +7015,15 @@
         </div>
       </div>
 
-      <!-- TABLA -->
+      <!-- TABLA · dinámica al delito + región -->
       <div class="ex-panel">
         <div class="ex-panel-head">
-          <div class="ex-panel-title">Top 10 municipios · total 2025</div>
+          <div class="ex-panel-title">Top 10 municipios · <span id="exTblScope">Estado completo</span></div>
           <div class="ex-panel-action">click → ficha</div>
         </div>
         <div class="ex-tbl">
           <div class="ex-tbl-head"><div>#</div><div>Municipio</div><div style="text-align:right;">Total</div><div style="text-align:right;">Δ</div></div>
-          <a class="ex-tbl-row" href="municipio.html?id=cuernavaca" style="text-decoration:none;"><div class="ex-tbl-pos">01</div><div class="ex-tbl-name hi">Cuernavaca</div><div class="ex-tbl-num">13,863</div><div class="ex-tbl-delta dn">−8.1</div></a>
-          <a class="ex-tbl-row" href="municipio.html?id=cuautla" style="text-decoration:none;"><div class="ex-tbl-pos">02</div><div class="ex-tbl-name">Cuautla</div><div class="ex-tbl-num">7,543</div><div class="ex-tbl-delta up">+18.6</div></a>
-          <a class="ex-tbl-row" href="municipio.html?id=jiutepec" style="text-decoration:none;"><div class="ex-tbl-pos">03</div><div class="ex-tbl-name">Jiutepec</div><div class="ex-tbl-num">4,191</div><div class="ex-tbl-delta dn">−14.5</div></a>
-          <a class="ex-tbl-row" href="municipio.html?id=temixco" style="text-decoration:none;"><div class="ex-tbl-pos">04</div><div class="ex-tbl-name">Temixco</div><div class="ex-tbl-num">2,477</div><div class="ex-tbl-delta dn">−3.3</div></a>
-          <a class="ex-tbl-row" href="municipio.html?id=yautepec" style="text-decoration:none;"><div class="ex-tbl-pos">05</div><div class="ex-tbl-name">Yautepec</div><div class="ex-tbl-num">2,440</div><div class="ex-tbl-delta dn">−0.6</div></a>
-          <a class="ex-tbl-row" href="municipio.html?id=jojutla" style="text-decoration:none;"><div class="ex-tbl-pos">06</div><div class="ex-tbl-name">Jojutla</div><div class="ex-tbl-num">2,053</div><div class="ex-tbl-delta up">+2.9</div></a>
-          <a class="ex-tbl-row" href="municipio.html?id=emiliano-zapata" style="text-decoration:none;"><div class="ex-tbl-pos">07</div><div class="ex-tbl-name">Emiliano Zapata</div><div class="ex-tbl-num">2,040</div><div class="ex-tbl-delta up">+0.3</div></a>
-          <a class="ex-tbl-row" href="municipio.html?id=xochitepec" style="text-decoration:none;"><div class="ex-tbl-pos">08</div><div class="ex-tbl-name">Xochitepec</div><div class="ex-tbl-num">1,455</div><div class="ex-tbl-delta dn">−14.6</div></a>
-          <a class="ex-tbl-row" href="municipio.html?id=tepoztlan" style="text-decoration:none;"><div class="ex-tbl-pos">09</div><div class="ex-tbl-name">Tepoztlán</div><div class="ex-tbl-num">1,101</div><div class="ex-tbl-delta up">+9.2</div></a>
-          <a class="ex-tbl-row" href="municipio.html?id=huitzilac" style="text-decoration:none;"><div class="ex-tbl-pos">10</div><div class="ex-tbl-name">Huitzilac</div><div class="ex-tbl-num">840</div><div class="ex-tbl-delta dn">−2.1</div></a>
+          <div id="exTblRows"><!-- inyectado por JS --></div>
         </div>
       </div>
 
@@ -35704,8 +35709,151 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
         b.style.setProperty('--reg-color', b.dataset.color || '#fbbf24');
       }
     });
-    paintMap();          // repinta y filtra el coroplético
-    updateKPIsRegion();  // actualiza 4 KPIs según región
+    paintMap();           // repinta y filtra el coroplético
+    updateKPIsRegion();   // actualiza 4 KPIs según región
+    updateTopTable();     // tabla top 10 munis filtrada
+    updateDonutRegion();  // donut composición letal (regional o estatal)
+    markStatewideOnly();  // badge "estatal" en charts sin desglose regional
+  }
+
+  // -------- Tabla top 10 municipios · dinámica al delito + región --------
+  // Deltas hardcoded por muni (vs 2024 → 2025) por que el JSON no los tiene
+  const MUNI_DELTAS = {
+    'Cuernavaca': -8.1, 'Cuautla': +18.6, 'Jiutepec': -14.5, 'Temixco': -3.3,
+    'Yautepec': -0.6, 'Jojutla': +2.9, 'Emiliano Zapata': +0.3,
+    'Xochitepec': -14.6, 'Tepoztlán': +9.2, 'Huitzilac': -2.1,
+    'Ayala': -7.1, 'Puente de Ixtla': +17.9, 'Zacatepec': +12.5,
+    'Tlaltizapán de Zapata': +20.5, 'Tlaquiltenango': +33.5,
+    'Yecapixtla': +10.2, 'Tlayacapan': -18.8, 'Atlatlahucan': -8.9,
+    'Tepalcingo': -17.9, 'Mazatepec': +27.5, 'Jantetelco': +38.2,
+    'Tetecala': -0.4, 'Axochiapan': -1.5, 'Tetela del Volcán': -12.4,
+    'Ocuituco': +17.7, 'Amacuzac': +2.0, 'Coatlán del Río': -14.5,
+    'Temoac': -15.5, 'Totolapan': -9.4, 'Coatetelco': +11.8,
+    'Hueyapan': -6.9, 'Miacatlán': +12.8, 'Tlalnepantla': +8.6,
+    'Zacualpan de Amilpas': +85.0, 'Xoxocotla': -24.6,
+    'Jonacatepec de Leandro Valle': +5.7,
+  };
+  function updateTopTable() {
+    if (!DATA || typeof DATA.delitos.total === 'undefined') return;
+    const data = DATA.delitos.total.data;
+    let entries = Object.entries(data).filter(([_, v]) => typeof v === 'number');
+    if (CURRENT_REGION) {
+      entries = entries.filter(([m]) => muniIsInRegion(m));
+    }
+    entries.sort((a, b) => b[1] - a[1]);
+    const top = entries.slice(0, 10);
+
+    const rowsEl = document.getElementById('exTblRows');
+    const scopeEl = document.getElementById('exTblScope');
+    if (!rowsEl) return;
+    rowsEl.innerHTML = '';
+    top.forEach(([muni, val], idx) => {
+      const d = MUNI_DELTAS[muni];
+      const dStr = d != null ? (d >= 0 ? '+' + d.toFixed(1) : d.toFixed(1).replace('-', '−')) : '—';
+      const dCls = d == null ? '' : (d >= 0 ? 'up' : 'dn');
+      const sid = (DATA.slugs && DATA.slugs[muni]) || muni.toLowerCase().replace(/ /g, '-');
+      const row = document.createElement('a');
+      row.className = 'ex-tbl-row';
+      row.href = 'municipio.html?id=' + sid;
+      row.style.textDecoration = 'none';
+      row.innerHTML =
+        '<div class="ex-tbl-pos">' + String(idx + 1).padStart(2, '0') + '</div>' +
+        '<div class="ex-tbl-name' + (idx === 0 ? ' hi' : '') + '">' + muni + '</div>' +
+        '<div class="ex-tbl-num">' + val.toLocaleString('es-MX') + '</div>' +
+        '<div class="ex-tbl-delta ' + dCls + '">' + dStr + '</div>';
+      rowsEl.appendChild(row);
+    });
+    if (scopeEl) {
+      scopeEl.textContent = CURRENT_REGION
+        ? 'Región ' + CURRENT_REGION
+        : 'Estado completo';
+    }
+  }
+
+  // -------- Donut composición letal · regional o estatal --------
+  function updateDonutRegion() {
+    if (!DATA) return;
+    const donutSvg = document.querySelector('#sExec .ex-donut');
+    if (!donutSvg) return;
+
+    let hd = 0, fem = 0, hc = 0;
+    let title = 'Composición letal 2025';
+    let caption = 'Víctimas totales · 2025';
+    let csub = 'Morelos · SESNSP víctimas';
+
+    if (CURRENT_REGION && REGIONES_PED[CURRENT_REGION]) {
+      // Sumar de los munis de la región (datos por muni del cubo)
+      const munis = REGIONES_PED[CURRENT_REGION].munis;
+      const hdData = DATA.delitos.homicidio?.data || {};
+      const femData = DATA.delitos.feminicidio?.data || {};
+      munis.forEach(m => {
+        hd += hdData[m] || 0;
+        fem += femData[m] || 0;
+      });
+      // No tenemos HC separado por muni. Usar proporción estatal: HC = 417 / (1119+417+35) = 26.5% del total letal
+      // Estimar HC regional: total homicidio - feminicidio (Homicidio cubo incluye doloso + culposo)
+      // El "homicidio" del cubo es Homicidio doloso + culposo. Restamos fem aparte.
+      // Mejor: usar la cifra homicidio del cubo region (suma) y restar feminicidio
+      // Para el donut, mostramos los 3 segmentos con estimación
+      hc = Math.max(0, hd * (417/1119));  // proporción estatal HC/HD
+      hd = hd - hc;  // ajustar HD
+      caption = 'Víctimas letales · ' + CURRENT_REGION;
+      csub = 'Estimación regional · SESNSP';
+    } else {
+      hd = 1119; hc = 417; fem = 35;
+    }
+
+    const total = hd + hc + fem;
+    // Recalcular los stroke-dasharray del donut. Perímetro = 2π·86 ≈ 540
+    const PER = 540;
+    const dashHD = (hd / total) * PER;
+    const dashHC = (hc / total) * PER;
+    const dashFEM = (fem / total) * PER;
+    const circles = donutSvg.querySelectorAll('circle');
+    // circle 1: fondo · 2: HD (rojo) · 3: HC (ámbar) · 4: FEM (morado)
+    if (circles.length >= 4) {
+      circles[1].setAttribute('stroke-dasharray', dashHD.toFixed(1) + ' ' + (PER - dashHD).toFixed(1));
+      circles[1].setAttribute('stroke-dashoffset', '0');
+      circles[2].setAttribute('stroke-dasharray', dashHC.toFixed(1) + ' ' + (PER - dashHC).toFixed(1));
+      circles[2].setAttribute('stroke-dashoffset', (-dashHD).toFixed(1));
+      circles[3].setAttribute('stroke-dasharray', dashFEM.toFixed(1) + ' ' + (PER - dashFEM).toFixed(1));
+      circles[3].setAttribute('stroke-dashoffset', (-(dashHD + dashHC)).toFixed(1));
+    }
+    const centerText = donutSvg.querySelector('.ex-donut-center');
+    if (centerText) centerText.textContent = Math.round(total).toLocaleString('es-MX');
+
+    // Actualizar caption y leyenda
+    const captionEl = document.querySelector('#sExec .ex-donut-caption .clbl');
+    const csubEl = document.querySelector('#sExec .ex-donut-caption .csub');
+    if (captionEl) captionEl.textContent = caption;
+    if (csubEl) csubEl.textContent = csub;
+    const legendItems = document.querySelectorAll('#sExec .ex-dl-item .ex-dl-num');
+    if (legendItems.length >= 3) {
+      legendItems[0].innerHTML = '<strong>' + Math.round(hd).toLocaleString('es-MX') + '</strong> víctimas · ' + (hd/total*100).toFixed(1) + '%';
+      legendItems[1].innerHTML = '<strong>' + Math.round(hc).toLocaleString('es-MX') + '</strong> víctimas · ' + (hc/total*100).toFixed(1) + '%';
+      legendItems[2].innerHTML = '<strong>' + Math.round(fem).toLocaleString('es-MX') + '</strong> víctimas · ' + (fem/total*100).toFixed(1) + '%';
+    }
+  }
+
+  // -------- Badge "datos estatales · sin desglose regional" --------
+  function markStatewideOnly() {
+    const showBadge = !!CURRENT_REGION;
+    // Serie HD y Barras divergentes no tienen desglose regional
+    ['exSerieHD', 'exBarsDiv'].forEach(id => {
+      const panel = document.getElementById(id);
+      if (!panel) return;
+      let badge = panel.querySelector('.ex-statewide-badge');
+      if (showBadge) {
+        if (!badge) {
+          badge = document.createElement('div');
+          badge.className = 'ex-statewide-badge';
+          badge.innerHTML = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M7 4v3M7 9v0.5"/></svg> Datos estatales · sin desglose por región disponible';
+          panel.appendChild(badge);
+        }
+      } else {
+        badge?.remove();
+      }
+    });
   }
 
   function muniIsInRegion(muni) {
@@ -35783,6 +35931,8 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
       // F2: setup de filtros por región PED
       buildRegionChips();
       setupScopeTabs();
+      // F2: inicializar la tabla top 10 (también será re-calculada al cambiar región)
+      updateTopTable();
       return;
     }
     if (attempt > 40) {
