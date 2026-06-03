@@ -6076,22 +6076,107 @@
     display: grid; grid-template-columns: 3fr 1fr; gap: 14px;
     margin-bottom: 16px;
   }
-  /* Mapa CHIQUITO · altura fija real (no min-height) */
+  /* Mapa · alto razonable + controles zoom + fullscreen modal */
   #sExec .ex-row-map .ex-panel {
     min-height: 0;
-    max-height: 260px;        /* limite duro */
     overflow: hidden;
   }
   #sExec .ex-row-map .ex-map-canvas {
-    flex: none;               /* deja de estirarse */
-    height: 130px;            /* alto fijo del area del mapa */
-    min-height: 130px;
-    max-height: 130px;
+    flex: none;
+    height: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    position: relative;
+    background: rgba(6,8,12,0.6);
+    border-radius: 7px;
+    overflow: hidden;
   }
   #sExec .ex-row-map #exChoropleth {
     width: 100% !important;
-    height: 130px !important;
-    max-height: 130px !important;
+    height: 100% !important;
+    cursor: grab;
+  }
+  #sExec .ex-row-map #exChoropleth.panning { cursor: grabbing; }
+  #sExec .ex-row-map #exChoropleth > .pan-group {
+    transition: transform 0.08s ease-out;
+  }
+
+  /* Controles flotantes sobre el mapa */
+  #sExec .ex-map-controls {
+    position: absolute;
+    top: 10px; right: 10px;
+    display: flex; flex-direction: column; gap: 4px;
+    z-index: 20;
+  }
+  #sExec .ex-map-ctrl {
+    width: 30px; height: 30px;
+    background: rgba(13,17,23,0.92);
+    border: 1px solid #1a1f26;
+    color: #c9d1d9; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700;
+    transition: all 0.15s;
+    padding: 0;
+  }
+  #sExec .ex-map-ctrl:hover {
+    background: #fbbf24; color: #0a0d12; border-color: #fbbf24;
+  }
+  #sExec .ex-map-ctrl svg { width: 14px; height: 14px; }
+  #sExec .ex-map-zoom-indicator {
+    position: absolute;
+    top: 10px; left: 10px;
+    background: rgba(13,17,23,0.92);
+    border: 1px solid #1a1f26;
+    color: #fbbf24;
+    padding: 4px 9px; border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 1px; font-weight: 700;
+    z-index: 20;
+  }
+
+  /* MODAL FULLSCREEN del mapa */
+  .ex-mapfs-modal {
+    position: fixed; inset: 0;
+    background: rgba(6,8,12,0.97);
+    z-index: 9999; display: none;
+    padding: 28px 36px;
+    flex-direction: column;
+  }
+  .ex-mapfs-modal.open { display: flex; }
+  .ex-mapfs-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+  }
+  .ex-mapfs-title {
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500;
+    color: #e6edf3;
+  }
+  .ex-mapfs-title em { color: #fbbf24; font-style: italic; font-weight: 600; }
+  .ex-mapfs-close {
+    padding: 8px 16px; background: rgba(248,81,73,0.10);
+    color: #f85149; border: 1px solid rgba(248,81,73,0.45);
+    border-radius: 7px; cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ex-mapfs-close:hover { background: #f85149; color: #fff; }
+  .ex-mapfs-close svg { width: 12px; height: 12px; }
+  .ex-mapfs-body {
+    flex: 1; display: flex; gap: 18px; min-height: 0;
+  }
+  .ex-mapfs-mapwrap {
+    flex: 1; position: relative;
+    background: rgba(13,17,23,0.55);
+    border: 1px solid #1a1f26; border-radius: 11px;
+    overflow: hidden;
+  }
+  .ex-mapfs-mapwrap svg { width: 100%; height: 100%; cursor: grab; }
+  .ex-mapfs-mapwrap svg.panning { cursor: grabbing; }
+  .ex-mapfs-sidebar {
+    width: 320px; display: flex; flex-direction: column; gap: 14px;
+    overflow-y: auto;
   }
   /* Panel lateral · ranking compacto top 5 munis */
   #sExec .ex-side-panel {
@@ -6527,7 +6612,18 @@
         </div>
         <!-- Canvas del mapa -->
         <div class="ex-map-canvas" id="exMapCanvas">
-          <svg id="exChoropleth" viewBox="-99.6 -19.2 1.0 0.95" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;"></svg>
+          <svg id="exChoropleth" viewBox="-99.6 -19.2 1.0 0.95" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="ex-map-zoom-indicator" id="exZoomInd">100%</div>
+          <div class="ex-map-controls">
+            <button class="ex-map-ctrl" id="exZoomIn" title="Acercar">+</button>
+            <button class="ex-map-ctrl" id="exZoomOut" title="Alejar">−</button>
+            <button class="ex-map-ctrl" id="exZoomReset" title="Restaurar">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 5V2H8M3 9v3h3M11 2L7 6M3 12l4-4"/></svg>
+            </button>
+            <button class="ex-map-ctrl" id="exMapFullscreen" title="Pantalla completa">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 5V2h3M9 2h3v3M12 9v3H9M5 12H2V9"/></svg>
+            </button>
+          </div>
         </div>
         <!-- Tooltip -->
         <div class="ex-map-tooltip" id="exMapTooltip" aria-hidden="true">
@@ -6695,6 +6791,25 @@
 
   </div>
 </section>
+
+<!-- MODAL FULLSCREEN del mapa (fuera de sExec para poder cubrir todo el viewport en cualquier momento) -->
+<div class="ex-mapfs-modal" id="exMapfsModal" role="dialog" aria-modal="true" aria-label="Mapa pantalla completa">
+  <div class="ex-mapfs-header">
+    <div class="ex-mapfs-title">Mapa de calor · <em>36 municipios</em> · <span id="exMapfsDelito">Cargando…</span></div>
+    <button class="ex-mapfs-close" id="exMapfsClose">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l6 6M9 3l-6 6"/></svg>
+      Cerrar mapa (ESC)
+    </button>
+  </div>
+  <div class="ex-mapfs-body">
+    <div class="ex-mapfs-mapwrap" id="exMapfsWrap">
+      <!-- el SVG se inyecta clonado por JS -->
+    </div>
+    <div class="ex-mapfs-sidebar" id="exMapfsSide">
+      <!-- top 5 ranking + leyenda inyectados por JS -->
+    </div>
+  </div>
+</div>
 
 
 <!-- BANNER v2.3 — Anuncio de actualización Q1 2026 -->
@@ -34886,7 +35001,9 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
       svg.appendChild(p);
     });
     paintMap();
+    wrapInPanGroup();   // mete los paths en un <g> para zoom/pan
     bindMapEvents();
+    bindZoomControls(); // controles +/-/reset/fullscreen + wheel zoom + drag pan
   }
 
   // -------- Pintar según delito seleccionado --------
@@ -34933,6 +35050,7 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
 
     // Actualizar stack lateral · top 3 munis del delito actual
     updateSideStack(dconf);
+    updateMapfsTitle();
   }
 
   // -------- Panel lateral · ranking top 5 (dinámico al delito) --------
@@ -35010,6 +35128,192 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
         window.location.href = 'municipio.html?id=' + id;
       });
     });
+  }
+
+  // -------- ZOOM + PAN del SVG del mapa --------
+  // Usamos un wrapper <g class="pan-group"> dentro del SVG y aplicamos transform
+  let zoomLevel = 1;
+  let panX = 0, panY = 0;
+  function wrapInPanGroup() {
+    const svg = document.getElementById('exChoropleth');
+    if (!svg || svg.querySelector('.pan-group')) return;
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('class', 'pan-group');
+    // Mover todos los hijos a g
+    while (svg.firstChild) g.appendChild(svg.firstChild);
+    svg.appendChild(g);
+  }
+  function applyZoom() {
+    const svg = document.getElementById('exChoropleth');
+    if (!svg) return;
+    const g = svg.querySelector('.pan-group');
+    if (!g) return;
+    // Trasladar al centro del viewBox antes de escalar
+    const vb = svg.viewBox.baseVal;
+    const cx = vb.x + vb.width / 2;
+    const cy = vb.y + vb.height / 2;
+    g.setAttribute('transform',
+      `translate(${cx + panX}, ${cy + panY}) scale(${zoomLevel}) translate(${-cx}, ${-cy})`
+    );
+    const ind = document.getElementById('exZoomInd');
+    if (ind) ind.textContent = Math.round(zoomLevel * 100) + '%';
+  }
+  function zoomBy(factor) {
+    zoomLevel = Math.max(0.5, Math.min(8, zoomLevel * factor));
+    applyZoom();
+  }
+  function zoomReset() {
+    zoomLevel = 1; panX = 0; panY = 0;
+    applyZoom();
+  }
+  function bindZoomControls() {
+    document.getElementById('exZoomIn')?.addEventListener('click', () => zoomBy(1.25));
+    document.getElementById('exZoomOut')?.addEventListener('click', () => zoomBy(1/1.25));
+    document.getElementById('exZoomReset')?.addEventListener('click', zoomReset);
+    document.getElementById('exMapFullscreen')?.addEventListener('click', openMapFullscreen);
+
+    const svg = document.getElementById('exChoropleth');
+    if (svg) {
+      // Wheel zoom
+      svg.addEventListener('wheel', e => {
+        e.preventDefault();
+        const factor = e.deltaY < 0 ? 1.15 : 1/1.15;
+        zoomBy(factor);
+      }, { passive: false });
+      // Pan con drag
+      let panning = false, sx = 0, sy = 0, vx = 0, vy = 0;
+      svg.addEventListener('mousedown', e => {
+        // Solo si no es click sobre un muni (paths handle su own click)
+        if (e.target.classList && e.target.classList.contains('muni')) return;
+        panning = true; svg.classList.add('panning');
+        sx = e.clientX; sy = e.clientY; vx = panX; vy = panY;
+        e.preventDefault();
+      });
+      window.addEventListener('mousemove', e => {
+        if (!panning) return;
+        const dx = (e.clientX - sx) / 600 * svg.viewBox.baseVal.width;
+        const dy = (e.clientY - sy) / 400 * svg.viewBox.baseVal.height;
+        panX = vx + dx; panY = vy + dy;
+        applyZoom();
+      });
+      window.addEventListener('mouseup', () => {
+        panning = false; svg.classList.remove('panning');
+      });
+    }
+  }
+
+  // -------- MODAL FULLSCREEN del mapa --------
+  function openMapFullscreen() {
+    const modal = document.getElementById('exMapfsModal');
+    if (!modal) return;
+    // Clonar el SVG actual al modal
+    const wrap = document.getElementById('exMapfsWrap');
+    const side = document.getElementById('exMapfsSide');
+    const orig = document.getElementById('exChoropleth');
+    if (!orig || !wrap) return;
+    const clone = orig.cloneNode(true);
+    clone.id = 'exChoroplethFs';
+    // Resetear transform del clon
+    const gClone = clone.querySelector('.pan-group');
+    if (gClone) gClone.setAttribute('transform', '');
+    wrap.innerHTML = '';
+    wrap.appendChild(clone);
+
+    // Llenar sidebar con header + top 5 + leyenda
+    if (side && DATA) {
+      const dconf = DATA.delitos[CURRENT_DELITO];
+      const ranked = Object.entries(dconf.data).filter(([,v]) => typeof v === 'number')
+        .sort((a,b)=>b[1]-a[1]);
+      const total = ranked.reduce((s,[,v])=>s+v,0) || 1;
+      const max = ranked[0]?.[1] || 1;
+      const rows = ranked.slice(0, 10).map(([m, v], i) => {
+        const pct = (v/total*100).toFixed(1);
+        const bw = (v/max*100).toFixed(0);
+        const sid = (DATA.slugs && DATA.slugs[m]) || m.toLowerCase().replace(/ /g,'-');
+        return `<a class="ex-side-row r${i+1}" href="municipio.html?id=${sid}" style="text-decoration:none;">
+          <span class="pos">${String(i+1).padStart(2,'0')}</span>
+          <div class="body"><span class="name">${m}</span>
+            <div class="bar-track"><div class="bar-fill" style="width:${bw}%"></div></div>
+          </div>
+          <div class="vals"><span class="num">${v.toLocaleString('es-MX')}</span><span class="pct">${pct}%</span></div>
+        </a>`;
+      }).join('');
+      side.innerHTML = `
+        <div class="ex-side-panel" style="background:rgba(13,17,23,0.7);">
+          <div class="ex-side-head-bar">
+            <span class="ex-side-title">Top 10 municipios</span>
+            <span class="ex-side-subtitle">${dconf.nombre} · 2025</span>
+          </div>
+          ${rows}
+          <div class="ex-side-footer">
+            <span>Total estatal · <strong>${dconf.total_estatal.toLocaleString('es-MX')}</strong></span>
+          </div>
+        </div>
+        <div style="background:rgba(13,17,23,0.7);border:1px solid #1a1f26;border-radius:11px;padding:14px 16px;color:#8b949e;font-size:11.5px;line-height:1.5;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:#fbbf24;font-weight:700;margin-bottom:10px;">CONTROLES</div>
+          <div><strong style="color:#c9d1d9;">Rueda del mouse:</strong> zoom in/out</div>
+          <div style="margin-top:6px;"><strong style="color:#c9d1d9;">Click y arrastrar:</strong> mover el mapa</div>
+          <div style="margin-top:6px;"><strong style="color:#c9d1d9;">Click en municipio:</strong> radiografía completa</div>
+          <div style="margin-top:6px;"><strong style="color:#c9d1d9;">ESC:</strong> cerrar pantalla completa</div>
+        </div>
+      `;
+    }
+    modal.classList.add('open');
+    // Re-bind interaccion zoom y hover al SVG clonado
+    setupCloneInteraction();
+  }
+  function setupCloneInteraction() {
+    const clone = document.getElementById('exChoroplethFs');
+    if (!clone) return;
+    let zl = 1, pX = 0, pY = 0;
+    function apply() {
+      const g = clone.querySelector('.pan-group');
+      if (!g) return;
+      const vb = clone.viewBox.baseVal;
+      const cx = vb.x + vb.width/2, cy = vb.y + vb.height/2;
+      g.setAttribute('transform',
+        `translate(${cx + pX}, ${cy + pY}) scale(${zl}) translate(${-cx}, ${-cy})`);
+    }
+    clone.addEventListener('wheel', e => {
+      e.preventDefault();
+      zl = Math.max(0.5, Math.min(12, zl * (e.deltaY < 0 ? 1.15 : 1/1.15)));
+      apply();
+    }, { passive: false });
+    let panning = false, sx = 0, sy = 0, vx = 0, vy = 0;
+    clone.addEventListener('mousedown', e => {
+      if (e.target.classList && e.target.classList.contains('muni')) return;
+      panning = true; clone.classList.add('panning');
+      sx = e.clientX; sy = e.clientY; vx = pX; vy = pY; e.preventDefault();
+    });
+    window.addEventListener('mousemove', e => {
+      if (!panning) return;
+      const dx = (e.clientX - sx) / 600 * clone.viewBox.baseVal.width;
+      const dy = (e.clientY - sy) / 400 * clone.viewBox.baseVal.height;
+      pX = vx + dx; pY = vy + dy; apply();
+    });
+    window.addEventListener('mouseup', () => { panning = false; clone.classList.remove('panning'); });
+    // Click muni va a municipio.html
+    clone.querySelectorAll('path.muni').forEach(p => {
+      p.addEventListener('click', () => {
+        const sid = p.getAttribute('data-slug');
+        window.location.href = 'municipio.html?id=' + sid;
+      });
+    });
+  }
+  function closeMapFullscreen() {
+    document.getElementById('exMapfsModal')?.classList.remove('open');
+  }
+  document.getElementById('exMapfsClose')?.addEventListener('click', closeMapFullscreen);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('exMapfsModal');
+      if (modal && modal.classList.contains('open')) { closeMapFullscreen(); e.stopPropagation(); }
+    }
+  });
+  // Actualizar titulo del modal cuando cambie el delito
+  function updateMapfsTitle() {
+    const el = document.getElementById('exMapfsDelito');
+    if (el && DATA) el.textContent = DATA.delitos[CURRENT_DELITO].nombre;
   }
 
   // -------- Picker de delitos --------
