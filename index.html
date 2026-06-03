@@ -6178,6 +6178,82 @@
     width: 320px; display: flex; flex-direction: column; gap: 14px;
     overflow-y: auto;
   }
+
+  /* Botón fullscreen genérico para cualquier panel del dashboard */
+  #sExec .ex-panel { position: relative; }
+  #sExec .ex-panel-fs-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 26px; height: 26px;
+    background: rgba(13,17,23,0.85);
+    border: 1px solid #1a1f26;
+    color: #8b949e; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 5px;
+    transition: all 0.15s;
+    z-index: 10;
+    opacity: 0.5;
+    padding: 0;
+  }
+  #sExec .ex-panel:hover .ex-panel-fs-btn { opacity: 1; }
+  #sExec .ex-panel-fs-btn:hover {
+    background: #fbbf24; color: #0a0d12; border-color: #fbbf24;
+    opacity: 1;
+  }
+  #sExec .ex-panel-fs-btn svg { width: 12px; height: 12px; }
+  /* En el panel del mapa los controles de zoom ya están a la derecha, no agregamos otro botón ahi */
+  #sExec .ex-map-panel .ex-panel-fs-btn { display: none; }
+
+  /* Modal genérico panel-fullscreen */
+  .ex-panel-fs-modal {
+    position: fixed; inset: 0;
+    background: rgba(6,8,12,0.97);
+    z-index: 9998; display: none;
+    padding: 28px 36px;
+    flex-direction: column;
+  }
+  .ex-panel-fs-modal.open { display: flex; }
+  .ex-panel-fs-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 18px;
+  }
+  .ex-panel-fs-title {
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500;
+    color: #e6edf3;
+  }
+  .ex-panel-fs-title em { color: #fbbf24; font-style: italic; font-weight: 600; }
+  .ex-panel-fs-close {
+    padding: 8px 16px; background: rgba(248,81,73,0.10);
+    color: #f85149; border: 1px solid rgba(248,81,73,0.45);
+    border-radius: 7px; cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ex-panel-fs-close:hover { background: #f85149; color: #fff; }
+  .ex-panel-fs-close svg { width: 12px; height: 12px; }
+  .ex-panel-fs-content {
+    flex: 1; background: #0d1117; border: 1px solid #1a1f26;
+    border-radius: 11px; padding: 28px 32px;
+    overflow: auto;
+  }
+  /* El panel clonado dentro del modal: que crezca a fullscreen */
+  .ex-panel-fs-content .ex-panel {
+    border: none; padding: 0; height: 100%;
+    background: transparent;
+  }
+  .ex-panel-fs-content svg { width: 100% !important; height: auto !important; min-height: 400px; max-height: none !important; }
+  .ex-panel-fs-content .ex-panel-fs-btn { display: none; }
+  .ex-panel-fs-content .ex-serie { min-height: 460px; }
+  .ex-panel-fs-content .ex-donut { width: 280px !important; height: 280px !important; }
+  .ex-panel-fs-content .ex-donut-wrap { gap: 60px; padding: 30px; }
+  .ex-panel-fs-content .ex-bars { gap: 14px; }
+  .ex-panel-fs-content .ex-bar-row .name { font-size: 14px; }
+  .ex-panel-fs-content .ex-bar-val { font-size: 13px; }
+  .ex-panel-fs-content .ex-tbl-row, .ex-panel-fs-content .ex-tbl-head { font-size: 14px; padding: 11px 0; }
+  .ex-panel-fs-content .ex-rank-row { font-size: 13.5px; padding: 7px 0; }
+  .ex-panel-fs-content .ex-rank-row .ex-rank-state { font-size: 13.5px; }
+  .ex-panel-fs-content .ex-rank-row .ex-rank-val { font-size: 13px; }
   /* Panel lateral · ranking compacto top 5 munis */
   #sExec .ex-side-panel {
     background: #0d1117; border: 1px solid #1a1f26; border-radius: 11px;
@@ -6203,7 +6279,7 @@
     display: grid;
     grid-template-columns: 18px 1fr auto;
     align-items: center; gap: 9px;
-    padding: 7px 0;
+    padding: 5px 0;
     border-bottom: 1px solid #14181f;
     cursor: pointer; transition: background 0.12s;
   }
@@ -6283,25 +6359,39 @@
   #sExec .ex-serie-grid { stroke: #1a1f26; stroke-width: 0.5; }
   #sExec .ex-serie-marker { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.5px; }
 
-  /* Donut */
-  #sExec .ex-donut-wrap { display: flex; align-items: center; gap: 18px; flex: 1; }
-  #sExec .ex-donut { width: 150px; height: 150px; flex-shrink: 0; }
+  /* Donut · respiración entre número, donut y leyenda */
+  #sExec .ex-donut-wrap {
+    display: flex; align-items: center; gap: 36px; flex: 1;
+    padding: 14px 8px;
+  }
+  #sExec .ex-donut { width: 160px; height: 160px; flex-shrink: 0; }
   #sExec .ex-donut-center {
-    font-family: 'Fraunces', serif; font-size: 30px; font-weight: 600;
+    font-family: 'Fraunces', serif; font-size: 32px; font-weight: 600;
     letter-spacing: -0.5px; text-anchor: middle; dominant-baseline: central; fill: #e6edf3;
   }
   #sExec .ex-donut-center-lbl {
-    font-family: 'JetBrains Mono', monospace; font-size: 8px;
-    letter-spacing: 1.5px; text-anchor: middle; fill: #6b7480; text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+    letter-spacing: 1.8px; text-anchor: middle; fill: #6b7480; text-transform: uppercase;
   }
-  #sExec .ex-donut-legend { display: flex; flex-direction: column; gap: 10px; flex: 1; }
-  #sExec .ex-dl-item { display: flex; align-items: baseline; gap: 8px; }
-  #sExec .ex-dl-dot { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; margin-top: 1px; }
-  #sExec .ex-dl-name { font-size: 11.5px; color: #c9d1d9; line-height: 1.2; font-weight: 500; }
+  #sExec .ex-donut-legend { display: flex; flex-direction: column; gap: 18px; flex: 1; }
+  #sExec .ex-dl-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding-bottom: 14px; border-bottom: 1px solid #14181f;
+  }
+  #sExec .ex-dl-item:last-child { border-bottom: none; padding-bottom: 0; }
+  #sExec .ex-dl-dot {
+    width: 10px; height: 10px; border-radius: 2px;
+    flex-shrink: 0; margin-top: 4px;
+  }
+  #sExec .ex-dl-name {
+    font-size: 12.5px; color: #c9d1d9; line-height: 1.3;
+    font-weight: 600; margin-bottom: 4px;
+  }
   #sExec .ex-dl-num {
-    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
-    color: #8b949e; letter-spacing: 0.5px; margin-top: 2px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: #8b949e; letter-spacing: 0.6px;
   }
+  #sExec .ex-dl-num strong { color: #e6edf3; font-weight: 700; }
 
   /* Row 3 · barras + tabla + ranking nacional */
   #sExec .ex-row3 { display: grid; grid-template-columns: 1.2fr 1.1fr 1fr; gap: 14px; min-height: 360px; }
@@ -6648,7 +6738,7 @@
         </div>
         <div id="exSideRows"><!-- top 5 inyectado por JS --></div>
         <div class="ex-side-footer">
-          <span>Suma top 5 · <strong id="exSideTopPct">—</strong></span>
+          <span>Suma top 10 · <strong id="exSideTopPct">—</strong></span>
           <a href="#sR">ver todos →</a>
         </div>
       </div>
@@ -6684,12 +6774,18 @@
             <path d="M 15 90 L 30 120 L 45 75 L 60 100 L 75 95 L 90 130 L 105 80 L 120 30 L 135 90 L 150 65 L 165 70 L 180 60 L 200 80 L 215 65 L 230 65 L 245 30 L 260 110 L 275 115 L 290 130 L 305 120 L 320 145 L 335 155 L 350 165 L 365 190 L 380 130 L 395 165 L 410 145 L 425 155 L 440 155 L 455 130 L 470 138 L 485 150 L 500 170 L 515 175 L 530 110 L 545 150 L 560 130 L 575 160 L 590 130 L 605 120 L 605 220 L 15 220 Z" fill="url(#exSerieGrad)"/>
             <path d="M 15 90 L 30 120 L 45 75 L 60 100 L 75 95 L 90 130 L 105 80 L 120 30 L 135 90 L 150 65 L 165 70 L 180 60 L 200 80 L 215 65 L 230 65 L 245 30 L 260 110 L 275 115 L 290 130 L 305 120 L 320 145 L 335 155 L 350 165 L 365 190 L 380 130 L 395 165 L 410 145 L 425 155 L 440 155 L 455 130 L 470 138 L 485 150 L 500 170 L 515 175 L 530 110 L 545 150 L 560 130 L 575 160 L 590 130 L 605 120" fill="none" stroke="#f85149" stroke-width="1.6"/>
             <path d="M 15 95 L 75 92 L 150 75 L 230 70 L 280 95 L 365 135 L 470 145 L 590 140" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Pico abril 2024 -->
             <circle cx="245" cy="30" r="5" fill="#f85149" stroke="#0d1117" stroke-width="2"/>
-            <text class="ex-serie-marker" x="245" y="20" fill="#f85149" text-anchor="middle" font-weight="700">PICO ABR-24 · 179</text>
+            <line x1="245" y1="30" x2="245" y2="18" stroke="#f85149" stroke-width="1"/>
+            <text class="ex-serie-marker" x="245" y="14" fill="#f85149" text-anchor="middle" font-weight="700">PICO · ABR-24 · 179</text>
+            <!-- Julio 2024 baja inicia -->
             <circle cx="280" cy="110" r="5" fill="#a78bfa" stroke="#0d1117" stroke-width="2"/>
-            <text class="ex-serie-marker" x="280" y="125" fill="#a78bfa" text-anchor="start" font-weight="700">JUL-24 · BAJA INICIA</text>
+            <line x1="280" y1="110" x2="280" y2="92" stroke="#a78bfa" stroke-width="1"/>
+            <text class="ex-serie-marker" x="280" y="86" fill="#a78bfa" text-anchor="middle" font-weight="700">JUL-24 · INICIA BAJA</text>
+            <!-- Noviembre 2024 línea base -->
             <circle cx="320" cy="145" r="5" fill="#fbbf24" stroke="#0d1117" stroke-width="2"/>
-            <text class="ex-serie-marker" x="320" y="161" fill="#fbbf24" text-anchor="middle" font-weight="700">NOV-24 BASELINE</text>
+            <line x1="320" y1="145" x2="320" y2="175" stroke="#fbbf24" stroke-width="1"/>
+            <text class="ex-serie-marker" x="320" y="188" fill="#fbbf24" text-anchor="middle" font-weight="700">NOV-24 · LÍNEA BASE</text>
             <text class="ex-serie-axis" x="40" y="240">2023</text>
             <text class="ex-serie-axis" x="200" y="240">2024</text>
             <text class="ex-serie-axis" x="370" y="240">2025</text>
@@ -6714,9 +6810,9 @@
             <text class="ex-donut-center-lbl" x="80" y="95">víctimas total</text>
           </svg>
           <div class="ex-donut-legend">
-            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#f85149;"></span><div><div class="ex-dl-name">Homicidio doloso</div><div class="ex-dl-num">1,119 · 71.2%</div></div></div>
-            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#fbbf24;"></span><div><div class="ex-dl-name">Homicidio culposo</div><div class="ex-dl-num">417 · 26.5%</div></div></div>
-            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#a78bfa;"></span><div><div class="ex-dl-name">Feminicidio</div><div class="ex-dl-num">35 · 2.2%</div></div></div>
+            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#f85149;"></span><div><div class="ex-dl-name">Homicidio doloso</div><div class="ex-dl-num"><strong>1,119</strong> · 71.2%</div></div></div>
+            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#fbbf24;"></span><div><div class="ex-dl-name">Homicidio culposo</div><div class="ex-dl-num"><strong>417</strong> · 26.5%</div></div></div>
+            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#a78bfa;"></span><div><div class="ex-dl-name">Feminicidio</div><div class="ex-dl-num"><strong>35</strong> · 2.2%</div></div></div>
           </div>
         </div>
       </div>
@@ -6791,6 +6887,18 @@
 
   </div>
 </section>
+
+<!-- Modal genérico para abrir cualquier panel del dashboard en pantalla completa -->
+<div class="ex-panel-fs-modal" id="exPanelFsModal" role="dialog" aria-modal="true" aria-label="Panel en pantalla completa">
+  <div class="ex-panel-fs-header">
+    <div class="ex-panel-fs-title" id="exPanelFsTitle">Panel · pantalla completa</div>
+    <button class="ex-panel-fs-close" id="exPanelFsClose">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l6 6M9 3l-6 6"/></svg>
+      Cerrar (ESC)
+    </button>
+  </div>
+  <div class="ex-panel-fs-content" id="exPanelFsContent"></div>
+</div>
 
 <!-- MODAL FULLSCREEN del mapa (fuera de sExec para poder cubrir todo el viewport en cualquier momento) -->
 <div class="ex-mapfs-modal" id="exMapfsModal" role="dialog" aria-modal="true" aria-label="Mapa pantalla completa">
@@ -35065,14 +35173,14 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
       .sort((a, b) => b[1] - a[1]);
     const total = ranked.reduce((s, [_, v]) => s + v, 0) || 1;
     const max = ranked[0] ? ranked[0][1] : 1;
-    const top5 = ranked.slice(0, 5);
-    const top5Total = top5.reduce((s, [_, v]) => s + v, 0);
+    const topN = ranked.slice(0, 10);
+    const topNTotal = topN.reduce((s, [_, v]) => s + v, 0);
 
     if (subEl) subEl.textContent = dconf.nombre + ' · 2025';
-    if (pctEl) pctEl.textContent = (top5Total / total * 100).toFixed(1) + '% estatal';
+    if (pctEl) pctEl.textContent = (topNTotal / total * 100).toFixed(1) + '% estatal';
 
     rowsEl.innerHTML = '';
-    top5.forEach(([muni, val], idx) => {
+    topN.forEach(([muni, val], idx) => {
       const pct = (val / total * 100).toFixed(1);
       const barW = (val / max * 100).toFixed(1);
       const sid = (DATA.slugs && DATA.slugs[muni]) || muni.toLowerCase().replace(/ /g,'-');
@@ -35304,6 +35412,53 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     document.getElementById('exMapfsModal')?.classList.remove('open');
   }
   document.getElementById('exMapfsClose')?.addEventListener('click', closeMapFullscreen);
+
+  // -------- MODAL GENÉRICO panel-fullscreen --------
+  // Inyecta un botón ⛶ en cada .ex-panel del dashboard
+  function addPanelFsButtons() {
+    document.querySelectorAll('#sExec .ex-panel').forEach(panel => {
+      if (panel.querySelector('.ex-panel-fs-btn')) return;
+      if (panel.classList.contains('ex-map-panel')) return; // el mapa tiene sus propios controles
+      const btn = document.createElement('button');
+      btn.className = 'ex-panel-fs-btn';
+      btn.title = 'Ver en pantalla completa';
+      btn.setAttribute('aria-label', 'Ver en pantalla completa');
+      btn.innerHTML = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 5V2h3M9 2h3v3M12 9v3H9M5 12H2V9"/></svg>';
+      btn.addEventListener('click', e => {
+        e.preventDefault(); e.stopPropagation();
+        openPanelFs(panel);
+      });
+      panel.appendChild(btn);
+    });
+  }
+  function openPanelFs(panel) {
+    const modal = document.getElementById('exPanelFsModal');
+    const content = document.getElementById('exPanelFsContent');
+    const titleEl = document.getElementById('exPanelFsTitle');
+    if (!modal || !content) return;
+    const titleSrc = panel.querySelector('.ex-panel-title');
+    if (titleEl && titleSrc) {
+      titleEl.innerHTML = titleSrc.innerHTML.replace(/<span/, '<em>·</em> <span');
+    }
+    const clone = panel.cloneNode(true);
+    content.innerHTML = '';
+    content.appendChild(clone);
+    modal.classList.add('open');
+  }
+  function closePanelFs() {
+    document.getElementById('exPanelFsModal')?.classList.remove('open');
+    const c = document.getElementById('exPanelFsContent');
+    if (c) c.innerHTML = '';
+  }
+  document.getElementById('exPanelFsClose')?.addEventListener('click', closePanelFs);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const m = document.getElementById('exPanelFsModal');
+      if (m && m.classList.contains('open')) closePanelFs();
+    }
+  });
+  // Llamar después de que sExec exista
+  setTimeout(addPanelFsButtons, 500);
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       const modal = document.getElementById('exMapfsModal');
