@@ -6071,7 +6071,11 @@
   }
 
   /* GRID main · row 2 */
-  #sExec .ex-row2 { display: grid; grid-template-columns: 1.2fr 1.6fr 1fr; gap: 14px; height: 320px; margin-bottom: 14px; }
+  /* Mapa solo, full width, alto generoso (protagonista) */
+  #sExec .ex-row-map { margin-bottom: 16px; }
+  #sExec .ex-row-map .ex-panel { min-height: 560px; }
+  /* Serie + donut · 2 columnas */
+  #sExec .ex-row2 { display: grid; grid-template-columns: 1.7fr 1fr; gap: 14px; min-height: 340px; margin-bottom: 14px; }
 
   /* Mapa */
   #sExec .ex-map { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; }
@@ -6115,7 +6119,7 @@
   }
 
   /* Row 3 · barras + tabla + ranking nacional */
-  #sExec .ex-row3 { display: grid; grid-template-columns: 1.2fr 1.1fr 1fr; gap: 14px; height: 320px; }
+  #sExec .ex-row3 { display: grid; grid-template-columns: 1.2fr 1.1fr 1fr; gap: 14px; min-height: 360px; }
 
   /* Barras divergentes */
   #sExec .ex-bars { flex: 1; display: flex; flex-direction: column; gap: 7px; padding-top: 4px; }
@@ -6405,9 +6409,8 @@
       </div>
     </div>
 
-    <!-- ROW 2 · Mapa + Serie + Donut -->
-    <div class="ex-row2">
-
+    <!-- ROW MAPA · protagonismo full-width -->
+    <div class="ex-row-map">
       <!-- MAPA · CHOROPLETH INTERACTIVO -->
       <div class="ex-panel ex-map-panel">
         <div class="ex-panel-head">
@@ -6438,6 +6441,10 @@
           <span class="ex-leg-max">—</span>
         </div>
       </div>
+    </div>
+
+    <!-- ROW 2 · Serie + Donut (2 columnas, sin mapa) -->
+    <div class="ex-row2">
 
       <!-- SERIE HD -->
       <div class="ex-panel">
@@ -34651,10 +34658,12 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
 
 
 <!-- ============================================================
-     sExec · Choropleth interactivo + Fullscreen takeover (v2.19)
+     sExec · Choropleth interactivo + Fullscreen takeover (v2.20)
+     morelos.geojson.js ya está cargado arriba en línea 67
+     municipios_delitos.js inlinea EXEC_DELITOS_DATA como global (evita fetch)
      ============================================================ -->
-<script src="morelos.geojson.js" defer></script>
-<script defer>
+<script src="municipios_delitos.js"></script>
+<script>
 (function() {
   // -------- Datos delitos por municipio --------
   // Cargados via fetch desde municipios_delitos.json
@@ -34864,16 +34873,33 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     });
   }
 
-  // -------- Init: cargar JSON y arrancar --------
-  fetch('municipios_delitos.json')
-    .then(r => r.json())
-    .then(d => {
-      DATA = d;
-      CURRENT_DELITO = d.default || 'total';
+  // -------- Init: leer variable global EXEC_DELITOS_DATA (inlineada) --------
+  function tryBoot(attempt) {
+    attempt = attempt || 0;
+    if (typeof EXEC_DELITOS_DATA !== 'undefined' && typeof MORELOS_GEOJSON !== 'undefined') {
+      DATA = EXEC_DELITOS_DATA;
+      CURRENT_DELITO = DATA.default || 'total';
       buildDelitoPicker();
       renderMap();
-    })
-    .catch(err => console.error('Error cargando municipios_delitos.json:', err));
+      return;
+    }
+    if (attempt > 40) {
+      // 10 segundos. Mostrar error visible
+      const lbl = document.getElementById('exMapDelitoLabel');
+      if (lbl) lbl.textContent = '· Error cargando datos (recarga la página)';
+      console.error('sExec boot failed: EXEC_DELITOS_DATA o MORELOS_GEOJSON ausentes tras 10s', {
+        hasData: typeof EXEC_DELITOS_DATA !== 'undefined',
+        hasGeo: typeof MORELOS_GEOJSON !== 'undefined',
+      });
+      return;
+    }
+    setTimeout(() => tryBoot(attempt + 1), 250);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => tryBoot(0));
+  } else {
+    tryBoot(0);
+  }
 
   // -------- FULLSCREEN TAKEOVER --------
   function applyDashboardMode() {
