@@ -4906,6 +4906,7 @@
   <div class="nav-group nav-hub">
     <div class="nav-group-title">Panel estatal</div>
     <a href="#sHero" data-target="sHero"><span class="num num-icon" aria-label="Inicio"><svg viewBox="0 0 20 20"><path d="M10 2L2 9h2v8h5v-5h2v5h5V9h2L10 2z" fill="currentColor"/></svg></span>INICIO · RESUMEN</a>
+    <a href="#sExec" data-target="sExec" style="border-left:3px solid #fbbf24;padding-left:8px;background:linear-gradient(90deg,rgba(251,191,36,0.10),rgba(251,191,36,0));"><span class="num num-icon" aria-label="Dashboard maestro"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M3 3h6v6H3zM11 3h6v4h-6zM11 9h6v8h-6zM3 11h6v6H3z"/></svg></span><span style="color:#fbbf24;font-weight:700;">DASHBOARD MAESTRO</span></a>
     <a href="#sNAC1" data-target="sNAC1" style="border-left:3px solid #f85149;padding-left:8px;background:rgba(248,81,73,0.06);"><span class="num num-icon" aria-label="Década nacional"><svg viewBox="0 0 20 20"><path d="M2 17V7l4-3 4 3 4-3 4 3v10" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><circle cx="14" cy="7" r="2.2" fill="currentColor"/></svg></span><span style="color:#f85149;font-weight:700;">DÉCADA NACIONAL</span></a>
     <a href="#s0" data-target="s0"><span class="num num-icon" aria-label="Mapa"><svg viewBox="0 0 20 20"><path d="M10 2C6.5 2 4 4.5 4 8c0 4.5 6 10 6 10s6-5.5 6-10c0-3.5-2.5-6-6-6zm0 8.3a2.3 2.3 0 110-4.6 2.3 2.3 0 010 4.6z" fill="currentColor"/></svg></span>MAPA</a>
     <a href="#sAC" data-target="sAC" style="border-left:3px solid #fbbf24;padding-left:8px;background:rgba(251,191,36,0.06);"><span class="num num-icon" aria-label="Ángulo Conveniente"><svg viewBox="0 0 20 20"><path d="M3 17 L10 4 L17 17" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="4" r="1.6" fill="currentColor"/><line x1="6.5" y1="11" x2="13.5" y2="11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/></svg></span><span style="color:#fbbf24;font-weight:700;">EL ÁNGULO CONVENIENTE</span></a>
@@ -5931,6 +5932,566 @@
     </button>
   </div>
 </section>
+
+<!-- ============================================================
+     SECCIÓN sExec · DASHBOARD MAESTRO · VISTA EJECUTIVA
+     Panel de seguimiento rápido · alcance: Estatal · 7 regiones PED · 36 munis (F2)
+     Drill-down al Nivel 3: municipio.html?id=<slug> (F3)
+     ============================================================ -->
+<style>
+  #sExec {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding: 56px 24px 64px;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.05) 0%, transparent 55%),
+      linear-gradient(180deg, #06080c 0%, #0a0d12 100%);
+    color: #e6edf3;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    border-top: 1px solid #1a1f26;
+    border-bottom: 1px solid #1a1f26;
+  }
+  #sExec .ex-wrap { max-width: 1500px; margin: 0 auto; padding: 0 24px; }
+
+  /* HEADER */
+  #sExec .ex-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 22px; flex-wrap: wrap; gap: 14px;
+  }
+  #sExec .ex-title h2 {
+    font-family: 'Fraunces', serif; font-size: 30px; font-weight: 500;
+    color: #e6edf3; line-height: 1; letter-spacing: -0.6px; margin: 6px 0 0;
+  }
+  #sExec .ex-title h2 em { color: #fbbf24; font-style: italic; font-weight: 600; }
+  #sExec .ex-title .crumb {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    letter-spacing: 2.5px; text-transform: uppercase; color: #6b7480; font-weight: 600;
+  }
+  #sExec .ex-title .crumb strong { color: #fbbf24; }
+  #sExec .ex-actions { display: flex; gap: 12px; align-items: center; }
+  #sExec .ex-actions .h-tag {
+    background: #0d1117; border: 1px solid #1a1f26;
+    padding: 8px 14px; border-radius: 9px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px;
+    color: #c9d1d9; display: flex; align-items: center; gap: 8px;
+  }
+  #sExec .ex-actions .h-tag.live { color: #f85149; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
+  #sExec .ex-actions .h-tag.live .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #f85149;
+    box-shadow: 0 0 12px rgba(248,81,73,0.7);
+  }
+
+  /* SELECTOR de alcance */
+  #sExec .ex-scope {
+    display: flex; gap: 8px; align-items: center;
+    padding: 8px; background: #0d1117; border: 1px solid #1a1f26;
+    border-radius: 11px; margin-bottom: 22px; flex-wrap: wrap;
+  }
+  #sExec .ex-scope-lbl {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 2px; text-transform: uppercase; color: #6b7480;
+    padding: 0 14px 0 8px; font-weight: 600;
+  }
+  #sExec .ex-tab {
+    padding: 8px 16px; border-radius: 7px;
+    font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600;
+    color: #8b949e; background: transparent; border: 1px solid transparent;
+    cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  #sExec .ex-tab:hover { color: #c9d1d9; background: rgba(251,191,36,0.04); }
+  #sExec .ex-tab.active {
+    color: #0a0d12; background: #fbbf24;
+    box-shadow: 0 4px 14px rgba(251,191,36,0.18);
+  }
+  #sExec .ex-tab .pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    background: rgba(139,148,158,0.15); color: #8b949e;
+    padding: 2px 6px; border-radius: 999px; letter-spacing: 1px;
+    text-transform: uppercase; font-weight: 700;
+  }
+  #sExec .ex-tab.active .pill { background: rgba(13,17,23,0.15); color: #0a0d12; }
+  #sExec .ex-tab.disabled { opacity: 0.5; cursor: not-allowed; }
+  #sExec .ex-tab.disabled:hover { background: transparent; }
+  #sExec .ex-spacer { flex: 1; }
+  #sExec .ex-drill {
+    padding: 9px 16px; border-radius: 7px;
+    font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600;
+    color: #fbbf24; background: rgba(251,191,36,0.08);
+    border: 1px solid rgba(251,191,36,0.35);
+    text-decoration: none; display: flex; align-items: center; gap: 8px;
+    transition: all 0.15s;
+  }
+  #sExec .ex-drill:hover { background: #fbbf24; color: #0a0d12; }
+  #sExec .ex-drill svg { width: 14px; height: 14px; }
+
+  /* KPI ROW */
+  #sExec .ex-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 14px; }
+  #sExec .ex-kpi {
+    background: #0d1117; border: 1px solid #1a1f26; border-radius: 11px;
+    padding: 18px 20px; position: relative; overflow: hidden;
+  }
+  #sExec .ex-kpi-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  #sExec .ex-kpi-lbl { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #8b949e; font-weight: 500; }
+  #sExec .ex-kpi-ico { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  #sExec .ex-kpi-ico.amber { background: rgba(251,191,36,0.14); color: #fbbf24; }
+  #sExec .ex-kpi-ico.red { background: rgba(248,81,73,0.14); color: #f85149; }
+  #sExec .ex-kpi-ico.cyan { background: rgba(34,211,238,0.14); color: #22d3ee; }
+  #sExec .ex-kpi-ico.purple { background: rgba(167,139,250,0.14); color: #a78bfa; }
+  #sExec .ex-kpi-ico svg { width: 12px; height: 12px; }
+  #sExec .ex-kpi-spark { height: 26px; width: 90px; }
+  #sExec .ex-kpi-spark path { fill: none; stroke-width: 1.7; }
+  #sExec .ex-kpi-num {
+    font-family: 'Fraunces', serif; font-size: 44px; font-weight: 600;
+    line-height: 1; letter-spacing: -1.2px; color: #e6edf3; margin-bottom: 8px;
+    font-variation-settings: "opsz" 144;
+  }
+  #sExec .ex-kpi-num small { font-size: 18px; color: #8b949e; font-weight: 500; }
+  #sExec .ex-kpi-num.red { color: #f85149; }
+  #sExec .ex-kpi-num.purple { color: #a78bfa; }
+  #sExec .ex-kpi-num.amber { color: #fbbf24; }
+  #sExec .ex-kpi-delta { display: flex; align-items: baseline; gap: 6px; font-size: 11.5px; }
+  #sExec .ex-kpi-delta .v { font-weight: 700; letter-spacing: 0.2px; }
+  #sExec .ex-kpi-delta .v.up { color: #3fb950; }
+  #sExec .ex-kpi-delta .v.dn { color: #f85149; }
+  #sExec .ex-kpi-delta .lbl { color: #6b7480; font-size: 10.5px; }
+
+  /* PANEL común */
+  #sExec .ex-panel {
+    background: #0d1117; border: 1px solid #1a1f26; border-radius: 11px;
+    padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;
+  }
+  #sExec .ex-panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  #sExec .ex-panel-title { font-size: 13px; font-weight: 600; color: #c9d1d9; letter-spacing: -0.1px; }
+  #sExec .ex-panel-title span { font-size: 11px; color: #6b7480; font-weight: 500; margin-left: 8px; }
+  #sExec .ex-panel-action {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 1.5px; color: #6b7480; text-transform: uppercase; font-weight: 600;
+  }
+
+  /* GRID main · row 2 */
+  #sExec .ex-row2 { display: grid; grid-template-columns: 1.2fr 1.6fr 1fr; gap: 14px; height: 320px; margin-bottom: 14px; }
+
+  /* Mapa */
+  #sExec .ex-map { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; }
+  #sExec .ex-map svg { width: 100%; height: 100%; max-height: 230px; }
+  #sExec .ex-map-legend {
+    display: flex; align-items: center; gap: 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 1.2px; color: #6b7480; margin-top: 8px;
+    text-transform: uppercase; flex-wrap: wrap;
+  }
+  #sExec .ex-map-legend .dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    margin-right: 4px; vertical-align: middle;
+  }
+
+  /* Serie */
+  #sExec .ex-serie { flex: 1; position: relative; }
+  #sExec .ex-serie svg { width: 100%; height: 100%; }
+  #sExec .ex-serie-axis { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: #3a4047; }
+  #sExec .ex-serie-grid { stroke: #1a1f26; stroke-width: 0.5; }
+  #sExec .ex-serie-marker { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.5px; }
+
+  /* Donut */
+  #sExec .ex-donut-wrap { display: flex; align-items: center; gap: 18px; flex: 1; }
+  #sExec .ex-donut { width: 150px; height: 150px; flex-shrink: 0; }
+  #sExec .ex-donut-center {
+    font-family: 'Fraunces', serif; font-size: 30px; font-weight: 600;
+    letter-spacing: -0.5px; text-anchor: middle; dominant-baseline: central; fill: #e6edf3;
+  }
+  #sExec .ex-donut-center-lbl {
+    font-family: 'JetBrains Mono', monospace; font-size: 8px;
+    letter-spacing: 1.5px; text-anchor: middle; fill: #6b7480; text-transform: uppercase;
+  }
+  #sExec .ex-donut-legend { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  #sExec .ex-dl-item { display: flex; align-items: baseline; gap: 8px; }
+  #sExec .ex-dl-dot { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; margin-top: 1px; }
+  #sExec .ex-dl-name { font-size: 11.5px; color: #c9d1d9; line-height: 1.2; font-weight: 500; }
+  #sExec .ex-dl-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    color: #8b949e; letter-spacing: 0.5px; margin-top: 2px;
+  }
+
+  /* Row 3 · barras + tabla + ranking nacional */
+  #sExec .ex-row3 { display: grid; grid-template-columns: 1.2fr 1.1fr 1fr; gap: 14px; height: 320px; }
+
+  /* Barras divergentes */
+  #sExec .ex-bars { flex: 1; display: flex; flex-direction: column; gap: 7px; padding-top: 4px; }
+  #sExec .ex-bar-row {
+    display: grid; grid-template-columns: 130px 1fr 50px;
+    align-items: center; gap: 8px; font-size: 11px;
+  }
+  #sExec .ex-bar-row .name { color: #c9d1d9; font-weight: 500; font-size: 11px; line-height: 1.2; }
+  #sExec .ex-bar-track { height: 8px; background: transparent; position: relative; display: flex; justify-content: center; }
+  #sExec .ex-bar-fill { height: 100%; border-radius: 1px; }
+  #sExec .ex-bar-fill.pos { background: linear-gradient(90deg, rgba(248,81,73,0.4), #f85149); margin-left: 50%; }
+  #sExec .ex-bar-fill.neg { background: linear-gradient(270deg, rgba(63,185,80,0.4), #3fb950); margin-right: 50%; margin-left: 0; }
+  #sExec .ex-bar-center { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: #3a4047; }
+  #sExec .ex-bar-val {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    font-weight: 700; letter-spacing: 0.3px; text-align: right;
+  }
+  #sExec .ex-bar-val.pos { color: #f85149; }
+  #sExec .ex-bar-val.neg { color: #3fb950; }
+
+  /* Tabla */
+  #sExec .ex-tbl { flex: 1; display: flex; flex-direction: column; font-size: 11.5px; }
+  #sExec .ex-tbl-head {
+    display: grid; grid-template-columns: 22px 1fr 60px 50px;
+    padding: 6px 0; border-bottom: 1px solid #1a1f26;
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+    letter-spacing: 1.2px; color: #6b7480; text-transform: uppercase; font-weight: 600;
+  }
+  #sExec .ex-tbl-row {
+    display: grid; grid-template-columns: 22px 1fr 60px 50px;
+    align-items: center; padding: 7px 0; border-bottom: 1px solid #14181f;
+    font-size: 11.5px; cursor: pointer; transition: background 0.15s;
+  }
+  #sExec .ex-tbl-row:last-child { border-bottom: none; }
+  #sExec .ex-tbl-row:hover { background: rgba(251,191,36,0.04); }
+  #sExec .ex-tbl-pos { color: #6b7480; font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 10.5px; }
+  #sExec .ex-tbl-name { color: #c9d1d9; font-weight: 500; }
+  #sExec .ex-tbl-name.hi { color: #fbbf24; font-weight: 700; }
+  #sExec .ex-tbl-num {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    color: #e6edf3; text-align: right; letter-spacing: 0.3px;
+  }
+  #sExec .ex-tbl-delta {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    text-align: right; font-size: 10px; letter-spacing: 0.3px;
+  }
+  #sExec .ex-tbl-delta.up { color: #f85149; }
+  #sExec .ex-tbl-delta.dn { color: #3fb950; }
+
+  /* Ranking nacional ENVIPE */
+  #sExec .ex-rank { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 5px; }
+  #sExec .ex-rank-row {
+    display: grid; grid-template-columns: 24px 1fr 1fr 40px;
+    align-items: center; gap: 8px; padding: 3px 0;
+    border-bottom: 1px solid #14181f; font-size: 11px;
+  }
+  #sExec .ex-rank-row:last-child { border-bottom: none; }
+  #sExec .ex-rank-row.hi {
+    background: rgba(251,191,36,0.05); border-radius: 4px;
+    padding: 5px 6px; border: 1px solid rgba(251,191,36,0.3); margin: 1px 0;
+  }
+  #sExec .ex-rank-pos {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    font-size: 10.5px; letter-spacing: 0.5px; color: #6b7480;
+  }
+  #sExec .ex-rank-row.hi .ex-rank-pos { color: #fbbf24; }
+  #sExec .ex-rank-state { font-size: 10.5px; color: #c9d1d9; font-weight: 500; }
+  #sExec .ex-rank-row.hi .ex-rank-state { color: #fbbf24; font-weight: 700; }
+  #sExec .ex-rank-bar-wrap { height: 5px; background: #1a1f26; border-radius: 2px; overflow: hidden; }
+  #sExec .ex-rank-bar { height: 100%; background: linear-gradient(90deg, rgba(248,81,73,0.4), #f85149); }
+  #sExec .ex-rank-row.hi .ex-rank-bar { background: linear-gradient(90deg, rgba(251,191,36,0.4), #fbbf24); }
+  #sExec .ex-rank-val {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    font-size: 10px; color: #e6edf3; text-align: right;
+  }
+  #sExec .ex-rank-row.hi .ex-rank-val { color: #fbbf24; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    #sExec .ex-kpis { grid-template-columns: repeat(2, 1fr); }
+    #sExec .ex-row2 { grid-template-columns: 1fr; height: auto; }
+    #sExec .ex-row3 { grid-template-columns: 1fr; height: auto; }
+    #sExec .ex-panel { min-height: 280px; }
+  }
+  @media (max-width: 700px) {
+    #sExec .ex-kpis { grid-template-columns: 1fr; }
+    #sExec .ex-head { flex-direction: column; align-items: flex-start; }
+    #sExec .ex-scope { overflow-x: auto; }
+  }
+</style>
+
+<section id="sExec" aria-labelledby="sExec-title">
+  <div class="ex-wrap">
+
+    <!-- HEADER -->
+    <div class="ex-head">
+      <div class="ex-title">
+        <div class="crumb"><strong>DASHBOARD MAESTRO</strong> · VISTA EJECUTIVA</div>
+        <h2 id="sExec-title">Panel de <em>seguimiento</em> · Inseguridad Morelos</h2>
+      </div>
+      <div class="ex-actions">
+        <div class="h-tag">Corte: marzo 2026 · Q1 parcial</div>
+        <div class="h-tag live"><span class="dot"></span>Live</div>
+      </div>
+    </div>
+
+    <!-- SELECTOR DE ALCANCE -->
+    <div class="ex-scope" role="tablist" aria-label="Seleccionar alcance del dashboard">
+      <span class="ex-scope-lbl">Alcance:</span>
+      <button class="ex-tab active" role="tab" aria-selected="true">Estado completo <span class="pill">36 munis</span></button>
+      <button class="ex-tab disabled" role="tab" aria-selected="false" disabled title="Disponible en próxima iteración">7 regiones PED <span class="pill">próx.</span></button>
+      <button class="ex-tab disabled" role="tab" aria-selected="false" disabled title="Disponible en próxima iteración">Municipio <span class="pill">próx.</span></button>
+      <span class="ex-spacer"></span>
+      <a class="ex-drill" href="municipio.html?id=cuernavaca">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h8M7 3l4 4-4 4"/></svg>
+        Ver radiografía municipal
+      </a>
+    </div>
+
+    <!-- KPI ROW -->
+    <div class="ex-kpis">
+      <div class="ex-kpi">
+        <div class="ex-kpi-head">
+          <div class="ex-kpi-lbl">
+            <span class="ex-kpi-ico amber"><svg viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="0.8"/></svg></span>
+            Percepción inseguridad
+          </div>
+          <svg class="ex-kpi-spark" viewBox="0 0 90 26" preserveAspectRatio="none"><path d="M0 20 L11 18 L22 15 L33 13 L44 11 L55 9 L66 6 L77 4 L90 3" stroke="#fbbf24"/><circle cx="90" cy="3" r="2.2" fill="#fbbf24"/></svg>
+        </div>
+        <div class="ex-kpi-num amber">90.09<small>%</small></div>
+        <div class="ex-kpi-delta"><span class="v up">+14.5 pts</span><span class="lbl">vs nacional · ENVIPE 2025</span></div>
+      </div>
+
+      <div class="ex-kpi">
+        <div class="ex-kpi-head">
+          <div class="ex-kpi-lbl">
+            <span class="ex-kpi-ico red"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="6" cy="6" r="4.5"/><path d="M6 3.5v3l2 1"/></svg></span>
+            Víctimas HD · 2025
+          </div>
+          <svg class="ex-kpi-spark" viewBox="0 0 90 26" preserveAspectRatio="none"><path d="M0 6 L11 8 L22 10 L33 7 L44 11 L55 14 L66 16 L77 13 L90 19" stroke="#f85149"/><circle cx="90" cy="19" r="2.2" fill="#f85149"/></svg>
+        </div>
+        <div class="ex-kpi-num red">1,119</div>
+        <div class="ex-kpi-delta"><span class="v dn">−26.4%</span><span class="lbl">vs 2024 · 1 cada 7.83 hrs</span></div>
+      </div>
+
+      <div class="ex-kpi">
+        <div class="ex-kpi-head">
+          <div class="ex-kpi-lbl">
+            <span class="ex-kpi-ico cyan"><svg viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="1.2"/><circle cx="6" cy="6" r="3.2" fill="none" stroke="currentColor" stroke-width="0.7"/><circle cx="6" cy="6" r="5.2" fill="none" stroke="currentColor" stroke-width="0.5"/></svg></span>
+            Extorsión Cuautla
+          </div>
+          <svg class="ex-kpi-spark" viewBox="0 0 90 26" preserveAspectRatio="none"><path d="M0 24 L12 22 L24 20 L36 16 L48 11 L60 7 L72 4 L90 1" stroke="#22d3ee"/><circle cx="90" cy="1" r="2.2" fill="#22d3ee"/></svg>
+        </div>
+        <div class="ex-kpi-num">259</div>
+        <div class="ex-kpi-delta"><span class="v up">+72.7%</span><span class="lbl">vs 2024 · #1 nacional</span></div>
+      </div>
+
+      <div class="ex-kpi">
+        <div class="ex-kpi-head">
+          <div class="ex-kpi-lbl">
+            <span class="ex-kpi-ico purple"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="3.5" cy="4.5" r="1.5"/><circle cx="8.5" cy="4.5" r="1.5"/><path d="M1.5 10.5c0-2 1.5-3 2-3M6.5 10.5c0-2 1.5-3 2-3"/></svg></span>
+            RNPDNO confidencial
+          </div>
+          <svg class="ex-kpi-spark" viewBox="0 0 90 26" preserveAspectRatio="none"><path d="M0 22 L11 19 L22 17 L33 14 L44 11 L55 9 L66 7 L77 5 L90 4" stroke="#a78bfa"/><circle cx="90" cy="4" r="2.2" fill="#a78bfa"/></svg>
+        </div>
+        <div class="ex-kpi-num purple">40.5<small>%</small></div>
+        <div class="ex-kpi-delta"><span class="v up">835</span><span class="lbl">de 2,063 · dic-2025</span></div>
+      </div>
+    </div>
+
+    <!-- ROW 2 · Mapa + Serie + Donut -->
+    <div class="ex-row2">
+
+      <!-- MAPA -->
+      <div class="ex-panel">
+        <div class="ex-panel-head">
+          <div class="ex-panel-title">36 municipios · intensidad de delito</div>
+          <div class="ex-panel-action">SESNSP 2025</div>
+        </div>
+        <div class="ex-map">
+          <svg viewBox="0 0 400 320">
+            <path d="M 180 30 L 240 40 L 280 65 L 310 110 L 320 165 L 318 225 L 290 270 L 240 295 L 180 305 L 130 295 L 85 260 L 65 200 L 70 140 L 95 90 L 140 50 Z" fill="rgba(13,17,23,0.5)" stroke="rgba(251,191,36,0.35)" stroke-width="1.2"/>
+            <a href="municipio.html?id=cuernavaca">
+              <circle cx="170" cy="155" r="26" fill="#f85149" opacity="0.85"/>
+              <text x="170" y="158" fill="#fff" font-size="10" font-weight="700" text-anchor="middle">CNV</text>
+            </a>
+            <a href="municipio.html?id=cuautla">
+              <circle cx="245" cy="165" r="20" fill="#f85149" opacity="0.7"/>
+              <text x="245" y="168" fill="#fff" font-size="8" font-weight="700" text-anchor="middle">CTL</text>
+            </a>
+            <a href="municipio.html?id=jiutepec">
+              <circle cx="195" cy="180" r="16" fill="#ec4899" opacity="0.65"/>
+              <text x="195" y="183" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">JTP</text>
+            </a>
+            <a href="municipio.html?id=temixco">
+              <circle cx="155" cy="190" r="13" fill="#ec4899" opacity="0.55"/>
+              <text x="155" y="193" fill="#fff" font-size="6.5" font-weight="700" text-anchor="middle">TMX</text>
+            </a>
+            <circle cx="210" cy="220" r="10" fill="#fbbf24" opacity="0.5"/>
+            <circle cx="270" cy="220" r="9" fill="#fbbf24" opacity="0.45"/>
+            <circle cx="135" cy="120" r="8" fill="#fbbf24" opacity="0.4"/>
+            <circle cx="220" cy="115" r="8" fill="#a78bfa" opacity="0.4"/>
+            <circle cx="105" cy="160" r="7" fill="#3fb950" opacity="0.4"/>
+            <circle cx="285" cy="155" r="8" fill="#fbbf24" opacity="0.4"/>
+            <circle cx="160" cy="240" r="9" fill="#3fb950" opacity="0.35"/>
+            <circle cx="225" cy="260" r="7" fill="#3fb950" opacity="0.35"/>
+            <circle cx="180" cy="110" r="6" fill="#a78bfa" opacity="0.35"/>
+            <circle cx="100" cy="220" r="6" fill="#3fb950" opacity="0.3"/>
+            <circle cx="265" cy="100" r="6" fill="#a78bfa" opacity="0.3"/>
+            <circle cx="290" cy="195" r="6" fill="#3fb950" opacity="0.3"/>
+            <circle cx="140" cy="265" r="5" fill="#3fb950" opacity="0.3"/>
+            <circle cx="245" cy="80" r="5" fill="#3fb950" opacity="0.3"/>
+            <circle cx="115" cy="195" r="5" fill="#3fb950" opacity="0.3"/>
+            <circle cx="195" cy="65" r="5" fill="#a78bfa" opacity="0.3"/>
+            <circle cx="305" cy="220" r="5" fill="#3fb950" opacity="0.3"/>
+            <circle cx="80" cy="190" r="4" fill="#3fb950" opacity="0.3"/>
+            <circle cx="250" cy="285" r="4" fill="#3fb950" opacity="0.3"/>
+            <circle cx="165" cy="280" r="4" fill="#3fb950" opacity="0.3"/>
+            <circle cx="295" cy="135" r="4" fill="#3fb950" opacity="0.3"/>
+            <circle cx="220" cy="285" r="3" fill="#3fb950" opacity="0.25"/>
+            <circle cx="120" cy="280" r="3" fill="#3fb950" opacity="0.25"/>
+            <circle cx="280" cy="245" r="3" fill="#3fb950" opacity="0.25"/>
+            <circle cx="155" cy="80" r="3" fill="#3fb950" opacity="0.25"/>
+            <circle cx="275" cy="285" r="3" fill="#3fb950" opacity="0.25"/>
+            <circle cx="190" cy="295" r="3" fill="#3fb950" opacity="0.25"/>
+            <circle cx="85" cy="155" r="3" fill="#3fb950" opacity="0.25"/>
+            <circle cx="305" cy="180" r="3" fill="#3fb950" opacity="0.25"/>
+            <circle cx="100" cy="115" r="3" fill="#3fb950" opacity="0.25"/>
+            <circle cx="250" cy="240" r="3" fill="#3fb950" opacity="0.25"/>
+            <circle cx="135" cy="165" r="2.5" fill="#3fb950" opacity="0.25"/>
+            <circle cx="225" cy="195" r="2.5" fill="#3fb950" opacity="0.25"/>
+          </svg>
+        </div>
+        <div class="ex-map-legend">
+          <span><span class="dot" style="background:#f85149;"></span>Alta</span>
+          <span><span class="dot" style="background:#ec4899;"></span>Media-alta</span>
+          <span><span class="dot" style="background:#fbbf24;"></span>Media</span>
+          <span><span class="dot" style="background:#3fb950;"></span>Baja</span>
+        </div>
+      </div>
+
+      <!-- SERIE HD -->
+      <div class="ex-panel">
+        <div class="ex-panel-head">
+          <div class="ex-panel-title">Homicidio doloso · víctimas mensuales <span>2023-2026</span></div>
+          <div class="ex-panel-action">SESNSP víctimas</div>
+        </div>
+        <div class="ex-serie">
+          <svg viewBox="0 0 700 250" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="exSerieGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f85149" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#f85149" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line class="ex-serie-grid" x1="0" y1="50" x2="700" y2="50"/>
+            <line class="ex-serie-grid" x1="0" y1="100" x2="700" y2="100"/>
+            <line class="ex-serie-grid" x1="0" y1="150" x2="700" y2="150"/>
+            <line class="ex-serie-grid" x1="0" y1="200" x2="700" y2="200"/>
+            <text class="ex-serie-axis" x="2" y="48">180</text>
+            <text class="ex-serie-axis" x="2" y="98">140</text>
+            <text class="ex-serie-axis" x="2" y="148">100</text>
+            <text class="ex-serie-axis" x="2" y="198">60</text>
+            <rect x="280" y="0" width="280" height="220" fill="rgba(251,191,36,0.05)"/>
+            <text class="ex-serie-marker" x="420" y="14" fill="#fbbf24" text-anchor="middle" font-weight="700">PERIODO HARFUCH</text>
+            <path d="M 15 90 L 30 120 L 45 75 L 60 100 L 75 95 L 90 130 L 105 80 L 120 30 L 135 90 L 150 65 L 165 70 L 180 60 L 200 80 L 215 65 L 230 65 L 245 30 L 260 110 L 275 115 L 290 130 L 305 120 L 320 145 L 335 155 L 350 165 L 365 190 L 380 130 L 395 165 L 410 145 L 425 155 L 440 155 L 455 130 L 470 138 L 485 150 L 500 170 L 515 175 L 530 110 L 545 150 L 560 130 L 575 160 L 590 130 L 605 120 L 605 220 L 15 220 Z" fill="url(#exSerieGrad)"/>
+            <path d="M 15 90 L 30 120 L 45 75 L 60 100 L 75 95 L 90 130 L 105 80 L 120 30 L 135 90 L 150 65 L 165 70 L 180 60 L 200 80 L 215 65 L 230 65 L 245 30 L 260 110 L 275 115 L 290 130 L 305 120 L 320 145 L 335 155 L 350 165 L 365 190 L 380 130 L 395 165 L 410 145 L 425 155 L 440 155 L 455 130 L 470 138 L 485 150 L 500 170 L 515 175 L 530 110 L 545 150 L 560 130 L 575 160 L 590 130 L 605 120" fill="none" stroke="#f85149" stroke-width="1.6"/>
+            <path d="M 15 95 L 75 92 L 150 75 L 230 70 L 280 95 L 365 135 L 470 145 L 590 140" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="245" cy="30" r="5" fill="#f85149" stroke="#0d1117" stroke-width="2"/>
+            <text class="ex-serie-marker" x="245" y="20" fill="#f85149" text-anchor="middle" font-weight="700">PICO ABR-24 · 179</text>
+            <circle cx="280" cy="110" r="5" fill="#a78bfa" stroke="#0d1117" stroke-width="2"/>
+            <text class="ex-serie-marker" x="280" y="125" fill="#a78bfa" text-anchor="start" font-weight="700">JUL-24 · BAJA INICIA</text>
+            <circle cx="320" cy="145" r="5" fill="#fbbf24" stroke="#0d1117" stroke-width="2"/>
+            <text class="ex-serie-marker" x="320" y="161" fill="#fbbf24" text-anchor="middle" font-weight="700">NOV-24 BASELINE</text>
+            <text class="ex-serie-axis" x="40" y="240">2023</text>
+            <text class="ex-serie-axis" x="200" y="240">2024</text>
+            <text class="ex-serie-axis" x="370" y="240">2025</text>
+            <text class="ex-serie-axis" x="540" y="240">2026</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- DONUT -->
+      <div class="ex-panel">
+        <div class="ex-panel-head">
+          <div class="ex-panel-title">Composición letal 2025</div>
+          <div class="ex-panel-action">víctimas</div>
+        </div>
+        <div class="ex-donut-wrap">
+          <svg class="ex-donut" viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r="62" fill="none" stroke="#1a1f26" stroke-width="14"/>
+            <circle cx="80" cy="80" r="62" fill="none" stroke="#f85149" stroke-width="14" stroke-dasharray="277 113" stroke-dashoffset="0" stroke-linecap="butt" transform="rotate(-90 80 80)"/>
+            <circle cx="80" cy="80" r="62" fill="none" stroke="#fbbf24" stroke-width="14" stroke-dasharray="103 287" stroke-dashoffset="-279" stroke-linecap="butt" transform="rotate(-90 80 80)"/>
+            <circle cx="80" cy="80" r="62" fill="none" stroke="#a78bfa" stroke-width="14" stroke-dasharray="9 381" stroke-dashoffset="-385" stroke-linecap="butt" transform="rotate(-90 80 80)"/>
+            <text class="ex-donut-center" x="80" y="76">1,571</text>
+            <text class="ex-donut-center-lbl" x="80" y="95">víctimas total</text>
+          </svg>
+          <div class="ex-donut-legend">
+            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#f85149;"></span><div><div class="ex-dl-name">Homicidio doloso</div><div class="ex-dl-num">1,119 · 71.2%</div></div></div>
+            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#fbbf24;"></span><div><div class="ex-dl-name">Homicidio culposo</div><div class="ex-dl-num">417 · 26.5%</div></div></div>
+            <div class="ex-dl-item"><span class="ex-dl-dot" style="background:#a78bfa;"></span><div><div class="ex-dl-name">Feminicidio</div><div class="ex-dl-num">35 · 2.2%</div></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ROW 3 · Bars + Tabla + Ranking nacional -->
+    <div class="ex-row3">
+
+      <!-- BARS DIVERGENTES -->
+      <div class="ex-panel">
+        <div class="ex-panel-head">
+          <div class="ex-panel-title">Sube vs baja · 6m simétricos</div>
+          <div class="ex-panel-action">Δ% nov24-abr25 vs nov25-abr26</div>
+        </div>
+        <div class="ex-bars">
+          <div class="ex-bar-row"><div class="name">Extorsión total</div><div class="ex-bar-track"><span class="ex-bar-center"></span><div class="ex-bar-fill pos" style="width:50%;"></div></div><div class="ex-bar-val pos">+116%</div></div>
+          <div class="ex-bar-row"><div class="name">Servidores públ.</div><div class="ex-bar-track"><span class="ex-bar-center"></span><div class="ex-bar-fill pos" style="width:48%;"></div></div><div class="ex-bar-val pos">+112%</div></div>
+          <div class="ex-bar-row"><div class="name">Allanamiento</div><div class="ex-bar-track"><span class="ex-bar-center"></span><div class="ex-bar-fill pos" style="width:20%;"></div></div><div class="ex-bar-val pos">+47%</div></div>
+          <div class="ex-bar-row"><div class="name">Lesiones culposas</div><div class="ex-bar-track"><span class="ex-bar-center"></span><div class="ex-bar-fill pos" style="width:11%;"></div></div><div class="ex-bar-val pos">+25%</div></div>
+          <div class="ex-bar-row"><div class="name">Otros vs vida</div><div class="ex-bar-track"><span class="ex-bar-center"></span><div class="ex-bar-fill pos" style="width:10%;"></div></div><div class="ex-bar-val pos">+24%</div></div>
+          <div class="ex-bar-row"><div class="name">Violencia familiar</div><div class="ex-bar-track"><span class="ex-bar-center"></span><div class="ex-bar-fill pos" style="width:8%;"></div></div><div class="ex-bar-val pos">+19%</div></div>
+          <div class="ex-bar-row"><div class="name">Feminicidio</div><div class="ex-bar-track"><span class="ex-bar-center"></span><div class="ex-bar-fill pos" style="width:6%;"></div></div><div class="ex-bar-val pos">+14%</div></div>
+          <div class="ex-bar-row"><div class="name">Homicidio doloso</div><div class="ex-bar-track"><span class="ex-bar-center"></span><div class="ex-bar-fill neg" style="width:4%;margin-left:46%;"></div></div><div class="ex-bar-val neg">−8.5%</div></div>
+          <div class="ex-bar-row"><div class="name">Homicidio culposo</div><div class="ex-bar-track"><span class="ex-bar-center"></span><div class="ex-bar-fill neg" style="width:11%;margin-left:39%;"></div></div><div class="ex-bar-val neg">−25%</div></div>
+        </div>
+      </div>
+
+      <!-- TABLA -->
+      <div class="ex-panel">
+        <div class="ex-panel-head">
+          <div class="ex-panel-title">Top 10 municipios · total 2025</div>
+          <div class="ex-panel-action">click → ficha</div>
+        </div>
+        <div class="ex-tbl">
+          <div class="ex-tbl-head"><div>#</div><div>Municipio</div><div style="text-align:right;">Total</div><div style="text-align:right;">Δ</div></div>
+          <a class="ex-tbl-row" href="municipio.html?id=cuernavaca" style="text-decoration:none;"><div class="ex-tbl-pos">01</div><div class="ex-tbl-name hi">Cuernavaca</div><div class="ex-tbl-num">13,863</div><div class="ex-tbl-delta dn">−8.1</div></a>
+          <a class="ex-tbl-row" href="municipio.html?id=cuautla" style="text-decoration:none;"><div class="ex-tbl-pos">02</div><div class="ex-tbl-name">Cuautla</div><div class="ex-tbl-num">7,543</div><div class="ex-tbl-delta up">+18.6</div></a>
+          <a class="ex-tbl-row" href="municipio.html?id=jiutepec" style="text-decoration:none;"><div class="ex-tbl-pos">03</div><div class="ex-tbl-name">Jiutepec</div><div class="ex-tbl-num">4,191</div><div class="ex-tbl-delta dn">−14.5</div></a>
+          <a class="ex-tbl-row" href="municipio.html?id=temixco" style="text-decoration:none;"><div class="ex-tbl-pos">04</div><div class="ex-tbl-name">Temixco</div><div class="ex-tbl-num">2,477</div><div class="ex-tbl-delta dn">−3.3</div></a>
+          <a class="ex-tbl-row" href="municipio.html?id=yautepec" style="text-decoration:none;"><div class="ex-tbl-pos">05</div><div class="ex-tbl-name">Yautepec</div><div class="ex-tbl-num">2,440</div><div class="ex-tbl-delta dn">−0.6</div></a>
+          <a class="ex-tbl-row" href="municipio.html?id=jojutla" style="text-decoration:none;"><div class="ex-tbl-pos">06</div><div class="ex-tbl-name">Jojutla</div><div class="ex-tbl-num">2,053</div><div class="ex-tbl-delta up">+2.9</div></a>
+          <a class="ex-tbl-row" href="municipio.html?id=emiliano-zapata" style="text-decoration:none;"><div class="ex-tbl-pos">07</div><div class="ex-tbl-name">Emiliano Zapata</div><div class="ex-tbl-num">2,040</div><div class="ex-tbl-delta up">+0.3</div></a>
+          <a class="ex-tbl-row" href="municipio.html?id=xochitepec" style="text-decoration:none;"><div class="ex-tbl-pos">08</div><div class="ex-tbl-name">Xochitepec</div><div class="ex-tbl-num">1,455</div><div class="ex-tbl-delta dn">−14.6</div></a>
+          <a class="ex-tbl-row" href="municipio.html?id=tepoztlan" style="text-decoration:none;"><div class="ex-tbl-pos">09</div><div class="ex-tbl-name">Tepoztlán</div><div class="ex-tbl-num">1,101</div><div class="ex-tbl-delta up">+9.2</div></a>
+          <a class="ex-tbl-row" href="municipio.html?id=huitzilac" style="text-decoration:none;"><div class="ex-tbl-pos">10</div><div class="ex-tbl-name">Huitzilac</div><div class="ex-tbl-num">840</div><div class="ex-tbl-delta dn">−2.1</div></a>
+        </div>
+      </div>
+
+      <!-- RANKING NACIONAL ENVIPE -->
+      <div class="ex-panel">
+        <div class="ex-panel-head">
+          <div class="ex-panel-title">Ranking ENVIPE · 32 entidades <span>2025</span></div>
+          <div class="ex-panel-action">INEGI</div>
+        </div>
+        <div class="ex-rank">
+          <div class="ex-rank-row hi"><div class="ex-rank-pos">01</div><div class="ex-rank-state">MORELOS</div><div class="ex-rank-bar-wrap"><div class="ex-rank-bar" style="width:100%;"></div></div><div class="ex-rank-val">90.1%</div></div>
+          <div class="ex-rank-row"><div class="ex-rank-pos">02</div><div class="ex-rank-state">Estado de México</div><div class="ex-rank-bar-wrap"><div class="ex-rank-bar" style="width:96%;"></div></div><div class="ex-rank-val">86.4%</div></div>
+          <div class="ex-rank-row"><div class="ex-rank-pos">03</div><div class="ex-rank-state">Zacatecas</div><div class="ex-rank-bar-wrap"><div class="ex-rank-bar" style="width:92%;"></div></div><div class="ex-rank-val">83.1%</div></div>
+          <div class="ex-rank-row"><div class="ex-rank-pos">04</div><div class="ex-rank-state">Tabasco</div><div class="ex-rank-bar-wrap"><div class="ex-rank-bar" style="width:90%;"></div></div><div class="ex-rank-val">81.2%</div></div>
+          <div class="ex-rank-row"><div class="ex-rank-pos">05</div><div class="ex-rank-state">Guerrero</div><div class="ex-rank-bar-wrap"><div class="ex-rank-bar" style="width:88%;"></div></div><div class="ex-rank-val">79.6%</div></div>
+          <div class="ex-rank-row"><div class="ex-rank-pos">06</div><div class="ex-rank-state">Veracruz</div><div class="ex-rank-bar-wrap"><div class="ex-rank-bar" style="width:86%;"></div></div><div class="ex-rank-val">78.3%</div></div>
+          <div class="ex-rank-row"><div class="ex-rank-pos">07</div><div class="ex-rank-state">Quintana Roo</div><div class="ex-rank-bar-wrap"><div class="ex-rank-bar" style="width:85%;"></div></div><div class="ex-rank-val">77.4%</div></div>
+          <div class="ex-rank-row"><div class="ex-rank-pos">…</div><div class="ex-rank-state" style="color:#3a4047;">···</div><div class="ex-rank-bar-wrap" style="background:transparent;"></div><div class="ex-rank-val" style="color:#3a4047;">···</div></div>
+          <div class="ex-rank-row" style="opacity:0.55;"><div class="ex-rank-pos">16</div><div class="ex-rank-state">Promedio nacional</div><div class="ex-rank-bar-wrap"><div class="ex-rank-bar" style="width:82%;background:#6b7480;"></div></div><div class="ex-rank-val" style="color:#8b949e;">75.6%</div></div>
+          <div class="ex-rank-row"><div class="ex-rank-pos">…</div><div class="ex-rank-state" style="color:#3a4047;">···</div><div class="ex-rank-bar-wrap" style="background:transparent;"></div><div class="ex-rank-val" style="color:#3a4047;">···</div></div>
+          <div class="ex-rank-row" style="opacity:0.6;"><div class="ex-rank-pos">32</div><div class="ex-rank-state">Yucatán</div><div class="ex-rank-bar-wrap"><div class="ex-rank-bar" style="width:38%;background:#3fb950;"></div></div><div class="ex-rank-val">35.7%</div></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
 
 <!-- BANNER v2.3 — Anuncio de actualización Q1 2026 -->
 <section id="sV23" class="v23-callout" style="padding-top:32px;padding-bottom:32px;">
@@ -7480,6 +8041,10 @@
       </h2>
     </div>
 
+    <!-- atribución verificada · Mtra. Marcela Figueroa Franco · titular SESNSP designada oct-2024 por Sheinbaum
+         fuentes: gob.mx/sesnsp/estructuras/mtra-marcela-figueroa-franco + cobertura prensa 12-may-2026
+         (SinEmbargo, Tribuna, Excélsior, Pulso SLP, El Heraldo de México)
+         ver cifras.csv fila sNAC7-001 -->
     <p class="opa-lead">
       El 12 de mayo de 2026, la titular del SESNSP Marcela Figueroa Franco anunció en la conferencia presidencial que el promedio diario de homicidios dolosos cayó <strong>40%</strong> desde septiembre de 2024 — abril 2026 fue el mes más bajo en 11 años. La cifra agregada es real. Pero <strong>en los mismos 32 estados</strong>, durante <strong>el mismo periodo</strong>, sobre <strong>la misma realidad criminal</strong>, el flujo de personas reportadas como desaparecidas al RNPDNO <em>subió 34%</em>. Esta sección documenta la inconsistencia y plantea la pregunta que la opacidad institucional impide responder.
     </p>
