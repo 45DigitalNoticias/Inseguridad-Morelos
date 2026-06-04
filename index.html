@@ -4894,6 +4894,52 @@
   </defs>
 </svg>
 
+<!-- ============================================================
+     EMBED MODE · /?embed=sR  oculta nav y muestra solo la seccion
+     pedida. Usado por las paginas individuales en /secciones/.
+     ============================================================ -->
+<style id="embed-mode-styles">
+  html.embed-mode-html body.embed-mode .menu-toggle,
+  html.embed-mode-html body.embed-mode .nav-backdrop,
+  html.embed-mode-html body.embed-mode #nav { display: none !important; }
+  html.embed-mode-html body.embed-mode { padding-left: 0 !important; background: #06080c !important; }
+  html.embed-mode-html body.embed-mode main,
+  html.embed-mode-html body.embed-mode .main-content { margin-left: 0 !important; }
+  html.embed-mode-html body.embed-mode section:not(.embed-target) { display: none !important; }
+  html.embed-mode-html body.embed-mode section.embed-target { display: block !important; }
+  /* tambien ocultar el HUB y bloque V23 que no son <section> */
+  html.embed-mode-html body.embed-mode #sV23,
+  html.embed-mode-html body.embed-mode .v23-callout,
+  html.embed-mode-html body.embed-mode header,
+  html.embed-mode-html body.embed-mode > footer,
+  html.embed-mode-html body.embed-mode .breadcrumb { display: none !important; }
+</style>
+<script>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const embed = params.get('embed');
+    if (!embed) return;
+    document.documentElement.classList.add('embed-mode-html');
+
+    function applyEmbed() {
+      if (!document.body) { setTimeout(applyEmbed, 30); return; }
+      document.body.classList.add('embed-mode');
+      const target = document.getElementById(embed);
+      if (target) {
+        target.classList.add('embed-target');
+        setTimeout(function() {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+        }, 50);
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyEmbed);
+    } else {
+      applyEmbed();
+    }
+  })();
+</script>
+
 <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
 <div class="nav-backdrop" id="navBackdrop"></div>
 
