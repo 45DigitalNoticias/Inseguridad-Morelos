@@ -6109,6 +6109,52 @@
   #sExec .ex-reg-btn.active .pill {
     background: rgba(13,17,23,0.20); color: rgba(13,17,23,0.85);
   }
+
+  /* Sub-selector de municipio · dropdown con buscador */
+  #sExec .ex-municipios-bar {
+    display: flex; gap: 10px; align-items: center;
+    padding: 10px 12px; margin-bottom: 16px;
+    background: rgba(13,17,23,0.6);
+    border: 1px solid rgba(236,72,153,0.30);
+    border-radius: 9px;
+    flex-wrap: wrap;
+  }
+  #sExec .ex-municipios-bar[hidden] { display: none; }
+  #sExec .ex-muni-select {
+    flex: 1; min-width: 240px; max-width: 460px;
+    padding: 9px 12px; border-radius: 7px;
+    font-family: 'Inter', sans-serif; font-size: 13.5px;
+    color: #e6edf3; background: #0d1117;
+    border: 1px solid rgba(236,72,153,0.45);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    font-weight: 600;
+  }
+  #sExec .ex-muni-select:hover {
+    border-color: rgba(236,72,153,0.7);
+    background: #161b22;
+  }
+  #sExec .ex-muni-select:focus {
+    outline: none;
+    border-color: #ec4899;
+    box-shadow: 0 0 0 3px rgba(236,72,153,0.15);
+  }
+  #sExec .ex-muni-select option { background: #0d1117; color: #e6edf3; padding: 6px; }
+  #sExec .ex-muni-select optgroup {
+    color: #ec4899; font-weight: 700; font-style: normal;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  /* Cuando el tab municipio está activo, lo pintamos rosa */
+  #sExec .ex-tab#exTabMunicipio.active {
+    color: #fff;
+    background: #ec4899;
+    box-shadow: 0 4px 14px rgba(236,72,153,0.20);
+  }
+  #sExec .ex-tab#exTabMunicipio.active .pill {
+    background: rgba(13,17,23,0.18); color: rgba(255,255,255,0.85);
+  }
+
   /* Estilo del SVG choropleth: munis fuera de la región se atenúan */
   #sExec #exChoropleth path.muni.is-out-of-region {
     opacity: 0.10;
@@ -6782,9 +6828,9 @@
       <span class="ex-scope-lbl">Alcance:</span>
       <button class="ex-tab active" id="exTabEstado" role="tab" aria-selected="true">Estado completo <span class="pill">36 munis</span></button>
       <button class="ex-tab" id="exTabRegiones" role="tab" aria-selected="false">7 regiones PED <span class="pill">filtrar</span></button>
-      <button class="ex-tab disabled" role="tab" aria-selected="false" disabled title="Disponible en próxima iteración">Municipio <span class="pill">próx.</span></button>
+      <button class="ex-tab" id="exTabMunicipio" role="tab" aria-selected="false">Municipio <span class="pill">filtrar</span></button>
       <span class="ex-spacer"></span>
-      <a class="ex-drill" href="municipio.html?id=cuernavaca">
+      <a class="ex-drill" href="municipios/index.html">
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h8M7 3l4 4-4 4"/></svg>
         Ver radiografía municipal
       </a>
@@ -6795,6 +6841,19 @@
       <span class="ex-scope-lbl">Región:</span>
       <button class="ex-reg-btn active" data-region="" data-color="#fbbf24">Todas <span class="pill">36 munis</span></button>
       <!-- Chips de regiones inyectados por JS -->
+    </div>
+
+    <!-- Sub-selector de municipio (visible solo cuando tab Municipio está activo) -->
+    <div class="ex-municipios-bar" id="exMunicipiosBar" aria-label="Seleccionar municipio" hidden>
+      <span class="ex-scope-lbl">Municipio:</span>
+      <select id="exMuniSelect" class="ex-muni-select" aria-label="Elegir municipio para filtrar el dashboard">
+        <option value="">— Selecciona municipio —</option>
+        <!-- Opciones inyectadas por JS -->
+      </select>
+      <a class="ex-drill" id="exMuniDrill" href="#" style="opacity:0.35;pointer-events:none;">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h8M7 3l4 4-4 4"/></svg>
+        Dashboard completo
+      </a>
     </div>
 
     <!-- KPI ROW -->
@@ -34722,6 +34781,7 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     'Poniente': '#ec4899',
   };
   let CURRENT_REGION = null;  // null = todas las regiones
+  let CURRENT_MUNI = null;    // null = sin filtro municipal · si está, gana sobre CURRENT_REGION
 
   function buildRegionChips() {
     const bar = document.getElementById('exRegionesBar');
@@ -34747,6 +34807,11 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
 
   function setRegion(reg) {
     CURRENT_REGION = reg;
+    CURRENT_MUNI = null;  // cambio de region invalida filtro municipal
+    const muniSel = document.getElementById('exMuniSelect');
+    if (muniSel) muniSel.value = '';
+    const drill = document.getElementById('exMuniDrill');
+    if (drill) { drill.style.opacity = 0.35; drill.style.pointerEvents = 'none'; drill.removeAttribute('href'); }
     // Highlight chip
     document.querySelectorAll('.ex-reg-btn').forEach(b => {
       const isActive = (b.dataset.region || null) === (reg || null);
@@ -34762,6 +34827,68 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     renderSerie();        // v2.31: serie temporal con datos regionales
     renderBars();         // v2.31: bars divergentes 6m sym con datos regionales
     markStatewideOnly();  // v2.31: limpia badges legacy
+  }
+
+  // -------- FILTRO POR MUNICIPIO (v2.44) --------
+  // Slug -> nombre canónico (los slugs vienen del JSON DATA.slugs si existe)
+  function setMuni(muni) {
+    if (!muni) {
+      CURRENT_MUNI = null;
+    } else {
+      CURRENT_MUNI = muni;
+      CURRENT_REGION = null;
+      // limpiar chip region activo
+      document.querySelectorAll('.ex-reg-btn').forEach(b => {
+        const isAll = (b.dataset.region || '') === '';
+        b.classList.toggle('active', isAll);
+      });
+    }
+    // actualizar drill link
+    const drill = document.getElementById('exMuniDrill');
+    if (drill && muni) {
+      const slug = (DATA && DATA.slugs && DATA.slugs[muni]) || muni.toLowerCase().replace(/ /g, '-').replace(/ñ/g,'n').normalize('NFD').replace(/[̀-ͯ]/g, '');
+      drill.href = 'municipios/' + slug + '.html';
+      drill.target = '_blank';
+      drill.rel = 'noopener';
+      drill.style.opacity = 1;
+      drill.style.pointerEvents = 'auto';
+    } else if (drill) {
+      drill.style.opacity = 0.35;
+      drill.style.pointerEvents = 'none';
+      drill.removeAttribute('href');
+    }
+    paintMap();
+    updateKPIsRegion();
+    updateTopTable();
+    updateDonutRegion();
+    renderSerie();
+    renderBars();
+    markStatewideOnly();
+  }
+
+  function setupMuniSelector() {
+    const sel = document.getElementById('exMuniSelect');
+    if (!sel || typeof REGIONES_PED === 'undefined') return;
+    // limpiar opciones excepto la primera
+    while (sel.options.length > 1) sel.remove(1);
+    // poblar agrupado por región
+    const orden = ['Noroeste','Centro','Norte','Noreste','Oriente','Sur','Poniente'];
+    orden.forEach(reg => {
+      const info = REGIONES_PED[reg];
+      if (!info) return;
+      const grp = document.createElement('optgroup');
+      grp.label = reg + ' (' + info.munis.length + ')';
+      // orden alfabético dentro del grupo
+      const munis = info.munis.slice().sort((a,b) => a.localeCompare(b, 'es'));
+      munis.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        grp.appendChild(opt);
+      });
+      sel.appendChild(grp);
+    });
+    sel.addEventListener('change', e => setMuni(e.target.value || null));
   }
 
   // -------- Tabla top 10 municipios · dinámica al delito + región --------
@@ -34785,7 +34912,7 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     if (!DATA || typeof DATA.delitos.total === 'undefined') return;
     const data = DATA.delitos.total.data;
     let entries = Object.entries(data).filter(([_, v]) => typeof v === 'number');
-    if (CURRENT_REGION) {
+    if (CURRENT_REGION || CURRENT_MUNI) {
       entries = entries.filter(([m]) => muniIsInRegion(m));
     }
     entries.sort((a, b) => b[1] - a[1]);
@@ -34812,9 +34939,9 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
       rowsEl.appendChild(row);
     });
     if (scopeEl) {
-      scopeEl.textContent = CURRENT_REGION
-        ? 'Región ' + CURRENT_REGION
-        : 'Estado completo';
+      scopeEl.textContent = CURRENT_MUNI
+        ? CURRENT_MUNI
+        : (CURRENT_REGION ? 'Región ' + CURRENT_REGION : 'Estado completo');
     }
   }
 
@@ -34829,7 +34956,19 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     let csub = 'Morelos · SESNSP víctimas';
     let isEstimated = false;
 
-    if (CURRENT_REGION && REGIONES_PED[CURRENT_REGION]) {
+    if (CURRENT_MUNI) {
+      if (typeof SERIES_MUNICIPALES !== 'undefined' && SERIES_MUNICIPALES.series) {
+        const s = SERIES_MUNICIPALES.series[CURRENT_MUNI];
+        if (s) {
+          hd  = (s.homicidio_doloso?.[2025]  || []).reduce((a,b)=>a+b, 0);
+          hc  = (s.homicidio_culposo?.[2025] || []).reduce((a,b)=>a+b, 0);
+          fem = (s.feminicidio?.[2025]       || []).reduce((a,b)=>a+b, 0);
+          isEstimated = true;
+        }
+      }
+      caption = 'Víctimas letales · ' + CURRENT_MUNI;
+      csub = (isEstimated ? '* Estimación municipal · ' : '') + 'SESNSP víctimas';
+    } else if (CURRENT_REGION && REGIONES_PED[CURRENT_REGION]) {
       // Usar series mensuales 2025 reales (sumando ene-dic) para HD/HC/Fem por separado
       const munis = REGIONES_PED[CURRENT_REGION].munis;
       if (typeof SERIES_MUNICIPALES !== 'undefined' && SERIES_MUNICIPALES.series) {
@@ -34858,7 +34997,7 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     // Actualizar título y panel-action
     const scopeEl = document.getElementById('exDonutScope');
     const actionEl = document.getElementById('exDonutAction');
-    if (scopeEl) scopeEl.textContent = CURRENT_REGION ? 'Región ' + CURRENT_REGION : 'Estado completo';
+    if (scopeEl) scopeEl.textContent = CURRENT_MUNI ? CURRENT_MUNI : (CURRENT_REGION ? 'Región ' + CURRENT_REGION : 'Estado completo');
     if (actionEl) actionEl.textContent = isEstimated ? 'víctimas · estimado*' : 'víctimas';
 
     const total = hd + hc + fem;
@@ -34957,6 +35096,9 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
 
   function getSerieData() {
     // Retorna {anios: {2016: [12], ...}} según delito + región actual
+    if (CURRENT_MUNI && typeof SERIES_MUNICIPALES !== 'undefined') {
+      return SERIES_MUNICIPALES.series?.[CURRENT_MUNI]?.[SERIE_DELITO] || {};
+    }
     if (CURRENT_REGION && typeof SERIES_REGIONALES !== 'undefined') {
       return SERIES_REGIONALES.series[CURRENT_REGION]?.[SERIE_DELITO] || {};
     }
@@ -35139,6 +35281,9 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
 
   function getSeriesForBars() {
     // Devuelve {delito: {anio:[12]}} estatal o regional
+    if (CURRENT_MUNI && typeof SERIES_MUNICIPALES !== 'undefined') {
+      return SERIES_MUNICIPALES.series?.[CURRENT_MUNI] || {};
+    }
     if (CURRENT_REGION && typeof SERIES_REGIONALES !== 'undefined') {
       return SERIES_REGIONALES.series[CURRENT_REGION] || {};
     }
@@ -35213,11 +35358,15 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     // Actualizar action del panel (scope info)
     const action = document.querySelector('#exBarsDiv .ex-panel-action');
     if (action) {
-      action.textContent = CURRENT_REGION ? `Región ${CURRENT_REGION}` : 'Estado · 6m sym';
+      action.textContent = CURRENT_MUNI ? CURRENT_MUNI : (CURRENT_REGION ? `Región ${CURRENT_REGION}` : 'Estado · 6m sym');
     }
   }
 
   function muniIsInRegion(muni) {
+    if (CURRENT_MUNI) {
+      // Modo municipio: solo este pasa
+      return muni === CURRENT_MUNI || muni.startsWith(CURRENT_MUNI) || CURRENT_MUNI.startsWith(muni);
+    }
     if (!CURRENT_REGION) return true;
     const munis = REGIONES_PED[CURRENT_REGION]?.munis || [];
     return munis.some(m => m === muni || m.startsWith(muni) || muni.startsWith(m));
@@ -35232,7 +35381,29 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     const kpis = document.querySelectorAll('#sExec .ex-kpis .ex-kpi');
     if (kpis.length < 4) return;
 
-    if (CURRENT_REGION && REGIONES_PED[CURRENT_REGION]) {
+    if (CURRENT_MUNI) {
+      // Modo municipio · sumar series mensuales 2025 del municipio
+      let hd = 0, ext = 0, total = 0;
+      if (typeof SERIES_MUNICIPALES !== 'undefined' && SERIES_MUNICIPALES.series) {
+        const s = SERIES_MUNICIPALES.series[CURRENT_MUNI];
+        if (s) {
+          (s.homicidio_doloso?.[2025] || []).forEach(v => hd += v);
+          (s.extorsion?.[2025] || []).forEach(v => ext += v);
+          (s.total?.[2025] || []).forEach(v => total += v);
+        }
+      }
+      // Fallback: si no hay series, usar el dato del mapa (total 2025)
+      if (total === 0 && DATA?.delitos?.total?.data?.[CURRENT_MUNI] != null) {
+        total = DATA.delitos.total.data[CURRENT_MUNI];
+      }
+      const k2 = kpis[1];
+      k2.querySelector('.ex-kpi-num').textContent = hd.toLocaleString('es-MX');
+      k2.querySelector('.ex-kpi-delta').innerHTML = '<span class="lbl">' + CURRENT_MUNI + ' · víctimas HD 2025 (estim.)</span>';
+      const k3 = kpis[2];
+      k3.querySelector('.ex-kpi-num').textContent = ext.toLocaleString('es-MX');
+      k3.querySelector('.ex-kpi-lbl').lastChild.textContent = ' Extorsión Muni';
+      k3.querySelector('.ex-kpi-delta').innerHTML = '<span class="lbl">' + CURRENT_MUNI + ' · total ' + total.toLocaleString('es-MX') + ' carpetas</span>';
+    } else if (CURRENT_REGION && REGIONES_PED[CURRENT_REGION]) {
       const info = REGIONES_PED[CURRENT_REGION];
       // KPI 2 · víctimas HD
       const k2 = kpis[1];
@@ -35257,28 +35428,52 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     }
   }
 
-  // Hooks de Tabs principales (Estado completo / 7 regiones PED)
+  // Hooks de Tabs principales (Estado completo / 7 regiones PED / Municipio)
   function setupScopeTabs() {
-    const tabEstado = document.getElementById('exTabEstado');
-    const tabRegiones = document.getElementById('exTabRegiones');
-    const regBar = document.getElementById('exRegionesBar');
+    const tabEstado    = document.getElementById('exTabEstado');
+    const tabRegiones  = document.getElementById('exTabRegiones');
+    const tabMunicipio = document.getElementById('exTabMunicipio');
+    const regBar      = document.getElementById('exRegionesBar');
+    const muniBar     = document.getElementById('exMunicipiosBar');
     if (!tabEstado || !tabRegiones || !regBar) return;
 
+    function activateOnly(tab) {
+      [tabEstado, tabRegiones, tabMunicipio].forEach(t => {
+        if (!t) return;
+        const isActive = t === tab;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    }
+
     tabEstado.addEventListener('click', () => {
-      tabEstado.classList.add('active');
-      tabRegiones.classList.remove('active');
-      tabEstado.setAttribute('aria-selected', 'true');
-      tabRegiones.setAttribute('aria-selected', 'false');
-      regBar.setAttribute('hidden', '');
+      activateOnly(tabEstado);
+      if (regBar)  regBar.setAttribute('hidden', '');
+      if (muniBar) muniBar.setAttribute('hidden', '');
+      // limpiar filtros
+      CURRENT_MUNI = null;
       setRegion(null);
     });
     tabRegiones.addEventListener('click', () => {
-      tabRegiones.classList.add('active');
-      tabEstado.classList.remove('active');
-      tabRegiones.setAttribute('aria-selected', 'true');
-      tabEstado.setAttribute('aria-selected', 'false');
-      regBar.removeAttribute('hidden');
+      activateOnly(tabRegiones);
+      if (regBar)  regBar.removeAttribute('hidden');
+      if (muniBar) muniBar.setAttribute('hidden', '');
+      // si veniamos de municipio, soltar el filtro muni
+      if (CURRENT_MUNI) {
+        const muniSel = document.getElementById('exMuniSelect');
+        if (muniSel) muniSel.value = '';
+        setMuni(null);
+      }
     });
+    if (tabMunicipio) {
+      tabMunicipio.addEventListener('click', () => {
+        activateOnly(tabMunicipio);
+        if (regBar)  regBar.setAttribute('hidden', '');
+        if (muniBar) muniBar.removeAttribute('hidden');
+        // resetear region (si estaba activa) y dejar al select del muni decidir
+        if (CURRENT_REGION) setRegion(null);
+      });
+    }
   }
 
   // -------- Init: leer variable global EXEC_DELITOS_DATA (inlineada) --------
@@ -35291,6 +35486,8 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
       renderMap();
       // F2: setup de filtros por región PED
       buildRegionChips();
+      // v2.44: setup del selector de municipio
+      setupMuniSelector();
       setupScopeTabs();
       // F2: inicializar la tabla top 10 (también será re-calculada al cambiar región)
       updateTopTable();
