@@ -6875,10 +6875,10 @@
       </div>
 
       <!-- DONUT -->
-      <div class="ex-panel">
+      <div class="ex-panel" id="exDonutPanel">
         <div class="ex-panel-head">
-          <div class="ex-panel-title">Composición letal 2025</div>
-          <div class="ex-panel-action">víctimas</div>
+          <div class="ex-panel-title">Composición letal 2025 · <span id="exDonutScope">Estado completo</span></div>
+          <div class="ex-panel-action" id="exDonutAction">víctimas</div>
         </div>
         <div class="ex-donut-wrap">
           <div class="ex-donut-side">
@@ -35765,33 +35765,60 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     if (!donutSvg) return;
 
     let hd = 0, fem = 0, hc = 0;
-    let title = 'Composición letal 2025';
     let caption = 'Víctimas totales · 2025';
     let csub = 'Morelos · SESNSP víctimas';
+    let isEstimated = false;
 
     if (CURRENT_REGION && REGIONES_PED[CURRENT_REGION]) {
-      // Sumar de los munis de la región (datos por muni del cubo)
+      // Usar series mensuales 2025 reales (sumando ene-dic) para HD/HC/Fem por separado
       const munis = REGIONES_PED[CURRENT_REGION].munis;
-      const hdData = DATA.delitos.homicidio?.data || {};
-      const femData = DATA.delitos.feminicidio?.data || {};
-      munis.forEach(m => {
-        hd += hdData[m] || 0;
-        fem += femData[m] || 0;
-      });
-      // No tenemos HC separado por muni. Usar proporción estatal: HC = 417 / (1119+417+35) = 26.5% del total letal
-      // Estimar HC regional: total homicidio - feminicidio (Homicidio cubo incluye doloso + culposo)
-      // El "homicidio" del cubo es Homicidio doloso + culposo. Restamos fem aparte.
-      // Mejor: usar la cifra homicidio del cubo region (suma) y restar feminicidio
-      // Para el donut, mostramos los 3 segmentos con estimación
-      hc = Math.max(0, hd * (417/1119));  // proporción estatal HC/HD
-      hd = hd - hc;  // ajustar HD
+      if (typeof SERIES_MUNICIPALES !== 'undefined' && SERIES_MUNICIPALES.series) {
+        munis.forEach(m => {
+          const s = SERIES_MUNICIPALES.series[m];
+          if (!s) return;
+          const hdMon = s.homicidio_doloso?.[2025] || [];
+          const hcMon = s.homicidio_culposo?.[2025] || [];
+          const femMon = s.feminicidio?.[2025] || [];
+          hd += hdMon.reduce((a,b)=>a+b, 0);
+          hc += hcMon.reduce((a,b)=>a+b, 0);
+          fem += femMon.reduce((a,b)=>a+b, 0);
+        });
+        // Las series 2025 son E (estimadas), marcar
+        isEstimated = true;
+      }
       caption = 'Víctimas letales · ' + CURRENT_REGION;
-      csub = 'Estimación regional · SESNSP';
+      csub = (isEstimated ? '* Estimación regional · ' : '') + 'SESNSP víctimas';
     } else {
+      // Estado completo · cifras de víctimas estatales reales
       hd = 1119; hc = 417; fem = 35;
+      caption = 'Víctimas letales · Morelos';
+      csub = 'SESNSP víctimas · 2025';
     }
 
+    // Actualizar título y panel-action
+    const scopeEl = document.getElementById('exDonutScope');
+    const actionEl = document.getElementById('exDonutAction');
+    if (scopeEl) scopeEl.textContent = CURRENT_REGION ? 'Región ' + CURRENT_REGION : 'Estado completo';
+    if (actionEl) actionEl.textContent = isEstimated ? 'víctimas · estimado*' : 'víctimas';
+
     const total = hd + hc + fem;
+    if (total === 0) {
+      // No hay datos letales en esta región — limpiar el donut
+      const cText = donutSvg.querySelector('.ex-donut-center');
+      if (cText) cText.textContent = '0';
+      const captionEl = document.querySelector('#sExec .ex-donut-caption .clbl');
+      const csubEl = document.querySelector('#sExec .ex-donut-caption .csub');
+      if (captionEl) captionEl.textContent = caption;
+      if (csubEl) csubEl.textContent = 'Sin víctimas registradas';
+      donutSvg.querySelectorAll('circle').forEach((c, i) => {
+        if (i > 0) c.setAttribute('stroke-dasharray', '0 540');
+      });
+      const legendItems = document.querySelectorAll('#sExec .ex-dl-item .ex-dl-num');
+      ['Homicidio doloso', 'Homicidio culposo', 'Feminicidio'].forEach((_, idx) => {
+        if (legendItems[idx]) legendItems[idx].innerHTML = '<strong>0</strong> víctimas · 0.0%';
+      });
+      return;
+    }
     // Recalcular los stroke-dasharray del donut. Perímetro = 2π·86 ≈ 540
     const PER = 540;
     const dashHD = (hd / total) * PER;
