@@ -6155,6 +6155,25 @@
     background: rgba(13,17,23,0.18); color: rgba(255,255,255,0.85);
   }
 
+  /* v2.45: destaque del municipio seleccionado dentro del ranking regional */
+  #sExec .ex-tbl-row.is-current-muni {
+    background: linear-gradient(90deg, rgba(236,72,153,0.18), rgba(236,72,153,0.03));
+    border-left: 3px solid #ec4899;
+    padding-left: 9px !important;
+  }
+  #sExec .ex-tbl-row.is-current-muni .ex-tbl-pos { color: #ec4899; font-weight: 800; }
+  #sExec .ex-tbl-row.is-current-muni .ex-tbl-name { color: #fff !important; font-weight: 700; }
+  #sExec .ex-tbl-row.is-current-muni .ex-tbl-num { color: #ec4899; }
+  #sExec .ex-side-row.is-current-muni {
+    background: linear-gradient(90deg, rgba(236,72,153,0.18), rgba(236,72,153,0.03));
+    border-left: 3px solid #ec4899;
+    padding-left: 9px;
+  }
+  #sExec .ex-side-row.is-current-muni .pos { color: #ec4899; font-weight: 800; }
+  #sExec .ex-side-row.is-current-muni .name { color: #fff !important; font-weight: 700; }
+  #sExec .ex-side-row.is-current-muni .num { color: #ec4899; }
+  #sExec .ex-side-row.is-current-muni .bar-fill { background: #ec4899 !important; }
+
   /* Estilo del SVG choropleth: munis fuera de la región se atenúan */
   #sExec #exChoropleth path.muni.is-out-of-region {
     opacity: 0.10;
@@ -34417,11 +34436,21 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
       p.classList.toggle('is-out-of-region', !isIn);
     });
 
-    // Header labels
+    // Header labels · v2.45: contextual con carpetas + % del estatal + año
     const lbl = document.getElementById('exMapDelitoLabel');
     if (lbl) lbl.textContent = '· ' + dconf.nombre;
     const tot = document.getElementById('exMapTotalEstatal');
-    if (tot) tot.textContent = `Total estatal · ${dconf.total_estatal.toLocaleString('es-MX')}`;
+    if (tot) {
+      const anio = (dconf.anio || '2025');
+      const totEstatal = dconf.total_estatal || Object.values(dconf.data).filter(v => typeof v === 'number').reduce((s,v)=>s+v,0);
+      if (CURRENT_MUNI || CURRENT_REGION) {
+        const subtotal = sumInScope(dconf);
+        const pct = totEstatal > 0 ? (subtotal / totEstatal * 100) : 0;
+        tot.innerHTML = subtotal.toLocaleString('es-MX') + ' carpetas <span style="color:#8b949e;font-weight:600;">· ' + pct.toFixed(1) + '% del estatal · ' + anio + '</span>';
+      } else {
+        tot.innerHTML = totEstatal.toLocaleString('es-MX') + ' carpetas <span style="color:#8b949e;font-weight:600;">· estatal · ' + anio + '</span>';
+      }
+    }
     const legMax = document.querySelector('#exMapLegendGrad .ex-leg-max');
     if (legMax) legMax.textContent = max.toLocaleString('es-MX') + '+';
 
@@ -34442,27 +34471,57 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     const pctEl = document.getElementById('exSideTopPct');
     if (!rowsEl) return;
 
+    // v2.45: en modo MUNI, ranking regional con el muni destacado en su lugar
+    const muniRegion = CURRENT_MUNI ? getRegionOfMuni(CURRENT_MUNI) : null;
+    const regionForRanking = CURRENT_MUNI ? muniRegion : CURRENT_REGION;
+    const munisForRanking = regionForRanking && REGIONES_PED[regionForRanking]
+      ? REGIONES_PED[regionForRanking].munis : null;
+
     const ranked = Object.entries(dconf.data)
       .filter(([k,v]) => typeof v === 'number' && v > 0)
-      // F2: si hay región activa, filtrar solo a sus munis
-      .filter(([m, _]) => muniIsInRegion(m))
+      .filter(([m, _]) => {
+        if (CURRENT_MUNI) {
+          // mostrar todos los munis de la región del muni
+          return munisForRanking && munisForRanking.some(s => s === m || s.startsWith(m) || m.startsWith(s));
+        }
+        return muniIsInRegion(m);
+      })
       .sort((a, b) => b[1] - a[1]);
+    const totalEstatal = (dconf.total_estatal || Object.values(dconf.data).filter(v => typeof v === 'number').reduce((s,v)=>s+v,0)) || 1;
     const total = ranked.reduce((s, [_, v]) => s + v, 0) || 1;
     const max = ranked[0] ? ranked[0][1] : 1;
     const topN = ranked.slice(0, 10);
     const topNTotal = topN.reduce((s, [_, v]) => s + v, 0);
 
-    if (subEl) subEl.textContent = dconf.nombre + ' · 2025';
-    if (pctEl) pctEl.textContent = (topNTotal / total * 100).toFixed(1) + '% estatal';
+    // Subtitle: delito · scope · año
+    if (subEl) {
+      let scopeText;
+      if (CURRENT_MUNI) scopeText = 'Región ' + muniRegion;
+      else if (CURRENT_REGION) scopeText = 'Región ' + CURRENT_REGION;
+      else scopeText = 'Estado';
+      subEl.textContent = dconf.nombre + ' · ' + scopeText + ' · ' + (dconf.anio || '2025');
+    }
+    // Suma top N % vs estatal (no vs sub-scope) para dar la lectura real
+    if (pctEl) {
+      const pctEstatal = (topNTotal / totalEstatal * 100).toFixed(1);
+      if (CURRENT_MUNI || CURRENT_REGION) {
+        pctEl.innerHTML = pctEstatal + '% <span style="color:#8b949e;font-weight:600;">del estatal</span>';
+      } else {
+        pctEl.textContent = pctEstatal + '% estatal';
+      }
+    }
 
     rowsEl.innerHTML = '';
     topN.forEach(([muni, val], idx) => {
-      const pct = (val / total * 100).toFixed(1);
+      // pct sobre el ESTATAL del delito (no sobre topN ni sub-scope) → da lectura real
+      const pct = (val / totalEstatal * 100).toFixed(1);
       const barW = (val / max * 100).toFixed(1);
       const sid = (DATA.slugs && DATA.slugs[muni]) || muni.toLowerCase().replace(/ /g,'-');
       const row = document.createElement('a');
-      row.className = 'ex-side-row r' + (idx + 1);
-      row.href = 'municipio.html?id=' + sid;
+      const isCurrentMuni = CURRENT_MUNI && (muni === CURRENT_MUNI || muni.startsWith(CURRENT_MUNI) || CURRENT_MUNI.startsWith(muni));
+      row.className = 'ex-side-row r' + (idx + 1) + (isCurrentMuni ? ' is-current-muni' : '');
+      row.href = 'municipios/' + sid + '.html';
+      row.target = '_blank'; row.rel = 'noopener';
       row.style.textDecoration = 'none';
       row.innerHTML =
         '<span class="pos">' + String(idx + 1).padStart(2, '0') + '</span>' +
@@ -34910,13 +34969,26 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
   };
   function updateTopTable() {
     if (!DATA || typeof DATA.delitos.total === 'undefined') return;
-    const data = DATA.delitos.total.data;
+    const dconf = DATA.delitos.total;
+    const data = dconf.data;
     let entries = Object.entries(data).filter(([_, v]) => typeof v === 'number');
-    if (CURRENT_REGION || CURRENT_MUNI) {
+
+    // v2.45: si hay CURRENT_MUNI, usar la lista de la REGIÓN del muni para dar contexto
+    const muniRegion = CURRENT_MUNI ? getRegionOfMuni(CURRENT_MUNI) : null;
+    const regionForRanking = CURRENT_MUNI ? muniRegion : CURRENT_REGION;
+    const munisForRanking = regionForRanking && REGIONES_PED[regionForRanking]
+      ? REGIONES_PED[regionForRanking].munis : null;
+
+    if (CURRENT_MUNI && munisForRanking) {
+      // ranking regional COMPLETO con el muni destacado
+      entries = entries.filter(([m]) => munisForRanking.some(s => s === m || s.startsWith(m) || m.startsWith(s)));
+    } else if (CURRENT_REGION) {
       entries = entries.filter(([m]) => muniIsInRegion(m));
     }
     entries.sort((a, b) => b[1] - a[1]);
     const top = entries.slice(0, 10);
+
+    const totalEstatal = (dconf.total_estatal || Object.values(data).filter(v => typeof v === 'number').reduce((s,v)=>s+v,0)) || 1;
 
     const rowsEl = document.getElementById('exTblRows');
     const scopeEl = document.getElementById('exTblScope');
@@ -34927,9 +34999,11 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
       const dStr = d != null ? (d >= 0 ? '+' + d.toFixed(1) : d.toFixed(1).replace('-', '−')) : '—';
       const dCls = d == null ? '' : (d >= 0 ? 'up' : 'dn');
       const sid = (DATA.slugs && DATA.slugs[muni]) || muni.toLowerCase().replace(/ /g, '-');
+      const isCurrent = CURRENT_MUNI && (muni === CURRENT_MUNI || muni.startsWith(CURRENT_MUNI) || CURRENT_MUNI.startsWith(muni));
       const row = document.createElement('a');
-      row.className = 'ex-tbl-row';
-      row.href = 'municipio.html?id=' + sid;
+      row.className = 'ex-tbl-row' + (isCurrent ? ' is-current-muni' : '');
+      row.href = 'municipios/' + sid + '.html';
+      row.target = '_blank'; row.rel = 'noopener';
       row.style.textDecoration = 'none';
       row.innerHTML =
         '<div class="ex-tbl-pos">' + String(idx + 1).padStart(2, '0') + '</div>' +
@@ -34939,9 +35013,9 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
       rowsEl.appendChild(row);
     });
     if (scopeEl) {
-      scopeEl.textContent = CURRENT_MUNI
-        ? CURRENT_MUNI
-        : (CURRENT_REGION ? 'Región ' + CURRENT_REGION : 'Estado completo');
+      if (CURRENT_MUNI && muniRegion) scopeEl.textContent = 'Región ' + muniRegion + ' · ' + CURRENT_MUNI;
+      else if (CURRENT_REGION) scopeEl.textContent = 'Región ' + CURRENT_REGION;
+      else scopeEl.textContent = 'Estado completo';
     }
   }
 
@@ -35370,6 +35444,42 @@ new Chart(document.getElementById('chartTemxRnpdno'), {
     if (!CURRENT_REGION) return true;
     const munis = REGIONES_PED[CURRENT_REGION]?.munis || [];
     return munis.some(m => m === muni || m.startsWith(muni) || muni.startsWith(m));
+  }
+
+  // v2.45: helpers para mostrar contexto (carpetas + % del estatal + año)
+  function getRegionOfMuni(muni) {
+    if (!muni || typeof REGIONES_PED === 'undefined') return null;
+    for (const reg of Object.keys(REGIONES_PED)) {
+      const munis = REGIONES_PED[reg]?.munis || [];
+      if (munis.some(m => m === muni || m.startsWith(muni) || muni.startsWith(m))) return reg;
+    }
+    return null;
+  }
+  // Munis que forman el "alcance" actual (estado/region/muni)
+  function munisInScope() {
+    if (CURRENT_MUNI) return [CURRENT_MUNI];
+    if (CURRENT_REGION && REGIONES_PED[CURRENT_REGION]) return REGIONES_PED[CURRENT_REGION].munis;
+    return null; // null = todos
+  }
+  // Suma del delito (dconf.data) en el alcance actual
+  function sumInScope(dconf) {
+    if (!dconf || !dconf.data) return 0;
+    const scope = munisInScope();
+    if (!scope) return dconf.total_estatal || Object.values(dconf.data).reduce((s,v)=> s + (typeof v==='number'?v:0), 0);
+    let sum = 0;
+    Object.entries(dconf.data).forEach(([m, v]) => {
+      if (typeof v !== 'number') return;
+      // matchear nombres con variantes
+      const inScope = scope.some(s => s === m || s.startsWith(m) || m.startsWith(s));
+      if (inScope) sum += v;
+    });
+    return sum;
+  }
+  // Etiqueta de scope para mostrar en headers
+  function scopeLabel() {
+    if (CURRENT_MUNI) return CURRENT_MUNI;
+    if (CURRENT_REGION) return 'Región ' + CURRENT_REGION;
+    return 'Estado completo';
   }
 
   function updateKPIsRegion() {
