@@ -2,190 +2,44 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Radiografía municipal · Inseguridad Morelos · 45 Digital Noticias</title>
-<meta name="description" content="Dashboard municipal · radiografía completa por municipio · todos los delitos SESNSP · 45 Digital Noticias">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Redirigiendo · 45 Digital Noticias · Inseguridad Morelos</title>
+<meta name="description" content="El dashboard municipal vive ahora en /municipios/. Redirigiendo automáticamente.">
+<link rel="canonical" href="municipios/index.html">
+<script>
+  // Compatibilidad con links viejos del tipo municipio.html?id=cuernavaca
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const id = (params.get('id') || '').toLowerCase().trim();
+    const map = {
+      'cuernavaca': 'cuernavaca',
+      'cuautla': 'cuautla',
+      'jiutepec': 'jiutepec',
+      'temixco': 'temixco',
+      'yautepec': 'yautepec',
+      'jojutla': 'jojutla',
+      'emiliano-zapata': 'emiliano-zapata',
+      'xochitepec': 'xochitepec',
+      'tepoztlan': 'tepoztlan',
+      'huitzilac': 'huitzilac',
+      'tlaltizapan': 'tlaltizapan'
+    };
+    const dest = (id && map[id]) ? ('municipios/' + map[id] + '.html') : 'municipios/index.html';
+    window.location.replace(dest);
+  })();
+</script>
+<meta http-equiv="refresh" content="0; url=municipios/index.html">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{background:#06080c;color:#e6edf3;font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;}
-
-  .topbar{
-    padding:18px 40px;display:flex;justify-content:space-between;align-items:center;
-    border-bottom:1px solid #1a1f26;background:#0a0d12;
-  }
-  .brand{display:flex;align-items:center;gap:14px;}
-  .brand-block{
-    width:38px;height:38px;background:linear-gradient(140deg,#3b72d9,#1e40af 60%,#0f2a7a);
-    border-radius:8px;display:flex;align-items:center;justify-content:center;
-    font-family:'Arial Black',sans-serif;font-size:19px;font-weight:900;color:#fff;letter-spacing:-1.2px;
-  }
-  .brand-text{display:flex;flex-direction:column;line-height:1.15;}
-  .brand-text .n{font-size:14px;font-weight:800;color:#e6edf3;letter-spacing:1.2px;}
-  .brand-text .s{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.5px;color:#8b949e;text-transform:uppercase;margin-top:3px;}
-  .back-link{
-    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
-    color:#fbbf24;text-decoration:none;font-weight:700;
-    display:flex;align-items:center;gap:8px;
-    padding:8px 16px;border:1px solid rgba(251,191,36,0.35);border-radius:7px;
-    transition:all 0.15s;
-  }
-  .back-link:hover{background:#fbbf24;color:#0a0d12;}
-  .back-link svg{width:14px;height:14px;}
-
-  main{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 24px;}
-  .card{
-    max-width:780px;width:100%;text-align:center;
-    background:linear-gradient(180deg,rgba(13,17,23,0.7),rgba(13,17,23,0.4));
-    border:1px solid #1a1f26;border-radius:16px;
-    padding:64px 56px;
-  }
-  .eyebrow{
-    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;
-    text-transform:uppercase;color:#fbbf24;font-weight:700;margin-bottom:18px;
-  }
-  h1{
-    font-family:'Fraunces',serif;font-size:48px;font-weight:600;
-    line-height:1.05;letter-spacing:-1.2px;color:#e6edf3;margin-bottom:14px;
-    font-variation-settings:"opsz" 144;
-  }
-  h1 em{color:#fbbf24;font-style:italic;}
-  .lead{
-    font-size:17px;line-height:1.65;color:#c9d1d9;
-    max-width:560px;margin:0 auto 36px;
-  }
-  .lead strong{color:#fbbf24;font-weight:700;}
-  .municipio-pill{
-    display:inline-block;
-    font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:2px;
-    text-transform:uppercase;font-weight:700;
-    background:rgba(251,191,36,0.10);color:#fbbf24;
-    border:1px solid rgba(251,191,36,0.4);
-    padding:9px 18px;border-radius:7px;
-    margin-bottom:24px;
-  }
-
-  .roadmap{
-    background:rgba(13,17,23,0.7);border:1px solid #1a1f26;border-radius:11px;
-    padding:24px;margin-bottom:30px;text-align:left;
-  }
-  .roadmap h3{
-    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;
-    text-transform:uppercase;color:#fbbf24;font-weight:700;margin-bottom:16px;
-  }
-  .roadmap ul{list-style:none;display:flex;flex-direction:column;gap:11px;}
-  .roadmap li{
-    display:flex;align-items:flex-start;gap:12px;
-    font-size:13.5px;line-height:1.5;color:#c9d1d9;
-  }
-  .roadmap li::before{
-    content:"";flex-shrink:0;width:8px;height:8px;border-radius:50%;
-    background:#1a1f26;margin-top:7px;border:1.5px solid #3a4047;
-  }
-  .roadmap li.done::before{background:#3fb950;border-color:#3fb950;}
-  .roadmap li.now::before{background:#fbbf24;border-color:#fbbf24;box-shadow:0 0 12px rgba(251,191,36,0.5);}
-  .roadmap li strong{color:#e6edf3;}
-
-  .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
-  .btn{
-    padding:13px 24px;border-radius:9px;
-    font-family:'Inter',sans-serif;font-size:14px;font-weight:600;
-    text-decoration:none;transition:all 0.15s;
-    display:inline-flex;align-items:center;gap:8px;
-  }
-  .btn-primary{background:#fbbf24;color:#0a0d12;}
-  .btn-primary:hover{background:#fff;}
-  .btn-secondary{background:transparent;color:#c9d1d9;border:1px solid #1a1f26;}
-  .btn-secondary:hover{border-color:#fbbf24;color:#fbbf24;}
-  .btn svg{width:14px;height:14px;}
-
-  footer{
-    text-align:center;padding:24px;
-    font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2px;
-    color:#6b7480;text-transform:uppercase;border-top:1px solid #1a1f26;
-  }
+  body{background:#06080c;color:#e6edf3;font-family:Inter,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+  .msg{text-align:center;padding:40px;}
+  .msg h1{font-family:Fraunces,serif;font-size:30px;margin-bottom:14px;}
+  .msg a{color:#ec4899;text-decoration:none;font-weight:700;}
+  .msg a:hover{color:#fff;}
 </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-block">45</div>
-      <div class="brand-text"><span class="n">45 DIGITAL NOTICIAS</span><span class="s">Morelos · Seguridad · Dashboard municipal</span></div>
-    </div>
-    <a class="back-link" href="index.html#sExec">
-      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M11 7H3M7 3L3 7l4 4"/></svg>
-      Volver al panel maestro
-    </a>
-  </header>
-
-  <main>
-    <div class="card">
-      <div class="eyebrow">Nivel 3 · Radiografía municipal</div>
-      <div class="municipio-pill" id="muniPill">Cargando municipio…</div>
-      <h1>Dashboard <em>municipal completo</em> en construcción</h1>
-      <p class="lead">
-        Esta vista mostrará la <strong>radiografía completa del municipio</strong> seleccionado: todos los delitos del catálogo SESNSP, KPIs municipales, series temporales por delito, contexto demográfico CONAPO y comparativos contra el promedio estatal.
-      </p>
-
-      <div class="roadmap">
-        <h3>Roadmap · Dashboard maestro &gt; Municipal</h3>
-        <ul>
-          <li class="done"><span><strong>F1 · Nivel 1 ESTATAL</strong> — Panel maestro con vista del estado completo (publicado, lo estás viendo en <code style="background:#1a1f26;padding:1px 6px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#fbbf24;">#sExec</code>)</span></li>
-          <li class="now"><span><strong>F2 · Nivel 2 ZONAS y REGIONES PED</strong> — Fraccionamiento del panel maestro por las 7 regiones del PED Morelos y zonas metropolitanas (próxima iteración)</span></li>
-          <li><span><strong>F3 · Nivel 3 MUNICIPAL</strong> — Esta vista, una vez con datos y diseño completos: catálogo total SESNSP del municipio, demografía CONAPO, serie histórica decenal, contexto comparativo (en construcción)</span></li>
-        </ul>
-      </div>
-
-      <div class="actions">
-        <a class="btn btn-primary" href="index.html#sExec">
-          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h8M7 3l4 4-4 4"/></svg>
-          Volver al panel maestro
-        </a>
-        <a class="btn btn-secondary" href="index.html" id="narrLink">
-          Ver análisis completo (narrativo)
-        </a>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    45 Digital Noticias · Morelos · Seguridad · 36 municipios · Cifras SESNSP / INEGI / RNPDNO
-  </footer>
-
-  <script>
-    // Leer el query string ?id=cuernavaca y mostrar el nombre del muni + link al ancla de narrativo si existe
-    (function(){
-      const params = new URLSearchParams(window.location.search);
-      const id = (params.get('id') || '').toLowerCase().trim();
-      const map = {
-        'cuernavaca':       {nombre:'Cuernavaca', ancla:'#sC1'},
-        'cuautla':          {nombre:'Cuautla', ancla:'#sCu1'},
-        'jiutepec':         {nombre:'Jiutepec', ancla:'#sJ1'},
-        'temixco':          {nombre:'Temixco', ancla:'#sT1'},
-        'yautepec':         {nombre:'Yautepec', ancla:'#sYa1'},
-        'jojutla':          {nombre:'Jojutla', ancla:''},
-        'emiliano-zapata':  {nombre:'Emiliano Zapata', ancla:'#sEz1'},
-        'xochitepec':       {nombre:'Xochitepec', ancla:'#sXoc1'},
-        'tepoztlan':        {nombre:'Tepoztlán', ancla:'#sTep1'},
-        'huitzilac':        {nombre:'Huitzilac', ancla:'#sHz1'},
-        'tlaltizapan':      {nombre:'Tlaltizapán de Zapata', ancla:'#sTlz1'}
-      };
-      const pill = document.getElementById('muniPill');
-      const narrLink = document.getElementById('narrLink');
-      if (id && map[id]) {
-        pill.textContent = '◀ ' + map[id].nombre + ' · Morelos';
-        if (map[id].ancla) {
-          narrLink.href = 'index.html' + map[id].ancla;
-          narrLink.textContent = 'Ver ficha narrativa de ' + map[id].nombre + ' →';
-        }
-      } else if (id) {
-        pill.textContent = '◀ ' + id.toUpperCase() + ' · Municipio';
-      } else {
-        pill.textContent = '◀ Municipio no especificado';
-      }
-    })();
-  </script>
+  <div class="msg">
+    <h1>Redirigiendo a los 36 municipios…</h1>
+    <p>Si no fuiste redirigido, <a href="municipios/index.html">haz clic aquí</a>.</p>
+  </div>
 </body>
 </html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los 36 municipios de Morelos · 45 Digital Noticias</title>
+<meta name="description" content="Dashboard municipal por municipio. Las 7 regiones PED Morelos 2025-2030 con sus 36 municipios. Cada municipio abre su dashboard completo.">
+<meta property="og:title" content="Los 36 municipios · Inseguridad Morelos">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_partials/section-page.css">
+<style>
+  main{flex:1;padding:50px 24px 80px;}
+  .wrap{max-width:1180px;margin:0 auto;}
+
+  .page-eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;
+    color:#c9d1d9;text-transform:uppercase;font-weight:700;
+    text-align:center;margin-bottom:14px;
+  }
+  h1{
+    font-family:'Fraunces',serif;font-size:56px;font-weight:700;
+    color:#e6edf3;text-align:center;line-height:1.05;letter-spacing:-1.5px;
+    margin:0 auto 24px;max-width:880px;
+  }
+  h1 em{color:#fbbf24;font-style:italic;font-weight:600;}
+  .page-lead{
+    text-align:center;max-width:780px;margin:0 auto 60px;
+    font-size:17px;line-height:1.7;color:#c9d1d9;
+  }
+  .page-lead strong{color:#e6edf3;}
+
+  /* Tabla resumen de regiones */
+  .region-summary{
+    display:grid;grid-template-columns:repeat(7,1fr);gap:8px;
+    margin:0 0 50px;padding:18px 22px;
+    background:rgba(13,17,23,0.6);border:1px solid rgba(48,54,61,0.6);
+    border-radius:12px;
+  }
+  .region-pill{
+    text-align:center;padding:10px 6px;border-radius:8px;
+    background:rgba(13,17,23,0.55);
+    text-decoration:none;
+    transition:background 0.15s,transform 0.18s;
+  }
+  .region-pill:hover{transform:translateY(-2px);}
+  .region-pill .rn{
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    letter-spacing:1.4px;text-transform:uppercase;
+    display:block;margin-bottom:4px;
+  }
+  .region-pill .rc{
+    font-family:'Fraunces',serif;font-size:22px;font-weight:800;
+    color:#e6edf3;line-height:1;
+  }
+
+  /* Regiones */
+  .region{
+    margin:0 0 50px;
+  }
+  .region-head{
+    margin:0 0 22px;
+    padding-bottom:16px;
+    border-bottom:1px solid rgba(48,54,61,0.5);
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:18px;
+  }
+  .region-name{
+    font-family:'Fraunces',serif;font-size:38px;font-weight:700;
+    line-height:1;letter-spacing:-1px;
+  }
+  .region-count{
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    letter-spacing:2px;color:#8b949e;text-transform:uppercase;font-weight:700;
+  }
+  .region-glosa{
+    flex:1 1 100%;
+    font-family:'Inter',sans-serif;font-size:13.5px;line-height:1.55;
+    color:#8b949e;margin:0;
+  }
+
+  .muni-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  }
+  .muni-card{
+    background:linear-gradient(180deg,rgba(13,17,23,0.7),rgba(13,17,23,0.4));
+    border:1px solid rgba(48,54,61,0.7);
+    border-left:3px solid var(--region-color);
+    border-radius:11px;padding:20px 22px;
+    text-decoration:none;color:inherit;
+    transition:border-color 0.15s,transform 0.18s,background 0.18s;
+  }
+  .muni-card:hover{
+    border-color:var(--region-color);
+    transform:translateY(-2px);
+    background:linear-gradient(180deg,rgba(13,17,23,0.85),rgba(13,17,23,0.55));
+  }
+  .muni-card .muni-name{
+    font-family:'Fraunces',serif;font-size:22px;font-weight:700;
+    color:#e6edf3;line-height:1.15;letter-spacing:-0.3px;
+    margin-bottom:6px;
+  }
+  .muni-card .muni-meta{
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:#8b949e;letter-spacing:1px;
+    margin-bottom:14px;
+  }
+  .muni-card .muni-cta{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    letter-spacing:1.5px;text-transform:uppercase;font-weight:700;
+    color:var(--region-color);
+  }
+
+  .nota-final{
+    margin-top:50px;padding:24px 28px;
+    background:rgba(13,17,23,0.55);
+    border:1px solid rgba(48,54,61,0.5);
+    border-radius:12px;
+    font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;color:#8b949e;
+    text-align:center;
+  }
+  .nota-final strong{color:#c9d1d9;}
+  .nota-final em{color:#fbbf24;font-style:normal;font-weight:600;}
+
+  @media (max-width:760px){
+    h1{font-size:36px;}
+    .region-summary{grid-template-columns:repeat(4,1fr);}
+    .region-name{font-size:28px;}
+    .muni-grid{grid-template-columns:1fr;}
+    .region-head{flex-direction:column;align-items:flex-start;gap:6px;}
+  }
+  @media (max-width:480px){
+    .region-summary{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+  <header class="page-topbar">
+    <div class="page-brand">
+      <div class="page-brand-block">45</div>
+      <div class="page-brand-text">
+        <span class="n">45 DIGITAL NOTICIAS</span>
+        <span class="s">Municipios · Inseguridad Morelos</span>
+      </div>
+    </div>
+    <a class="page-back-link" href="../index.html#sExec">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M11 7H3M7 3L3 7l4 4"/></svg>
+      Volver al dashboard
+    </a>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="page-eyebrow">Dashboard municipal · 45 Digital Noticias</div>
+      <h1>Los <em>36 municipios</em> de Morelos</h1>
+      <p class="page-lead">
+        Radiografía completa por municipio. <strong>Cada dashboard incluye</strong> portada con KPIs, posición estatal y nacional, ranking, serie decenal, top delitos, contratendencias, cruce homicidio × desaparición, comparativo vs estado, conclusiones y actualización T1 2026 donde aplica. Agrupados por las <strong>7 regiones PED Morelos 2025-2030</strong>.
+      </p>
+
+      <!-- Resumen rapido de regiones -->
+      <div class="region-summary">
+        <a class="region-pill" href="#region-noroeste" style="border-bottom:2px solid #58a6ff;"><span class="rn" style="color:#58a6ff;">Noroeste</span><span class="rc">6</span></a>
+        <a class="region-pill" href="#region-norte"    style="border-bottom:2px solid #84cc16;"><span class="rn" style="color:#84cc16;">Norte</span><span class="rc">5</span></a>
+        <a class="region-pill" href="#region-noreste"  style="border-bottom:2px solid #14b8a6;"><span class="rn" style="color:#14b8a6;">Noreste</span><span class="rc">6</span></a>
+        <a class="region-pill" href="#region-centro"   style="border-bottom:2px solid #fbbf24;"><span class="rn" style="color:#fbbf24;">Centro</span><span class="rc">3</span></a>
+        <a class="region-pill" href="#region-oriente"  style="border-bottom:2px solid #a371f7;"><span class="rn" style="color:#a371f7;">Oriente</span><span class="rc">4</span></a>
+        <a class="region-pill" href="#region-poniente" style="border-bottom:2px solid #ec4899;"><span class="rn" style="color:#ec4899;">Poniente</span><span class="rc">6</span></a>
+        <a class="region-pill" href="#region-sur"      style="border-bottom:2px solid #f85149;"><span class="rn" style="color:#f85149;">Sur</span><span class="rc">6</span></a>
+      </div>
+
+      <span id="region-noroeste"></span>
+      <section class="region" style="--region-color:#58a6ff;">
+        <header class="region-head">
+          <div class="region-name" style="color:#58a6ff;">Noroeste</div>
+          <div class="region-count">6 municipios</div>
+          <p class="region-glosa">Zona Metropolitana de Cuernavaca. 6 municipios.</p>
+        </header>
+        <div class="muni-grid">
+        <a class="muni-card" href="cuernavaca.html">
+          <div class="muni-name">Cuernavaca</div>
+          <div class="muni-meta">9 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="jiutepec.html">
+          <div class="muni-name">Jiutepec</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="temixco.html">
+          <div class="muni-name">Temixco</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="emiliano-zapata.html">
+          <div class="muni-name">Emiliano Zapata</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="xochitepec.html">
+          <div class="muni-name">Xochitepec</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="huitzilac.html">
+          <div class="muni-name">Huitzilac</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        </div>
+      </section>
+      <span id="region-norte"></span>
+      <section class="region" style="--region-color:#84cc16;">
+        <header class="region-head">
+          <div class="region-name" style="color:#84cc16;">Norte</div>
+          <div class="region-count">5 municipios</div>
+          <p class="region-glosa">Sierra alta y Pueblos Mágicos. 5 municipios.</p>
+        </header>
+        <div class="muni-grid">
+        <a class="muni-card" href="atlatlahucan.html">
+          <div class="muni-name">Atlatlahucan</div>
+          <div class="muni-meta">9 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="tlayacapan.html">
+          <div class="muni-name">Tlayacapan</div>
+          <div class="muni-meta">9 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="tepoztlan.html">
+          <div class="muni-name">Tepoztlán</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="tlalnepantla.html">
+          <div class="muni-name">Tlalnepantla</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="totolapan.html">
+          <div class="muni-name">Totolapan</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        </div>
+      </section>
+      <span id="region-noreste"></span>
+      <section class="region" style="--region-color:#14b8a6;">
+        <header class="region-head">
+          <div class="region-name" style="color:#14b8a6;">Noreste</div>
+          <div class="region-count">6 municipios</div>
+          <p class="region-glosa">Ladera del Popocatépetl. 6 municipios.</p>
+        </header>
+        <div class="muni-grid">
+        <a class="muni-card" href="yecapixtla.html">
+          <div class="muni-name">Yecapixtla</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="tetela-del-volcan.html">
+          <div class="muni-name">Tetela del Volcán</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="ocuituco.html">
+          <div class="muni-name">Ocuituco</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="temoac.html">
+          <div class="muni-name">Temoac</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="zacualpan.html">
+          <div class="muni-name">Zacualpan</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="hueyapan.html">
+          <div class="muni-name">Hueyapan</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        </div>
+      </section>
+      <span id="region-centro"></span>
+      <section class="region" style="--region-color:#fbbf24;">
+        <header class="region-head">
+          <div class="region-name" style="color:#fbbf24;">Centro</div>
+          <div class="region-count">3 municipios</div>
+          <p class="region-glosa">Cuautla cabecera + corredor agrícola. 3 municipios.</p>
+        </header>
+        <div class="muni-grid">
+        <a class="muni-card" href="cuautla.html">
+          <div class="muni-name">Cuautla</div>
+          <div class="muni-meta">18 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="ayala.html">
+          <div class="muni-name">Ayala</div>
+          <div class="muni-meta">9 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="yautepec.html">
+          <div class="muni-name">Yautepec</div>
+          <div class="muni-meta">9 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        </div>
+      </section>
+      <span id="region-oriente"></span>
+      <section class="region" style="--region-color:#a371f7;">
+        <header class="region-head">
+          <div class="region-name" style="color:#a371f7;">Oriente</div>
+          <div class="region-count">4 municipios</div>
+          <p class="region-glosa">Llanura agrícola. 4 municipios.</p>
+        </header>
+        <div class="muni-grid">
+        <a class="muni-card" href="tepalcingo.html">
+          <div class="muni-name">Tepalcingo</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="jantetelco.html">
+          <div class="muni-name">Jantetelco</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="axochiapan.html">
+          <div class="muni-name">Axochiapan</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="jonacatepec.html">
+          <div class="muni-name">Jonacatepec</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        </div>
+      </section>
+      <span id="region-poniente"></span>
+      <section class="region" style="--region-color:#ec4899;">
+        <header class="region-head">
+          <div class="region-name" style="color:#ec4899;">Poniente</div>
+          <div class="region-count">6 municipios</div>
+          <p class="region-glosa">Frontera con Guerrero. 6 municipios.</p>
+        </header>
+        <div class="muni-grid">
+        <a class="muni-card" href="mazatepec.html">
+          <div class="muni-name">Mazatepec</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="tetecala.html">
+          <div class="muni-name">Tetecala</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="miacatlan.html">
+          <div class="muni-name">Miacatlán</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="amacuzac.html">
+          <div class="muni-name">Amacuzac</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="coatetelco.html">
+          <div class="muni-name">Coatetelco</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="coatlan-del-rio.html">
+          <div class="muni-name">Coatlán del Río</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        </div>
+      </section>
+      <span id="region-sur"></span>
+      <section class="region" style="--region-color:#f85149;">
+        <header class="region-head">
+          <div class="region-name" style="color:#f85149;">Sur</div>
+          <div class="region-count">6 municipios</div>
+          <p class="region-glosa">Corredor agroindustrial y Jojutla. 6 municipios.</p>
+        </header>
+        <div class="muni-grid">
+        <a class="muni-card" href="jojutla.html">
+          <div class="muni-name">Jojutla</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="puente-de-ixtla.html">
+          <div class="muni-name">Puente de Ixtla</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="tlaltizapan.html">
+          <div class="muni-name">Tlaltizapán</div>
+          <div class="muni-meta">9 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="zacatepec.html">
+          <div class="muni-name">Zacatepec</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="tlaquiltenango.html">
+          <div class="muni-name">Tlaquiltenango</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        <a class="muni-card" href="xoxocotla.html">
+          <div class="muni-name">Xoxocotla</div>
+          <div class="muni-meta">10 secciones</div>
+          <div class="muni-cta">Ver dashboard →</div>
+        </a>
+        </div>
+      </section>
+
+
+      <div class="nota-final">
+        <strong>Las radiografías no acusan, ceden elementos.</strong> Cada municipio usa los archivos del propio gobierno — <em>SESNSP corte mar-2026, RNPDNO dic-2025, CONAPO 2025</em>. Toda cifra está registrada con su línea de cálculo y archivo fuente en <code style="background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:3px;color:#fbbf24;font-family:'JetBrains Mono',monospace;font-size:12px;">cifras.csv</code> del repositorio.
+      </div>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    45 Digital Noticias · Inseguridad Morelos · <a href="../index.html#sExec">Dashboard maestro</a> · <a href="../columnas/">Columnas</a> · <a href="../comunicados/">Comunicados auditados</a>
+  </footer>
+</body>
+</html>
