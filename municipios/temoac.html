@@ -47,18 +47,8 @@
     (function() {
       const iframe = document.querySelector('iframe');
       if (!iframe) return;
-      iframe.addEventListener('load', function() {
-        try {
-          const doc = iframe.contentDocument || iframe.contentWindow.document;
-          if (!doc) return;
-          setTimeout(function() {
-            const targets = doc.querySelectorAll('section.embed-target');
-            let h = 0;
-            targets.forEach(t => h += t.scrollHeight);
-            if (h > 0) iframe.style.minHeight = (h + 80) + 'px';
-          }, 2000);
-        } catch (e) {}
-      });
+      // v2.51: el iframe tiene altura fija = viewport (calc(100vh - 110px))
+      // y scrollea internamente. No requiere calculo dinamico (causaba loops).
     })();
   </script>
 </body>

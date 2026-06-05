@@ -19,7 +19,7 @@
   }
   .section-iframe-wrap iframe {
     width: 100%;
-    min-height: calc(100vh - 110px);
+    height: calc(100vh - 110px);
     border: 0;
     background: #06080c;
     display: block;
@@ -55,18 +55,8 @@
     (function() {
       const iframe = document.querySelector('iframe');
       if (!iframe) return;
-      iframe.addEventListener('load', function() {
-        try {
-          const doc = iframe.contentDocument || iframe.contentWindow.document;
-          if (!doc) return;
-          setTimeout(function() {
-            const targets = doc.querySelectorAll('section.embed-target');
-            let h = 0;
-            targets.forEach(t => h += t.scrollHeight);
-            if (h > 0) iframe.style.minHeight = (h + 60) + 'px';
-          }, 1500);
-        } catch (e) {}
-      });
+      // v2.51: el iframe tiene altura fija = viewport (calc(100vh - 110px))
+      // y scrollea internamente. No requiere calculo dinamico (causaba loops).
     })();
   </script>
 </body>

@@ -5265,7 +5265,23 @@
       text-decoration:none;color:inherit;
       transition:border-color 0.18s,transform 0.18s;
       display:flex;flex-direction:column;gap:10px;
+      position:relative;
     }
+    /* iconografía SVG arriba de cada card */
+    .landing-exits .le-icon{
+      width:44px;height:44px;border-radius:11px;
+      display:flex;align-items:center;justify-content:center;
+      margin-bottom:6px;
+      transition:transform 0.18s;
+    }
+    .landing-exits .le-icon svg{width:24px;height:24px;}
+    .landing-exits .le-card:hover .le-icon{transform:scale(1.08);}
+    .landing-exits .le-card.dashboard   .le-icon{background:rgba(251,191,36,0.14);color:#fbbf24;}
+    .landing-exits .le-card.muni        .le-icon{background:rgba(236,72,153,0.14);color:#ec4899;}
+    .landing-exits .le-card.columnas    .le-icon{background:rgba(167,139,250,0.14);color:#a78bfa;}
+    .landing-exits .le-card.comunicados .le-icon{background:rgba(20,184,166,0.14);color:#14b8a6;}
+    .landing-exits .le-card.fuentes     .le-icon{background:rgba(63,185,80,0.14);color:#3fb950;}
+    .landing-exits .le-card.glosario    .le-icon{background:rgba(34,211,238,0.14);color:#22d3ee;}
     .landing-exits .le-card:hover{transform:translateY(-2px);}
     .landing-exits .le-card.dashboard{border-left:4px solid #fbbf24;}
     .landing-exits .le-card.dashboard:hover{border-color:rgba(251,191,36,0.55);}
@@ -5325,36 +5341,54 @@
     <h2>Las <em>seis rutas</em> del proyecto</h2>
     <div class="le-grid">
       <a class="le-card dashboard" href="#sExec">
+        <div class="le-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1.3"/><rect x="13" y="3" width="8" height="5" rx="1.3"/><rect x="13" y="10" width="8" height="11" rx="1.3"/><rect x="3" y="13" width="8" height="8" rx="1.3"/></svg>
+        </div>
         <div class="le-tag">Panel ejecutivo</div>
         <h3>Dashboard <em>maestro</em></h3>
         <p>Mapa coroplético, KPIs por delito, ranking, donut letal y serie temporal. Filtros por estado, 7 regiones PED o municipio individual.</p>
         <div class="le-cta">Abrir panel →</div>
       </a>
       <a class="le-card muni" href="municipios/" target="_blank" rel="noopener">
+        <div class="le-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 22c4.5-5.5 7-9.5 7-13a7 7 0 1 0-14 0c0 3.5 2.5 7.5 7 13z"/><circle cx="12" cy="9.5" r="2.6" fill="currentColor"/></svg>
+        </div>
         <div class="le-tag">Radiografía municipal</div>
         <h3>Los <em>36 municipios</em></h3>
         <p>Vista interactiva: selecciona un municipio y verás todos los delitos del catálogo SESNSP, posición estatal y porcentajes del estatal.</p>
         <div class="le-cta">Abrir radiografía ↗</div>
       </a>
       <a class="le-card columnas" href="columnas/" target="_blank" rel="noopener">
+        <div class="le-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3" width="17" height="18" rx="1.5"/><path d="M7 7h10M7 10h10M7 13h7M7 16h10M7 19h6"/></svg>
+        </div>
         <div class="le-tag">Lectura editorial</div>
         <h3>Columnas <em>firmadas</em></h3>
         <p>Prosa narrativa con marco teórico verificable (Goodhart, Campbell, Tversky-Kahneman, Tufte, UNODC). Auditoría editorial de los anuncios oficiales.</p>
         <div class="le-cta">Leer columnas ↗</div>
       </a>
       <a class="le-card comunicados" href="comunicados/" target="_blank" rel="noopener">
+        <div class="le-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4l3 1 1.5 4.5L9.5 21l1-.5L9 16l11 3V5L3 10z"/></svg>
+        </div>
         <div class="le-tag">Anuncio vs auditoría</div>
         <h3>Comunicados <em>auditados</em></h3>
         <p>Cada anuncio oficial (mañanera, conferencia, reporte Segob) contrastado pinza por pinza contra los archivos públicos del propio Estado.</p>
         <div class="le-cta">Ver fichas ↗</div>
       </a>
       <a class="le-card fuentes" href="referencias/fuentes.html" target="_blank" rel="noopener">
+        <div class="le-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5v15c3-1.5 6-1.5 9 0V5c-3-1.5-6-1.5-9 0z"/><path d="M21 5v15c-3-1.5-6-1.5-9 0V5c3-1.5 6-1.5 9 0z"/><path d="M12 5v15"/></svg>
+        </div>
         <div class="le-tag">Referencia · M</div>
         <h3>Fuentes y <em>procedimiento</em></h3>
         <p>10 fuentes oficiales, cortes temporales, datasets derivados, criterios comparativos, limitaciones conocidas y blindaje legal.</p>
         <div class="le-cta">Ver fuentes ↗</div>
       </a>
       <a class="le-card glosario" href="referencias/glosario.html" target="_blank" rel="noopener">
+        <div class="le-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h12a2 2 0 0 1 2 2v15a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V3z"/><path d="M5 17h13M9 7l-2 6h5L10 7zM10 7v6M14 7v6M14 8.5h3M14 11.5h3"/></svg>
+        </div>
         <div class="le-tag">Referencia · G</div>
         <h3>Glosario <em>completo</em></h3>
         <p>Todos los términos técnicos del proyecto: instituciones, delitos, desaparición y RNPDNO, método, regiones PED y marco editorial.</p>
