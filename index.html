@@ -4920,6 +4920,17 @@
   body.landing-mode section:not(#sHero){ display: none !important; }
   body.landing-mode #sV23,
   body.landing-mode .v23-callout{ display: none !important; }
+
+  /* v2.52 · EMBED-MODE: centrar contenido de secciones que tenian
+     padding-left:300px para compensar el nav lateral (que ya no
+     existe en embed). Aplica a TODAS las section.embed-target del
+     index: dossiers municipales (s1-s18, sC1-sC9, sJ1-sJ10, etc.),
+     paneles estatales (sExec, sNAC*, sR, sH, sE, sI, sP, sME),
+     y meta-sections (sM, sG). */
+  html.embed-mode-html body.embed-mode section.embed-target{
+    padding-left: clamp(24px, 6vw, 80px) !important;
+    padding-right: clamp(24px, 6vw, 80px) !important;
+  }
 </style>
 <script>
   (function() {
@@ -5210,8 +5221,8 @@
     </a>
   </div>
   <div class="hero-actions">
-    <a href="#s0" class="hero-cta">Explorar el mapa interactivo →</a>
-    <a href="#sM" class="hero-cta secondary">Fuentes y método</a>
+    <a href="secciones/dashboard-maestro.html" target="_blank" rel="noopener" class="hero-cta">Explorar el mapa interactivo ↗</a>
+    <a href="referencias/fuentes.html" target="_blank" rel="noopener" class="hero-cta secondary">Fuentes y método ↗</a>
   </div>
 
   <!-- Barra de compartir visible (engancha con share_module.js · data-rb-share) -->
