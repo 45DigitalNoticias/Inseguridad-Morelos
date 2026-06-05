@@ -4913,12 +4913,31 @@
   html.embed-mode-html body.embed-mode header,
   html.embed-mode-html body.embed-mode > footer,
   html.embed-mode-html body.embed-mode .breadcrumb { display: none !important; }
+
+  /* v2.50 · LANDING MODE: cuando no hay ?embed, ocultar todas las
+     secciones in-page excepto sHero. Resuelve el scroll infinito
+     del INICIO · RESUMEN. Las secciones siguen en DOM para iframes. */
+  body.landing-mode section:not(#sHero){ display: none !important; }
+  body.landing-mode #sV23,
+  body.landing-mode .v23-callout{ display: none !important; }
 </style>
 <script>
   (function() {
     const params = new URLSearchParams(window.location.search);
     const embed = params.get('embed');
-    if (!embed) return;
+    // v2.50 · LANDING MODE: sin ?embed, mostrar solo sHero
+    if (!embed) {
+      function applyLanding() {
+        if (!document.body) { setTimeout(applyLanding, 30); return; }
+        document.body.classList.add('landing-mode');
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyLanding);
+      } else {
+        applyLanding();
+      }
+      return;
+    }
     document.documentElement.classList.add('embed-mode-html');
 
     function applyEmbed() {
@@ -5023,8 +5042,8 @@
        wrappers municipios/<slug>.html que las cargan en embed-mode. -->
   <div class="nav-group">
     <div class="nav-group-title">Referencia</div>
-    <a href="#sM" data-target="sM" class="nav-meta"><span class="num">M</span>FUENTES Y PROCEDIMIENTO</a>
-    <a href="#sG" data-target="sG" class="nav-meta"><span class="num">G</span>GLOSARIO</a>
+    <a href="referencias/fuentes.html" target="_blank" rel="noopener" class="nav-meta"><span class="num">M</span>FUENTES Y PROCEDIMIENTO ↗</a>
+    <a href="referencias/glosario.html" target="_blank" rel="noopener" class="nav-meta"><span class="num">G</span>GLOSARIO ↗</a>
   </div>
 
   <div class="nav-group">
@@ -5218,6 +5237,130 @@
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1z"/></svg>
       Copiar enlace
     </button>
+  </div>
+
+  <!-- v2.50 · CARDS DE SALIDA: rutas principales del proyecto -->
+  <style>
+    .landing-exits{
+      max-width:1080px;margin:60px auto 30px;padding:0 24px;
+    }
+    .landing-exits .le-eyebrow{
+      font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3.5px;
+      color:#fbbf24;text-transform:uppercase;font-weight:700;
+      text-align:center;margin-bottom:14px;
+    }
+    .landing-exits h2{
+      font-family:'Fraunces',serif;font-size:32px;font-weight:700;
+      color:#e6edf3;text-align:center;line-height:1.15;letter-spacing:-0.6px;
+      margin:0 auto 32px;max-width:720px;
+    }
+    .landing-exits h2 em{color:#fbbf24;font-style:italic;font-weight:600;}
+    .landing-exits .le-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    }
+    .landing-exits .le-card{
+      background:linear-gradient(180deg,rgba(13,17,23,0.7),rgba(13,17,23,0.4));
+      border:1px solid rgba(48,54,61,0.7);
+      border-radius:13px;padding:24px 22px;
+      text-decoration:none;color:inherit;
+      transition:border-color 0.18s,transform 0.18s;
+      display:flex;flex-direction:column;gap:10px;
+    }
+    .landing-exits .le-card:hover{transform:translateY(-2px);}
+    .landing-exits .le-card.dashboard{border-left:4px solid #fbbf24;}
+    .landing-exits .le-card.dashboard:hover{border-color:rgba(251,191,36,0.55);}
+    .landing-exits .le-card.muni{border-left:4px solid #ec4899;}
+    .landing-exits .le-card.muni:hover{border-color:rgba(236,72,153,0.55);}
+    .landing-exits .le-card.columnas{border-left:4px solid #a78bfa;}
+    .landing-exits .le-card.columnas:hover{border-color:rgba(167,139,250,0.55);}
+    .landing-exits .le-card.comunicados{border-left:4px solid #14b8a6;}
+    .landing-exits .le-card.comunicados:hover{border-color:rgba(20,184,166,0.55);}
+    .landing-exits .le-card.fuentes{border-left:4px solid #3fb950;}
+    .landing-exits .le-card.fuentes:hover{border-color:rgba(63,185,80,0.55);}
+    .landing-exits .le-card.glosario{border-left:4px solid #22d3ee;}
+    .landing-exits .le-card.glosario:hover{border-color:rgba(34,211,238,0.55);}
+    .landing-exits .le-card .le-tag{
+      font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;
+      text-transform:uppercase;font-weight:700;
+    }
+    .landing-exits .le-card.dashboard   .le-tag{color:#fbbf24;}
+    .landing-exits .le-card.muni        .le-tag{color:#ec4899;}
+    .landing-exits .le-card.columnas    .le-tag{color:#a78bfa;}
+    .landing-exits .le-card.comunicados .le-tag{color:#14b8a6;}
+    .landing-exits .le-card.fuentes     .le-tag{color:#3fb950;}
+    .landing-exits .le-card.glosario    .le-tag{color:#22d3ee;}
+    .landing-exits .le-card h3{
+      font-family:'Fraunces',serif;font-size:22px;font-weight:700;
+      color:#e6edf3;line-height:1.2;letter-spacing:-0.3px;margin:0;
+    }
+    .landing-exits .le-card h3 em{font-style:italic;}
+    .landing-exits .le-card.dashboard   h3 em{color:#fbbf24;}
+    .landing-exits .le-card.muni        h3 em{color:#ec4899;}
+    .landing-exits .le-card.columnas    h3 em{color:#a78bfa;}
+    .landing-exits .le-card.comunicados h3 em{color:#14b8a6;}
+    .landing-exits .le-card.fuentes     h3 em{color:#3fb950;}
+    .landing-exits .le-card.glosario    h3 em{color:#22d3ee;}
+    .landing-exits .le-card p{
+      font-family:'Inter',sans-serif;font-size:13.5px;line-height:1.55;
+      color:#c9d1d9;margin:0;
+    }
+    .landing-exits .le-card .le-cta{
+      margin-top:auto;padding-top:8px;
+      font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;
+      text-transform:uppercase;font-weight:700;
+    }
+    .landing-exits .le-card.dashboard   .le-cta{color:#fbbf24;}
+    .landing-exits .le-card.muni        .le-cta{color:#ec4899;}
+    .landing-exits .le-card.columnas    .le-cta{color:#a78bfa;}
+    .landing-exits .le-card.comunicados .le-cta{color:#14b8a6;}
+    .landing-exits .le-card.fuentes     .le-cta{color:#3fb950;}
+    .landing-exits .le-card.glosario    .le-cta{color:#22d3ee;}
+    @media (max-width:760px){
+      .landing-exits .le-grid{grid-template-columns:1fr;}
+      .landing-exits h2{font-size:26px;}
+    }
+  </style>
+  <div class="landing-exits">
+    <div class="le-eyebrow">▸ Continúa por aquí</div>
+    <h2>Las <em>seis rutas</em> del proyecto</h2>
+    <div class="le-grid">
+      <a class="le-card dashboard" href="#sExec">
+        <div class="le-tag">Panel ejecutivo</div>
+        <h3>Dashboard <em>maestro</em></h3>
+        <p>Mapa coroplético, KPIs por delito, ranking, donut letal y serie temporal. Filtros por estado, 7 regiones PED o municipio individual.</p>
+        <div class="le-cta">Abrir panel →</div>
+      </a>
+      <a class="le-card muni" href="municipios/" target="_blank" rel="noopener">
+        <div class="le-tag">Radiografía municipal</div>
+        <h3>Los <em>36 municipios</em></h3>
+        <p>Vista interactiva: selecciona un municipio y verás todos los delitos del catálogo SESNSP, posición estatal y porcentajes del estatal.</p>
+        <div class="le-cta">Abrir radiografía ↗</div>
+      </a>
+      <a class="le-card columnas" href="columnas/" target="_blank" rel="noopener">
+        <div class="le-tag">Lectura editorial</div>
+        <h3>Columnas <em>firmadas</em></h3>
+        <p>Prosa narrativa con marco teórico verificable (Goodhart, Campbell, Tversky-Kahneman, Tufte, UNODC). Auditoría editorial de los anuncios oficiales.</p>
+        <div class="le-cta">Leer columnas ↗</div>
+      </a>
+      <a class="le-card comunicados" href="comunicados/" target="_blank" rel="noopener">
+        <div class="le-tag">Anuncio vs auditoría</div>
+        <h3>Comunicados <em>auditados</em></h3>
+        <p>Cada anuncio oficial (mañanera, conferencia, reporte Segob) contrastado pinza por pinza contra los archivos públicos del propio Estado.</p>
+        <div class="le-cta">Ver fichas ↗</div>
+      </a>
+      <a class="le-card fuentes" href="referencias/fuentes.html" target="_blank" rel="noopener">
+        <div class="le-tag">Referencia · M</div>
+        <h3>Fuentes y <em>procedimiento</em></h3>
+        <p>10 fuentes oficiales, cortes temporales, datasets derivados, criterios comparativos, limitaciones conocidas y blindaje legal.</p>
+        <div class="le-cta">Ver fuentes ↗</div>
+      </a>
+      <a class="le-card glosario" href="referencias/glosario.html" target="_blank" rel="noopener">
+        <div class="le-tag">Referencia · G</div>
+        <h3>Glosario <em>completo</em></h3>
+        <p>Todos los términos técnicos del proyecto: instituciones, delitos, desaparición y RNPDNO, método, regiones PED y marco editorial.</p>
+        <div class="le-cta">Abrir glosario ↗</div>
+      </a>
+    </div>
   </div>
 </section>
 
